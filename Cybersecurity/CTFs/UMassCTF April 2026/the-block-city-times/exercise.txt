@@ -1,0 +1,9 @@
+The Block City Times
+100
+web medium xss
+Larry (MrLarryMan)
+
+ 21 (100% liked)  0
+The Block City Times is here to inform you!
+
+http://blockcitytimes.web.ctf.umasscybersec.org:5000/

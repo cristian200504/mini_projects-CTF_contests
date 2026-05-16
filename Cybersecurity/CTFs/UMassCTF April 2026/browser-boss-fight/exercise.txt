@@ -1,0 +1,11 @@
+BrOWSER BOSS FIGHT
+100
+web easy
+Ian/ianstadtlander
+
+ 42 (91% liked)  4
+This familiar brick castle is hiding something... can you break in and defeat the Koopa King?
+
+http://browser-boss-fight.web.ctf.umasscybersec.org:32770
+Hint 1 (Cost: 0 points)
+Check what the local script is doing to your key attempts... how could you bypass it?

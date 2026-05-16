@@ -1,0 +1,15 @@
+
+┌──(santey22㉿santey22)-[~]
+└─$ nc candy-mountain.picoctf.net 55732
+⊹──────[ BYTEMANCY-0 ]──────⊹
+☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐
+
+Send me ASCII DECIMAL 101, 101, 101, side-by-side, no space.
+
+☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐
+⊹─────────────⟡─────────────⊹
+==> eee
+picoCTF{pr1n74813_ch4r5_15ddc7a7}
+
+┌──(santey22㉿santey22)-[~]
+└─$

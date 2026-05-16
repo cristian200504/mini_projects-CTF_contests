@@ -1,0 +1,5 @@
+The alien falcon swarm is closing in. This scrambled data fragment holds the master override for the spaceship arsenal—our only hope for survival. Do you have the skills to decrypt the symbols and unlock the weaponry?
+
+Hint:
+If the two symbols are for example 'dog' and 'cat'
+The key is CATDOG (the two symbol names concatenated in alphabetic order)

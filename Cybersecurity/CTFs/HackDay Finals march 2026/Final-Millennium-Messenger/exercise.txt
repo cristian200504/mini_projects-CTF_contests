@@ -1,0 +1,23 @@
+Final-Millennium-Messenger
+434
+hard
+December 31st, 1999. 11:58 PM.
+
+While scanning forgotten subnets from the Millennium Systems network, you stumble upon a relic: a web-based MSN Messenger client, still running after all these years.
+
+The chat service seems operational. A bot named SmarterChild_Y2K responds to messages, and contacts from the old days are still listed — including the mysterious epoch_admin.
+
+Somewhere in this ancient messenger, classified communications are archived — encrypted, waiting for someone clever enough to find and decrypt them.
+
+A diagnostic tool from the era is still running on the server. It was hastily written in C and never properly secured.
+
+Three fragments, three different skills:
+
+The ciphertext sleeps in old network traffic.
+The IV hides in plain sight.
+The key lives in volatile memory.
+Combine all three to decrypt the final message and uncover the truth about Project Epoch.
+
+** - Constraints** - No brute-force - Pay close attention to server responses and headers - The binary runs server-side — you interact with it via HTTP - This is a 2-part challenge (multi-category)
+
+millenium-messenger.hackday.fr:8000

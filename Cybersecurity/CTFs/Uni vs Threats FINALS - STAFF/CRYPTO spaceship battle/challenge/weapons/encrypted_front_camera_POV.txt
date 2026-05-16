@@ -1,0 +1,64 @@
++---------------------------------------------------------------------------------------------------------------------------------------------+
+| [JXC] *                                                                                                                [SUY] bageks-jwyat%  |
+|                                                                                                                                             |
+|     00   01   02   03   04   05   06   07   08   09   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24              |
+| 00  qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii            |
+| 01  esjh zvlt nwko fhj  nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt            | 
+| 02  nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg            |
+| 03  seii esjh zvlt nwko qywc gge  qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh            |
+| 04  zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko fhj  nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg hnv  tjfg seii esjh            |
+| 05  zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf            |
+| 06  tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt cfx  zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf iss  rxrf            |
+| 07  tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt            |
+| 08  nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg            |
+| 09  seii esjh zvlt cfx  zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf iss  rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg            |
+| 10  seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko            |
+| 11  qywc rxrf tjfg seii esjh oey  esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc gge  qywc rxrf tjfg seii esjh zvlt nwko            |
+| 12  qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii            |
+| 13  esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc            |
+| 14  rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg hnv  tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt cfx  zvlt nwko qywc            | 
+| 15  rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh            |
+| 16  zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf iss  rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh oey  esjh            | 
+| 17  zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf            |
+| 18  tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt            |
+| 19  nwko qywc rxrf iss  rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh oey  esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt            |
+| 20  nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg            |
+| 21  seii esjh zvlt nwko qywc gge  qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii tbw  seii esjh zvlt nwko qywc rxrf tjfg            |
+| 22  seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko            |
+| 23  qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii            |
+| 24  esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt cfx  zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt            |
+| 25  nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg            |
+| 26  seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko fhj  nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh            |
+| 27  zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf            |
+| 28  tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt            |
+| 29  nwko qywc rxrf iss  rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc            |
+| 30  rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh            |
+| 31  zvlt nwko qywc rxrf tjfg hnv  tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko            |
+| 32  qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii esjh zvlt nwko qywc rxrf tjfg seii            |
+|                                                                                                                                             |
+| + YOJZEKM: ykwgtp-nbc                                                                                            RHOD: nmfwx pfcsh xbvv r + |
++---------------------------------------------------------------------------------------------------------------------------------------------+
+
+hcgkdzhfhwl:
+oey. (yvjxe, fhj)
+hoh. (fzpj, hzkev)
+nmfwx. (tyljs, fbnv)
+ztij. (yimy, jzwoee)
+znjw. (mhiyj, bagekyjb)
+kbx. (wcas, lpeend-cfx)
+svpjb. (larvy, ykwgtp-hnbw)
+xixby. (taoe, kbnflr-oey)
+swfx. (nzhj, tgnr)
+kys. (sdxvvh, xwp)
+xlvpjb. (fbnv, ztijmevh)
+ykwevv. (yqsnxn, jcchwxn)
+kbnflxee. (hnbw, mwvhym-xhui)
+ztijmevh. (jzwoee, nbsfmy-jcc)
+taytvys. (taytvys, bage)
+jcchwxn. (jyasfmevh, jzwoee)
+mjjwgtvys. (taytvys, bagekyjb)
+wbgynjsf. (lemyshwxn, kqjblr-oey)
+swfxtvys. (hoxnks-tbw, yoll)
+ykwgtp. (nbsfmy-kbwsw, lio)
+nbsfmy-fhj. (hoxnks-tbw, yollyswg)
+tnyshq-mwf. (nbsfmy-kbwsw, lionjsf)

@@ -1,0 +1,3 @@
+attack.mitre.org
+
+exploit-db.com

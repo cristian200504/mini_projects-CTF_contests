@@ -1,0 +1,10 @@
+I've stored a lot of words on an image, lost in an ocean of unimportant letters, but I can't find them anymore, and I need to remember how many I have!
+
+I need you to count my '2000', 'HACKDAY' and 'PS2'.
+
+However, to better conceal them, they can be written in all directions (horizontal, vertical, horizontal) ^^'
+
+Flag format: HACKDAY{h0w_m4ny_2K?_ + how many '2000'? + _ + how many 'HACKDAY'? + _ + how many 'PS2'? + }. Example: HACKDAY{h0w_m4ny_2K?_10_20_30} corresponds to 10 occurences of '2000', 20 occurences of 'HACKDAY' and 30 occurences of 'PS2'.
+
+Good luck.
+

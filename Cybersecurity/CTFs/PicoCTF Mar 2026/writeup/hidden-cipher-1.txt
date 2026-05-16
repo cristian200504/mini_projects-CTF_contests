@@ -1,0 +1,37 @@
+
+┌──(santey22㉿santey22)-[/mnt/c/users/crist/onedrive/desktop/hidden-cipher-1/hiddencipher]
+└─$ python3
+Python 3.13.9 (main, Oct 15 2025, 14:56:22) [GCC 15.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> cipher_hex = "235a201d70201548251358110c552f135409"
+... key = "S3Cr3t"
+...
+... # convert hex to bytes
+... cipher = bytes.fromhex(cipher_hex)
+... key_bytes = key.encode()
+...
+... # repeating-key XOR
+... plaintext = bytes([cipher[i] ^ key_bytes[i % len(key_bytes)] for i in range(le\
+n(cipher))])
+...
+... print(plaintext.decode())
+...
+picoCTF{fake_flag}
+>>> cipher_hex = "235a201d702015483b1d412b265d3313501f0c072d135f0d2002302d06476350\
+224507462e"
+... key = "S3Cr3t"
+...
+... # convert hex to bytes
+... cipher = bytes.fromhex(cipher_hex)
+... key_bytes = key.encode()
+...
+... # repeating-key XOR decryption
+... plaintext = bytes([
+...     cipher[i] ^ key_bytes[i % len(key_bytes)]
+...     for i in range(len(cipher))
+... ])
+...
+... print(plaintext.decode(errors="ignore"))
+...
+picoCTF{xor_unpack_4nalys1s_530ca742}
+>>>

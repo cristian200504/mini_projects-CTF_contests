@@ -1,0 +1,3 @@
+My technician is working on this Dell device of some sort, and he's trying to figure out what it is so he can order a replacement component. Can you identify what Dell product this is? The flag will be six characters, capital letters and numbers, such as DawgCTF{T4CH95}
+
+Limit of ten attempts.

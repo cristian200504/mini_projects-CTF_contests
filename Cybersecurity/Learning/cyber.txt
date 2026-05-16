@@ -1,0 +1,4 @@
+cauta CVE
+si MITRE
+
+vezi daca-ti poti face cont pe BrightTalk

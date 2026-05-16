@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instance</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/theme-orange.css">
+</head>
+<body>
+
+<div class="terminal">
+    <div class="terminal-title">The Block City Times</div>
+
+    <!-- Shows the authenticated team's name, like a "whoami" command -->
+    <div class="line"><span class="dim">$</span> whoami</div>
+    <div class="log-output"><span class="bright">antigravity_team_99</span></div>
+
+    <!-- Deploy section: shows "instance.create()" typing animation and step-by-step deploy logs -->
+    <div id="deploy-section" style="display:none">
+        <div class="line" style="margin-top: 20px"><span class="dim">$</span> <span id="deploy-cmd"></span><span class="cursor" id="deploy-cursor"></span></div>
+        <div id="deploy-logs" class="log-output"></div>
+    </div>
+
+    <!-- Info section: after deploy, shows instance URL and countdown timer until expiry -->
+    <div id="info-section" style="display:none">
+        <div class="line" style="margin-top: 20px"><span class="dim">$</span> <span id="info-cmd"></span><span class="cursor" id="info-cursor"></span></div>
+        <div id="info-content" class="log-output" style="display:none">
+            <div style="margin-bottom: 6px" id="info-url-row">url: <span class="url"><a id="instance-url" href="" target="_blank"></a></span></div>
+            <div class="countdown" id="info-expires-row">expires in: <span id="countdown"></span></div>
+        </div>
+    </div>
+
+    <!-- Action area: dynamically populated with Create or Destroy buttons, or the "type yes" confirmation prompt -->
+    <div id="action-area" style="margin-top: 30px"></div>
+
+    <!-- Destroy section: shows "instance.destroy()" typing animation and step-by-step destroy logs -->
+    <div id="destroy-section" class="danger-zone" style="display:none">
+        <div class="line" style="margin-top: 20px"><span class="dim">$</span> <span id="destroy-cmd"></span><span class="cursor" id="destroy-cursor"></span></div>
+        <div id="destroy-logs" class="log-output"></div>
+    </div>
+</div>
+
+<!-- Logout form: CSRF-protected POST that clears the session and redirects to login -->
+<form method="POST" action="/logout">
+    <input type="hidden" name="csrf_token" value="ImM3YzNjNzFhMWI3NzA1NjM1YzJmZmUwYjEwODBiMDllODQ0NDY2NTki.advpqg.8F2XtCz3G7j7XUx974tqHaOYzDA">
+    <button type="submit" class="logout-link">Logout</button>
+</form>
+
+
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script>
+    // ── Server state ─────────────────────────────────────────────────
+    // Jinja-injected values from the server, used to restore the correct UI on page load/refresh.
+    // STATUS: current instance lifecycle state (null, "deploying", "active", "destroying")
+    // PAST_LOGS: previously completed step logs stored in the DB, keyed like "deploy_1", "destroy_2", etc.
+    // INSTANCE_URL: the deployed instance's URL (null if not active)
+    // TIME_REMAINING: seconds left before instance expires (0 if not active)
+    const STATUS = null;
+    const PAST_LOGS = {};
+    const INSTANCE_URL = null;
+    const TIME_REMAINING = 0;
+
+    // deployInfo: enrichment data (project name, images, services, networks) used to make step messages more detailed
+    let deployInfo = PAST_LOGS.deploy_info || null;
+    // expiryTime: absolute wall-clock time (ms) when the instance expires.
+    // Using absolute time instead of a decrementing counter so the countdown self-corrects
+    // after tab backgrounding, laptop sleep, or setTimeout drift.
+    let expiryTime = TIME_REMAINING > 0 ? Date.now() + TIME_REMAINING * 1000 : 0;
+
+    // ── DOM refs ─────────────────────────────────────────────────────
+    const deploySection = document.getElementById('deploy-section');
+    const deployLogs = document.getElementById('deploy-logs');
+    const infoSection = document.getElementById('info-section');
+    const infoContent = document.getElementById('info-content');
+    const destroySection = document.getElementById('destroy-section');
+    const destroyLogs = document.getElementById('destroy-logs');
+    const actionArea = document.getElementById('action-area');
+
+    // ── Active animation state ───────────────────────────────────────
+    // currentStepEl: the DOM element for the currently animating step (with dots animation)
+    let currentStepEl = null;
+    // dotInterval: setInterval ID for the "..." animation on the current step
+    let dotInterval = null;
+    // renderedKeys: tracks which log keys (e.g. "deploy_1", "destroy_3") have already been rendered,
+    // preventing duplicates when past_logs and live socket events overlap
+    const renderedKeys = new Set();
+
+    // ── Helpers ──────────────────────────────────────────────────────
+
+    // Unhides an element (reverses display:none)
+    function show(el) { el.style.display = ''; }
+
+    // Simulates a typing animation on an element, calling callback when done
+    function typeText(el, text, speed, callback) {
+        let i = 0;
+        el.textContent = '';
+        const iv = setInterval(() => {
+            el.textContent += text[i];
+            i++;
+            if (i >= text.length) {
+                clearInterval(iv);
+                if (callback) callback();
+            }
+        }, speed);
+    }
+
+    // Replaces generic step messages with detailed versions using deployInfo
+    // e.g. "Starting services" → "Starting services (web, db)"
+    function enrichMessage(message) {
+        if (!deployInfo) return message;
+        const di = deployInfo;
+        const map = {
+            "Creating docker compose project": 'Creating docker compose project <code>' + di.project_name + '</code>',
+            "Building images": di.images.length ? 'Building images ' + di.images.map(i => '<code>' + i + '</code>').join(', ') : null,
+            "Starting services": di.services.length ? 'Starting services ' + di.services.map(s => '<code>' + s + '</code>').join(', ') : null,
+            "Configuring network routing": di.networks.length ? 'Configuring network routing ' + di.networks.map(n => '<code>' + n + '</code>').join(', ') : null,
+            "Disconnecting network routing": di.networks.length ? 'Disconnecting network routing ' + di.networks.map(n => '<code>' + n + '</code>').join(', ') : null,
+            "Stopping services": di.services.length ? 'Stopping services ' + di.services.map(s => '<code>' + s + '</code>').join(', ') : null,
+            "Removing docker compose project": 'Removing docker compose project <code>' + di.project_name + '</code>',
+        };
+        return map[message] || message;
+    }
+
+    // Appends a completed step line like "[+] Starting services ... done"
+    function addCompletedStep(targetEl, message) {
+        const div = document.createElement('div');
+        div.innerHTML = '[+] ' + enrichMessage(message) + ' ... done';
+        targetEl.appendChild(div);
+    }
+
+    // Appends a generic status line (e.g. "Instance deployed!", error messages)
+    function addStatusLine(targetEl, text) {
+        const div = document.createElement('div');
+        div.innerHTML = text;
+        div.style.marginTop = '4px';
+        targetEl.appendChild(div);
+    }
+
+    // Starts an animated step line with cycling dots (".", "..", "...") and a blinking cursor
+    function startStepAnimation(targetEl, message) {
+        stopStepAnimation();
+        const div = document.createElement('div');
+        div.innerHTML = '[+] ' + enrichMessage(message) + '<span class="dots"></span><span class="cursor"></span>';
+        targetEl.appendChild(div);
+        currentStepEl = div;
+
+        const dotsEl = div.querySelector('.dots');
+        let dots = 0;
+        dotInterval = setInterval(() => {
+            dots = (dots % 3) + 1;
+            dotsEl.textContent = ' ' + '.'.repeat(dots);
+        }, 400);
+    }
+
+    // Stops the current step animation, replacing dots with "... done" and hiding the cursor
+    function stopStepAnimation() {
+        if (dotInterval) { clearInterval(dotInterval); dotInterval = null; }
+        if (currentStepEl) {
+            const dotsEl = currentStepEl.querySelector('.dots');
+            if (dotsEl) dotsEl.textContent = ' ... done';
+            const cursor = currentStepEl.querySelector('.cursor');
+            if (cursor) cursor.style.display = 'none';
+            currentStepEl = null;
+        }
+    }
+
+    // ── Countdown ────────────────────────────────────────────────────
+
+    // Formats seconds as "Xm YYs" (e.g. 90 → "1m 30s")
+    function formatTime(s) {
+        const m = Math.floor(s / 60);
+        return m + 'm ' + String(s % 60).padStart(2, '0') + 's';
+    }
+
+    // Runs every second to update the countdown display; hides the destroy button when it reaches 0.
+    // Uses absolute expiryTime so it self-corrects after tab backgrounding or laptop sleep.
+    // (the server handles actual auto-destroy via _schedule_instance_expiry)
+    function tick() {
+        const el = document.getElementById('countdown');
+        const secondsLeft = Math.max(0, Math.round((expiryTime - Date.now()) / 1000));
+        el.textContent = formatTime(secondsLeft);
+        if (secondsLeft <= 0) {
+            actionArea.innerHTML = '';
+            return;
+        }
+        setTimeout(tick, 1000);
+    }
+
+    // ── UI builders ──────────────────────────────────────────────────
+
+    // Shows the "Create Instance" button in the action area (idle state)
+    function showCreateButton() {
+        actionArea.innerHTML = '<button class="term-btn" id="create-btn">Create Instance</button>';
+        document.getElementById('create-btn').addEventListener('click', onCreateClick);
+    }
+
+    // Shows the "Destroy Instance" button in the action area (active state)
+    function showShutdownButton() {
+        actionArea.innerHTML = '<button class="term-btn-danger" id="shutdown-btn">Destroy Instance</button>';
+        document.getElementById('shutdown-btn').addEventListener('click', promptShutdown);
+    }
+
+    // After a fresh deploy: types "instance.info()", then reveals URL + starts countdown with animation
+    function showInfoSectionAnimated(url, callback) {
+        show(infoSection);
+        typeText(document.getElementById('info-cmd'), 'instance.info()', 40, () => {
+            document.getElementById('info-cursor').style.display = 'none';
+            setTimeout(() => {
+                const urlEl = document.getElementById('instance-url');
+                urlEl.href = url;
+                urlEl.textContent = url;
+                show(infoContent);
+                tick();
+                if (callback) setTimeout(callback, 400);
+            }, 400);
+        });
+    }
+
+    // On page refresh with active instance: shows info section immediately without animation
+    function showInfoSectionStatic(url) {
+        show(infoSection);
+        document.getElementById('info-cmd').textContent = 'instance.info()';
+        document.getElementById('info-cursor').style.display = 'none';
+        const urlEl = document.getElementById('instance-url');
+        urlEl.href = url;
+        urlEl.textContent = url;
+        show(infoContent);
+        tick();
+    }
+
+    // Renders previously completed deploy steps from PAST_LOGS (skipping already-rendered keys)
+    function renderPastDeployLogs() {
+        const steps = Object.entries(PAST_LOGS)
+            .filter(([k]) => k.startsWith('deploy_') && k !== 'deploy_info')
+            .sort(([a], [b]) => parseInt(a.split('_')[1]) - parseInt(b.split('_')[1]));
+        for (const [k, v] of steps) {
+            if (renderedKeys.has(k)) continue;
+            renderedKeys.add(k);
+            addCompletedStep(deployLogs, v.message);
+        }
+    }
+
+    // Renders previously completed destroy steps from PAST_LOGS (skipping already-rendered keys)
+    function renderPastDestroyLogs() {
+        const steps = Object.entries(PAST_LOGS)
+            .filter(([k]) => k.startsWith('destroy_'))
+            .sort(([a], [b]) => parseInt(a.split('_')[1]) - parseInt(b.split('_')[1]));
+        for (const [k, v] of steps) {
+            if (renderedKeys.has(k)) continue;
+            renderedKeys.add(k);
+            addCompletedStep(destroyLogs, v.message);
+        }
+    }
+
+    // ── Create / Destroy actions ─────────────────────────────────────
+
+    // Called when user clicks "Create Instance": clears state, shows deploy section, types the command, then emits 'start_deploy' to the server
+    function onCreateClick() {
+        renderedKeys.clear();
+        actionArea.innerHTML = '';
+        show(deploySection);
+        typeText(document.getElementById('deploy-cmd'), 'instance.create()', 40, () => {
+            document.getElementById('deploy-cursor').style.display = 'none';
+            socket.emit('start_deploy');
+        });
+    }
+
+    // Called when user clicks "Destroy Instance": replaces the button with a
+    // "type yes to confirm" prompt to prevent accidental destruction
+    function promptShutdown() {
+        actionArea.classList.add('danger-zone');
+        actionArea.innerHTML = `
+            <div class="line" style="margin-top: 20px"><span class="dim">$</span> <span id="confirm-cmd"></span><span class="cursor" id="confirm-cursor"></span></div>
+            <div id="confirm-body" class="log-output" style="display:none">
+                <div class="confirm-row">
+                    <span>&gt;</span>
+                    <span style="margin-left: 8px;">type</span>
+                    <span style="margin-left: 4px; font-weight: bold;">yes</span>
+                    <span style="margin-left: 4px;">to confirm:</span>
+                    <input type="text" class="confirm-input" id="confirm-input" autocomplete="off" spellcheck="false">
+                </div>
+                <div id="confirm-output" class="line" style="margin-top: 8px"></div>
+            </div>
+        `;
+        typeText(document.getElementById('confirm-cmd'), 'are you sure you want to destroy your instance early?', 20, () => {
+            document.getElementById('confirm-cursor').style.display = 'none';
+            document.getElementById('confirm-body').style.display = '';
+            const input = document.getElementById('confirm-input');
+            if (input) {
+                input.focus();
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') confirmShutdown();
+                });
+            }
+        });
+    }
+
+    // Called when user presses Enter in the confirmation input:
+    // validates "yes", clears stale destroy keys, then emits 'start_destroy' to the server
+    function confirmShutdown() {
+        const val = document.getElementById('confirm-input').value.trim().toLowerCase();
+        const output = document.getElementById('confirm-output');
+        if (val !== 'yes') {
+            output.innerHTML = '<span style="color:var(--error)">[!] Destroy cancelled.</span>';
+            return;
+        }
+        // Immediately zero out the countdown since the instance is being destroyed
+        expiryTime = 0;
+        const countdownEl = document.getElementById('countdown');
+        if (countdownEl) countdownEl.textContent = formatTime(0);
+        renderedKeys.forEach(k => { if (k.startsWith('destroy_')) renderedKeys.delete(k); });
+        // Clear the confirmation prompt first, then type instance.destroy()
+        actionArea.innerHTML = '';
+        show(destroySection);
+        typeText(document.getElementById('destroy-cmd'), 'instance.destroy()', 40, () => {
+            document.getElementById('destroy-cursor').style.display = 'none';
+            socket.emit('start_destroy');
+        });
+    }
+
+    // ── Socket setup ─────────────────────────────────────────────────
+    // Establishes a WebSocket connection to the server for real-time updates.
+    // The server joins this client to a team-specific room on connect.
+
+    const socket = io();
+
+    // Received on connect: catches up on any steps that completed between page load and socket connection
+    socket.on('past_logs', function(logs) {
+        Object.assign(PAST_LOGS, logs);
+        if (logs.deploy_info) deployInfo = logs.deploy_info;
+        renderPastDeployLogs();
+        renderPastDestroyLogs();
+    });
+
+    // Received after deploy step 2 (validate_compose): stores enrichment data for step messages
+    socket.on('deploy_info', function(info) {
+        deployInfo = info;
+    });
+
+    // Received when a teammate triggers create/destroy from another tab:
+    // shows a fullscreen alert overlay, then reloads the page to sync state
+    socket.on('teammate_action', function(data) {
+        const action = data.action === 'destroy' ? 'instance.destroy()' : 'instance.create()';
+        const alertClass = data.action === 'destroy' ? 'teammate-alert alert-destroy' : 'teammate-alert';
+        const overlay = document.createElement('div');
+        overlay.className = 'teammate-alert-overlay';
+        overlay.innerHTML =
+            '<div class="' + alertClass + '">' +
+                '<div class="alert-action">Teammate triggered</div>' +
+                '<div class="alert-detail">' + action + '</div>' +
+                '<div class="alert-sub">Reloading...</div>' +
+            '</div>';
+        document.body.appendChild(overlay);
+        setTimeout(() => { window.location.reload(); }, 2000);
+    });
+
+    // Received when the server-side expiry timer fires (instance duration exceeded):
+    // shows a red alert overlay for 2 seconds, then sets up the destroy UI to show incoming destroy steps
+    socket.on('instance_expired', function() {
+        const overlay = document.createElement('div');
+        overlay.className = 'teammate-alert-overlay';
+        overlay.innerHTML =
+            '<div class="teammate-alert alert-destroy">' +
+                '<div class="alert-action">Instance expired</div>' +
+                '<div class="alert-detail">instance.destroy()</div>' +
+                '<div class="alert-sub">Destroying...</div>' +
+            '</div>';
+        document.body.appendChild(overlay);
+
+        setTimeout(() => {
+            overlay.remove();
+
+            actionArea.classList.add('danger-zone');
+            actionArea.innerHTML = '';
+            renderedKeys.forEach(k => { if (k.startsWith('destroy_')) renderedKeys.delete(k); });
+
+            show(destroySection);
+            destroySection.classList.add('danger-zone');
+            document.getElementById('destroy-cmd').textContent = 'instance.destroy()  // expired';
+            document.getElementById('destroy-cursor').style.display = 'none';
+        }, 2000);
+    });
+
+    // Received when a deploy/destroy step begins: starts the animated dots on the target log section
+    socket.on('step_start', function(data) {
+        const key = data.phase + '_' + data.step;
+        if (renderedKeys.has(key)) return;
+        const target = data.phase === 'destroy' ? destroyLogs : deployLogs;
+        startStepAnimation(target, data.message);
+    });
+
+    // Received when a deploy/destroy step completes: stops the animation or renders a completed line
+    // (handles the case where step_start was missed, e.g. if the page loaded mid-deploy)
+    socket.on('step_done', function(data) {
+        const key = data.phase + '_' + data.step;
+        if (currentStepEl) {
+            stopStepAnimation();
+        } else if (!renderedKeys.has(key)) {
+            const target = data.phase === 'destroy' ? destroyLogs : deployLogs;
+            addCompletedStep(target, data.message);
+        }
+        renderedKeys.add(key);
+    });
+
+    // Received when all deploy steps complete: shows "Instance deployed!", sets countdown to full duration,
+    // animates the info section with the instance URL, then shows the destroy button
+    socket.on('deploy_done', function(data) {
+        stopStepAnimation();
+        addStatusLine(deployLogs, 'Instance deployed!');
+        expiryTime = Date.now() + 1800 * 1000;
+        showInfoSectionAnimated(data.instance_url, () => {
+            showShutdownButton();
+        });
+    });
+
+    // Received when all destroy steps complete: shows "Instance destroyed!", then after 1.5s
+    // resets the entire UI back to the idle state with the create button
+    socket.on('destroy_done', function() {
+        stopStepAnimation();
+        addStatusLine(destroyLogs, 'Instance destroyed!');
+        setTimeout(() => {
+            deploySection.style.display = 'none';
+            deployLogs.innerHTML = '';
+            infoSection.style.display = 'none';
+            infoContent.style.display = 'none';
+            actionArea.classList.remove('danger-zone');
+            actionArea.innerHTML = '';
+            destroySection.style.display = 'none';
+            destroyLogs.innerHTML = '';
+            deployInfo = null;
+            showCreateButton();
+        }, 1500);
+    });
+
+    // Received when deploy or destroy fails: redirects the browser to the error page
+    socket.on('fatal_error', function(data) {
+        stopStepAnimation();
+        window.location.href = '/error?message=' + encodeURIComponent(data.message);
+    });
+
+    // ── Init: render based on current state ──────────────────────────
+    // On page load, reads the Jinja-injected STATUS and restores the UI to match.
+    // This handles page refreshes mid-deploy, mid-destroy, or with an active instance.
+
+    (function init() {
+        // Idle: no instance — show create button
+        if (STATUS === null || STATUS === undefined) {
+            showCreateButton();
+            return;
+        }
+
+        // Deploying: show deploy section with any completed steps; socket streams the rest
+        if (STATUS === 'deploying') {
+            show(deploySection);
+            document.getElementById('deploy-cmd').textContent = 'instance.create()';
+            document.getElementById('deploy-cursor').style.display = 'none';
+            renderPastDeployLogs();
+            return;
+        }
+
+        // Active: show completed deploy logs, instance info with countdown, and destroy button
+        if (STATUS === 'active') {
+            show(deploySection);
+            document.getElementById('deploy-cmd').textContent = 'instance.create()';
+            document.getElementById('deploy-cursor').style.display = 'none';
+            renderPastDeployLogs();
+            addStatusLine(deployLogs, 'Instance deployed!');
+            showInfoSectionStatic(INSTANCE_URL);
+            showShutdownButton();
+            return;
+        }
+
+        // Destroying: show completed deploy logs, info if available, and destroy steps; socket streams the rest
+        if (STATUS === 'destroying') {
+            show(deploySection);
+            document.getElementById('deploy-cmd').textContent = 'instance.create()';
+            document.getElementById('deploy-cursor').style.display = 'none';
+            renderPastDeployLogs();
+            addStatusLine(deployLogs, 'Instance deployed!');
+            if (INSTANCE_URL) showInfoSectionStatic(INSTANCE_URL);
+            show(destroySection);
+            document.getElementById('destroy-cmd').textContent = 'instance.destroy()';
+            document.getElementById('destroy-cursor').style.display = 'none';
+            renderPastDestroyLogs();
+            return;
+        }
+    })();
+</script>
+
+</body>
+</html>

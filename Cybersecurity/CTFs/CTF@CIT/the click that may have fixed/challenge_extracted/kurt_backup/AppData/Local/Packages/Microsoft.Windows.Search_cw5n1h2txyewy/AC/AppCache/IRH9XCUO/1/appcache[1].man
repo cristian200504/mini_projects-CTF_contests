@@ -1,0 +1,30 @@
+﻿CACHE MANIFEST
+# Version:d1a4eb75
+CACHE:
+/AS/API/WindowsCortanaPane/V2/Init
+/rb/1a/cir2,ortl,cc,nc/_6kcejpIrJTtxudclBiss_A-0_g.css?bu=CZ4FpgLQAu8F9ATpBMYDOzs&or=w
+/rb/1a/cir2,ortl,cc,nc/U006EeMfq1iK7IAAM8DJcfY519o.css?bu=B9UBQsoBezs73QE&or=w
+/rb/48/ortl,cc,nc/8yOt-qMgl3wFFpnXBbdaeUrdWpM.css?bu=A4gCjAKPAg&or=w
+/rb/5q/cj,nj/wpSg2p6SkLcnVPecJT8KUhaWksI.js?bu=FNgk3SPcBesj7iPwI_Ij_CPeJK0kmw3DJMkk4iTcBdwF2yCkJJcNjg0&or=w
+/rb/6L/cir2,ortl,cc,nc/ydl7yfVJPutx4Mr4BP2WoQDCIf4.css?bu=E5AGjQaiBscGmQaWBocGwQalBocGqwaHBrMGvAa2BocGygaHBvEG&or=w
+/rb/6L/ortl,cc,nc/QNBBNqWD9F_Blep-UqQSqnMp-FI.css?bu=AYcG&or=w
+/rp/apnqsRRXt6JgEW_ugOFZ5BXMXI8.js
+/rp/bb_VyzU6eRHMCUgyp06mZsWaa2w.js
+/rp/BFCWRTOlNj8g_Xp64WghzfwfzB0.js
+/rp/dXH4UJXiG6BhYx2KONGGI7yr8wE.js
+/rp/Er_mZsC1exNOe4uIvPGgw7Xc880.js
+/rp/GLl4_FnEObM3pDhr-smFD5xZ87g.js
+/rp/HMqj76ZsjxYmvVZZeUYbZx2Y15E.js
+/rp/hqo2U50hmHPyq1svEbr9QYhpaDw.js
+/rp/j8D2QluRP9yjwnt0U5AUCFK1yw4.js
+/rp/LbaaX4XVr9LFI_j2uIZ-qk4RJfk.js
+/rp/TM28ygTbZ68eQpEYcvsstdxh--A.js
+/rp/tRY_LLRJjIJCHVO39IkFva1fD5o.js
+/rp/VrUdC7IGdkMmiqaKCHqwbvK37ac.js
+/rp/wMJrZupnk_qITxQ-dsua0uAQnHw.js
+/rp/wrvSmodvFAvbdsrqQuOM3Iq5jO8.js
+/rp/XUoKWXdZQS2iuOnv0a_-gwXn0RY.js
+/rp/XxuWxuWQVMFNHumj86LLvHDgO4c.js
+/rs/6v/Wh/ortl,cc,nc/onra7PQl9o5bYT2lASI1BE4DDEs.css?or=w
+NETWORK:
+*

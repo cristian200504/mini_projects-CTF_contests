@@ -1,0 +1,50 @@
+
+┌──(santey22㉿santey22)-[~]
+└─$ python3
+Python 3.13.9 (main, Oct 15 2025, 14:56:22) [GCC 15.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from pwn import *
+...
+... HOST = "green-hill.picoctf.net"
+... PORT = 58910
+...
+... addrs = {
+...     b"ember_sigil": p32(0x08049176),
+...     b"glyph_conflux": p32(0x0804919a),
+...     b"astral_spark": p32(0x080491c1),
+...     b"binding_word": p32(0x080491e3),
+... }
+...
+... r = remote(HOST, PORT)
+...
+... for _ in range(3):
+...     prompt = r.recvuntil(b"==>")
+...     print(prompt.decode(errors="ignore"))
+...
+...     for name in addrs:
+...         if name in prompt:
+...             r.send(addrs[name])
+...             break
+...
+... print(r.recvall(timeout=2).decode(errors="ignore"))
+...
+[◐] Opening connection to green-hill.picoctf.net on port 58910: Trying 3.18.[+] Opening connection to green-hill.picoctf.net on port 58910: Done
+⊹──────[ BYTEMANCY-3 ]──────⊹
+☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐
+
+I will name four procedures hidden inside spellbook.
+Each round, send me their *raw* 4-byte addresses in little-endian form. 3 correct answers unlock the flag.
+
+☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐
+⊹─────────────⟡─────────────⊹
+[1/3] Send the 4-byte little-endian address for procedure 'ember_sigil'.
+==>
+ [2/3] Send the 4-byte little-endian address for procedure 'binding_word'.
+==>
+ [3/3] Send the 4-byte little-endian address for procedure 'astral_spark'.
+==>
+[+] Receiving all data: Done (33B)
+[*] Closed connection to green-hill.picoctf.net port 58910
+ picoCTF{0bjdump_m4g1c_de613af3}
+
+>>>

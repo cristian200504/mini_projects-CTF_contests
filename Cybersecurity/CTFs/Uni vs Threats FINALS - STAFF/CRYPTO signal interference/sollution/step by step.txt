@@ -1,0 +1,11 @@
+Step 1:find the sequence with the hidden characters
+
+U+200E}U+200E4U+200E3U+200E1U+200E2U+200EGU+200E2U+200EKNFJXWQQWBJMU+200E9KBDQ22NQNQWJWQMBU+200E90MBJVMJNZW982wxjmkoU+200E_jdwfdffmdbmdjU+200EMzaydxr3ZqwKDMJBU+200E3OBJV0027@WbxkrjmU+200EAvjvw93ywfwowjwU+200E00tntjas3qbsojU+200ECj903737kodjoU+200EBoswwbjz90437jbdqodqjbU+200E3wmbj@&#@dbbjmU+200EAjwmN)@&bjwrdojbmwU+200E_bmsjbsA&)@&@bjmbjU+200EBbjdom@&#$&)@((@mjbU+200EVtb002484a2zaFXAXYOJWOMU+200EVBOVJBWJOWJOa)&)QDJDOMOKU+200E0obwwobjwmwbkjokm&)z@DKOJU+200ELdqnrdqxjdOPDXRxroppXmjw@^$&@qnqfqjqdojwU+200E_djd0mdow37a808okmbjU+200EBjm99z30jbvomow0ah2wOZN{QU+200EA&%!#@0218102c7XBDWQWQ@&@whPMRDU+200E4rdbjqq)Q#A&#fqm4jon[oj[,joa[v93a3a8w8ahnyhxojwqU+200EVmyvbvwzazy3azwnrokZCFKZXNCojoqdU+200E{xycjvnjowjydoJNOWQXopapqxyjpydjmxoU+200ECbj)_@!#)%}^#omyjoOYNZWQDU+200EEpajpywwojwy747-213721-472!@_&%@*#$wpnfyYAZXFDFXRWMQobjobjmbU+200ED
+
+Steo 2: pick the characters after the U+200E and make a string out of it
+}4312G299_M3A0CB3A_BVV0L_BA4V{CED
+
+Step3: reverse it
+DEC{V4AB_L0VVB_A3BC0A3M_992G2134}
+Step$: ROT 9
+UVT{M4RS_C0MMS_R3ST0R3D_992X2134}

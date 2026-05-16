@@ -1,0 +1,8 @@
+Cool Car
+955
+by ronnie
+
+ 4 (100% liked)  0
+I got this cool car here, maybe you can find a flag.
+
+Flag Format: CIT{example_flag}

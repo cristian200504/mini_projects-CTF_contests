@@ -1,0 +1,2 @@
+I used to work at this crazy looking building. I've attached a picture of it, can you guess where it is? If you can, the flag is the nickname the building has. For instance, if the nickname was "The Dragon Building", the flag would be DawgCTF{The_Dragon_Building}.
+

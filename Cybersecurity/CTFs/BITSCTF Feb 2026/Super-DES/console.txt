@@ -1,0 +1,39 @@
+
+┌──(santey22㉿santey22)-[/mnt/c/users/crist/OneDrive/Desktop/New Folder/Super-DES]
+└─$ nc 20.193.149.152 1340
+I will prove its secure af by letting you choose k2 and k3
+enter k2 hex bytes >01fe01fe01fe01fe
+01fe01fe01fe01fe
+enter k3 hex bytes >fe01fe01fe01fe01
+fe01fe01fe01fe01
+1. triple des
+2. ultra secure v1
+3. ultra secure v2
+4. exit
+enter option >2
+2
+1. encrypt flag
+2. encrypt your own text
+enter option >1
+1
+ciphertext : df6ca9be966b9c000fa569dadc1466ece89446b215ced885d1136741e6c050ec59dcd51d6c44ad3c
+I will prove its secure af by letting you choose k2 and k3
+enter k2 hex bytes >01fe01fe01fe01fe
+01fe01fe01fe01fe
+enter k3 hex bytes >fe01fe01fe01fe01
+fe01fe01fe01fe01
+1. triple des
+2. ultra secure v1
+3. ultra secure v2
+4. exit
+enter option >3
+3
+1. encrypt flag
+2. encrypt your own text
+enter option >2
+2
+enter hex bytes >df6ca9be966b9c000fa569dadc1466ece89446b215ced885d1136741e6c050ec59dcd51d6c44ad3c
+df6ca9be966b9c000fa569dadc1466ece89446b215ced885d1136741e6c050ec59dcd51d6c44ad3c
+ciphertext : 424954534354467b35757033725f6433355f317a5f6e30375f3533637572337d08080808080808083b2c81123deb4de2
+I will prove its secure af by letting you choose k2 and k3
+enter k2 hex bytes >

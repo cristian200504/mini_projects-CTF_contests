@@ -1,0 +1,8 @@
+Super DES
+50
+NightFox
+
+ 5 (71% liked)  2
+I heard triple des is deprecated, so I made my own.
+
+nc 20.193.149.152 1340

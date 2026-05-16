@@ -1,0 +1,1 @@
+image -> binary -> base 45 -> base85 -> ROT8 -> base32

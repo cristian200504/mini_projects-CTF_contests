@@ -1,0 +1,144 @@
+GNU gdb (Debian 16.3-5) 16.3
+Copyright (C) 2024 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word".
+(No debugging symbols found in /usr/bin/python3.13)
+(No debugging symbols found in /lib/x86_64-linux-gnu/libm.so.6)
+(No debugging symbols found in /lib/x86_64-linux-gnu/libz.so.1)
+(No debugging symbols found in /lib/x86_64-linux-gnu/libexpat.so.1)
+(No debugging symbols found in /lib/x86_64-linux-gnu/libc.so.6)
+(No debugging symbols found in /lib64/ld-linux-x86-64.so.2)
+(No debugging symbols found in /usr/lib/python3.13/lib-dynload/_hashlib.cpython-313-x86_64-linux-gnu.so)
+(No debugging symbols found in /lib/x86_64-linux-gnu/libcrypto.so.3)
+(No debugging symbols found in /lib/x86_64-linux-gnu/libzstd.so.1)
+(No debugging symbols found in /usr/lib/x86_64-linux-gnu/ossl-modules/legacy.so)
+(No debugging symbols found in /home/santey22/crypto-env/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so)
+(No debugging symbols found in /home/santey22/crypto-env/lib/python3.13/site-packages/numpy/_core/../../numpy.libs/libscipy_openblas64_-096271d3.so)
+(No debugging symbols found in /lib/x86_64-linux-gnu/libstdc++.so.6)
+(No debugging symbols found in /lib/x86_64-linux-gnu/libgcc_s.so.1)
+(No debugging symbols found in /lib/x86_64-linux-gnu/libpthread.so.0)
+(No debugging symbols found in .gnu_debugdata for /home/santey22/crypto-env/lib/python3.13/site-packages/numpy/_core/../../numpy.libs/libgfortran-040039e1-0352e75f.so.5.0.0)
+(No debugging symbols found in /home/santey22/crypto-env/lib/python3.13/site-packages/numpy/_core/../../numpy.libs/libquadmath-96973f99-934c22de.so.0.0.0)
+(No debugging symbols found in /usr/lib/python3.13/lib-dynload/_contextvars.cpython-313-x86_64-linux-gnu.so)
+(No debugging symbols found in /usr/lib/python3.13/lib-dynload/_ctypes.cpython-313-x86_64-linux-gnu.so)
+(No debugging symbols found in /lib/x86_64-linux-gnu/libffi.so.8)
+(No debugging symbols found in /home/santey22/crypto-env/lib/python3.13/site-packages/numpy/linalg/_umath_linalg.cpython-313-x86_64-linux-gnu.so)
+(No debugging symbols found in /home/santey22/crypto-env/lib/python3.13/site-packages/cysignals/signals.cpython-313-x86_64-linux-gnu.so)
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x0000799da81b49ee in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+
+Stack backtrace
+---------------
+No symbol table info available.
+#1  0x0000799da81a9668 in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+No symbol table info available.
+#2  0x0000799da81a96ad in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+No symbol table info available.
+#3  0x0000799da8214787 in wait4 () from /lib/x86_64-linux-gnu/libc.so.6
+No symbol table info available.
+#4  0x0000799da7d3a59d in sigdie ()
+   from /home/santey22/crypto-env/lib/python3.13/site-packages/cysignals/signals.cpython-313-x86_64-linux-gnu.so
+No symbol table info available.
+#5  0x0000799da7d3a904 in cysigs_signal_handler ()
+   from /home/santey22/crypto-env/lib/python3.13/site-packages/cysignals/signals.cpython-313-x86_64-linux-gnu.so
+No symbol table info available.
+#6  <signal handler called>
+No symbol table info available.
+#7  0x00000000005ac788 in PyTraceBack_Here ()
+No symbol table info available.
+#8  0x0000799d7aa3f557 in __Pyx_AddTraceback (funcname=<optimized out>, 
+    py_line=1178, filename=0x799d7aa571c9 "src/fpylll/fplll/bkz.pyx", 
+    c_line=<optimized out>) at build/src/fpylll/fplll/bkz.cpp:19467
+        bad = <optimized out>
+        py_code = 0x799d7cc13ec0
+        py_frame = 0x799d7ccbc400
+        tstate = 0xa915d0 <_PyRuntime+283024>
+        ptype = <optimized out>
+        pvalue = <optimized out>
+        ptraceback = <optimized out>
+#9  0x0000799d7aa41b1d in __pyx_pf_6fpylll_5fplll_3bkz_bkz_reduction (
+    __pyx_v_B=__pyx_v_B@entry=0x799d7cc95440, 
+    __pyx_v_o=__pyx_v_o@entry=0x799da7ee0db0, 
+    __pyx_v_U=__pyx_v_U@entry=0xa154f0 <_Py_NoneStruct>, 
+    __pyx_v_float_type=__pyx_v_float_type@entry=0xa154f0 <_Py_NoneStruct>, 
+    __pyx_v_precision=0, __pyx_self=<optimized out>)
+    at build/src/fpylll/fplll/bkz.cpp:13234
+        __pyx_L5_bool_binop_done = <optimized out>
+        __pyx_v_float_type_ = <optimized out>
+        __pyx_v_r = <optimized out>
+        __pyx_r = 0x0
+        __pyx_t_1 = <optimized out>
+        __pyx_t_2 = <optimized out>
+        __pyx_t_3 = <optimized out>
+        __pyx_t_4 = <optimized out>
+        __pyx_t_5 = <optimized out>
+        __pyx_t_6 = <optimized out>
+        __pyx_t_7 = <optimized out>
+        __pyx_t_8 = <optimized out>
+        __pyx_t_9 = <optimized out>
+        __pyx_t_10 = <optimized out>
+        __pyx_t_11 = <optimized out>
+        __pyx_lineno = <optimized out>
+        __pyx_filename = <optimized out>
+        __pyx_clineno = 0
+#10 0x0000799d7aa423eb in __pyx_pw_6fpylll_5fplll_3bkz_1bkz_reduction (
+    __pyx_self=<optimized out>, __pyx_args=<optimized out>, 
+    __pyx_nargs=<optimized out>, __pyx_kwds=<optimized out>)
+    at build/src/fpylll/fplll/bkz.cpp:12859
+        __pyx_L7_cleaned_up = <optimized out>
+        __pyx_L1_error = <optimized out>
+        __pyx_L3_error = <optimized out>
+        __pyx_v_B = <optimized out>
+        __pyx_v_o = <optimized out>
+        __pyx_v_U = <optimized out>
+        __pyx_v_float_type = <optimized out>
+        __pyx_v_precision = <optimized out>
+        __pyx_kwvalues = <optimized out>
+        values = {0x799d7cc95440, 0x799da7ee0db0, 0xa154f0 <_Py_NoneStruct>, 
+          0xa154f0 <_Py_NoneStruct>, 0x0}
+        __pyx_lineno = 0
+        __pyx_filename = 0x0
+        __pyx_clineno = 0
+        __pyx_r = 0x0
+#11 0x0000000000556bb3 in PyObject_Vectorcall ()
+No symbol table info available.
+#12 0x000000000056e2a3 in _PyEval_EvalFrameDefault ()
+No symbol table info available.
+#13 0x0000000000567784 in PyEval_EvalCode ()
+No symbol table info available.
+#14 0x00000000006bba24 in ?? ()
+No symbol table info available.
+#15 0x00000000006b899f in ?? ()
+No symbol table info available.
+#16 0x00000000006c9da4 in ?? ()
+No symbol table info available.
+#17 0x00000000006c97a9 in ?? ()
+No symbol table info available.
+#18 0x00000000006c95de in ?? ()
+No symbol table info available.
+#19 0x00000000006c887f in Py_RunMain ()
+No symbol table info available.
+#20 0x0000000000696cd9 in Py_BytesMain ()
+No symbol table info available.
+#21 0x0000799da8143ca8 in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+No symbol table info available.
+#22 0x0000799da8143d65 in __libc_start_main ()
+   from /lib/x86_64-linux-gnu/libc.so.6
+No symbol table info available.
+#23 0x0000000000696071 in _start ()
+No symbol table info available.
+[Inferior 1 (process 6073) detached]
+Python Exception <class 'ModuleNotFoundError'>: No module named 'Cython'
+Error occurred in Python: No module named 'Cython'

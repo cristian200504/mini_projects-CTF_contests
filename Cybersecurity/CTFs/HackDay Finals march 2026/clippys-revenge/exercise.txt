@@ -1,0 +1,10 @@
+Clippy's-Revenge
+361
+medium
+Remember Clippy? He's back, and he's running a document assistant on a Millennium Systems server. Create documents, write content, and export them. Clippy is very helpful... maybe too helpful.
+
+- Constraints
+
+No brute-force
+Interact with Clippy via the web interface or API
+clippy-revenge.hackday.fr:8000

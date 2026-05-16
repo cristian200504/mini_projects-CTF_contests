@@ -1,0 +1,14 @@
+The click that may have fixed
+937
+boom
+
+ 3 (100% liked)  0
+So one of the CTF@CIT 2026 players tried to download more RAM and it seems they may have gotten pwned. They said they got to one website, but the captcha required them to run some PowerShell..
+
+Can you identify what time that website was last visited?
+
+FLAG FORMAT: CIT{YYYY-MM-DDThh:mm:ssZ}
+
+SHA1: aa50aa4516d0bc7b0aa23139f95d38edd916164a
+
+http://23.179.17.92/challenge.zip

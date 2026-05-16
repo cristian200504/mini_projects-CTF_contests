@@ -1,0 +1,12 @@
+crypto/lazy-bigrams
+pstorm
+210 solves / 118 points
+Don't feel like writing a plaintext...
+
+Flag is all lowercase.
+
+Flag
+Downloads
+
+ct.txt
+chall.py

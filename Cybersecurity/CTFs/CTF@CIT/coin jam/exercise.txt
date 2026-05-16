@@ -1,0 +1,8 @@
+Coin Jam
+931
+by ronnie
+
+ 4 (100% liked)  0
+Can you collect all the coins?
+
+Flag Format: CIT{example_flag}

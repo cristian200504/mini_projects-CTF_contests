@@ -1,0 +1,249 @@
+Celestial Body — Crypto CTF Writeup
+Challenge Summary
+
+We intercepted a classified deep-space transmission containing:
+
+A known transmission date
+
+A truncated SHA256 hash of the broadcast time (epoch_hash)
+
+A 512-bit prime modulus p
+
+Five truncated LCG state outputs sampled at irregular steps
+
+DSA signatures authenticating each telemetry sector
+
+AES-CBC encrypted flag
+
+Goal: Recover the flag.
+
+Attack Overview
+
+The solution consists of five deterministic cryptographic breaks:
+
+Recover exact UTC time from truncated SHA256
+
+Break DSA via nonce reuse
+
+Recompute LCG parameters from Halley ephemeris
+
+Recover hidden 320 bits of LCG state via lattice attack
+
+Reconstruct AES key and decrypt flag
+
+No brute force beyond the forced 86,400 time possibilities.
+
+Step 1 — Recover Exact Broadcast Time
+
+We know:
+
+epoch_hash = sha256("HH:MM:SS")[:16]
+
+Since time is within one day:
+
+24 × 60 × 60 = 86400 possibilities
+
+Brute-forcing this small space is acceptable.
+
+Recovered:
+
+UTC time = 04:12:55
+Step 2 — Break DSA (Nonce Reuse Attack)
+
+All signatures share the same:
+
+r = 289099664372750378797408625704893428920316669030
+
+That means the same nonce k was reused.
+
+DSA equations:
+
+s = k⁻¹ (H(m) + x·r) mod q
+
+For two signatures:
+
+s1 = k⁻¹ (H1 + x·r)
+s2 = k⁻¹ (H2 + x·r)
+
+Subtract:
+
+k = (H1 − H2) · (s1 − s2)⁻¹ mod q
+
+Then recover private key:
+
+x = (s·k − H) · r⁻¹ mod q
+
+Recovered:
+
+DSA private key x
+DSA nonce k
+Step 3 — Derive LCG Parameters from Halley
+
+From encrypt.py, parameters are:
+
+a = SHA512(coord_string + "_A")
+b = SHA512(coord_string + "_B")
+
+Where:
+
+coord_string = f"{x:.10f}_{y:.10f}_{z:.10f}"
+
+Coordinates are Halley’s heliocentric position at:
+
+2026-01-26 04:12:55 UTC
+
+Using:
+
+Skyfield
+
+MPC comet elements
+
+JPL de421 ephemeris
+
+We recompute a and b exactly.
+
+Step 4 — Recover Hidden LCG State (Core Crypto Break)
+LCG Definition
+state_{i+1} = (a·state_i + b) mod p
+
+512-bit state
+
+Only top 192 bits leaked:
+
+t_i = state_i >> 320
+
+So:
+
+state_i = t_i·2^320 + x_i
+
+where:
+
+0 ≤ x_i < 2^320
+
+The unknown x_i are the hidden 320 bits.
+
+Using Irregular Steps
+
+We are given outputs at steps:
+
+0, 4, 10, 18, 28
+
+Thus:
+
+state_4  = A4·state_0  + B4  mod p
+state_10 = A10·state_4 + B10 mod p
+...
+
+These produce modular linear equations in unknown low bits.
+
+Lattice Attack
+
+We transform constraints into:
+
+A·x − y·p ≈ known_constant
+
+This forms a bounded distance decoding (BDD) problem.
+
+Since:
+
+unknown < 2^320
+p ≈ 2^512
+
+The hidden vector is uniquely recoverable.
+
+We build a 5-dimensional lattice:
+
+| p      0      0      0      0 |
+| 0      p      0      0      0 |
+| 0      0      p      0      0 |
+| 0      0      0      p      0 |
+| C0     C1     C2     C3     2^320 |
+
+Apply:
+
+LLL reduction
+
+Babai nearest-plane
+
+This recovers the hidden low bits deterministically.
+
+No brute force required.
+
+Step 5 — Rebuild Final State and Decrypt
+
+Once state_28 is known:
+
+state_29 = (a·state_28 + b) mod p
+
+AES key:
+
+key = SHA256(long_to_bytes(state_29))
+
+Decrypt:
+
+AES-CBC
+PKCS#7 unpadding
+
+→ FLAG
+
+Why This Works
+
+The security failure is multi-layered:
+
+1. Truncated SHA256 of Time
+
+Only 16 hex chars → 64 bits
+
+Input space only 86400 possibilities
+
+2. DSA Nonce Reuse
+
+Catastrophic failure
+
+Reveals private key instantly
+
+3. Truncated LCG Output
+
+Only 192 of 512 bits shown
+
+But modulus known
+
+Steps known
+
+Parameters known
+
+Becomes lattice-solvable BDD problem
+
+Complexity
+Step	Complexity
+Time recovery	86,400 hashes
+DSA break	Constant time
+Ephemeris recomputation	Deterministic
+LCG recovery	Polynomial (LLL)
+AES decrypt	Constant
+
+No exponential attacks required.
+
+Final Result
+
+Flag successfully decrypted.
+
+Lessons Learned
+
+Never reuse DSA nonces.
+
+Never derive cryptographic parameters from predictable public data.
+
+Truncated LCG outputs are recoverable when modulus and parameters are known.
+
+Lattice attacks are extremely powerful against partial-output PRNGs.
+
+If you'd like, I can also provide:
+
+A shorter competition-ready version
+
+A more mathematical lattice explanation
+
+A visual diagram version for GitHub
+
+Or a LaTeX version for submission

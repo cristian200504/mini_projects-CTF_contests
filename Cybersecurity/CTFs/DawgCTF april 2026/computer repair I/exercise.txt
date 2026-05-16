@@ -1,0 +1,6 @@
+I just started a computer repair store and a client dropped this off to my warehouse guy. Can you help me out and figure out what memory size and speed this laptop was sold with, along with the model and size of the hard drive?
+
+The flag format will look like this, if the RAM was 32GB 3200Mhz and the hard drive was a 980PRO 1TB: DawgCTF{32GB_3200MHZ_1TB_980PRO}
+
+Hint 1 (no penalty):
+Make sure you're filling the flag out right, and make sure you consider that the prompt says "sold with", not what it might currently have in it.

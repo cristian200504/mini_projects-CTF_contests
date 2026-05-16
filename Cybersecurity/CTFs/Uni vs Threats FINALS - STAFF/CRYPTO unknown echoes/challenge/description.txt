@@ -1,0 +1,7 @@
+title: unknown echoes
+
+We intercepted a massive propagated transmission from deep space. At first glance, it appears to be an endless, unspaced log of celestial phenomena, but our analysts suspect it is actually an encoded distress signal.
+
+We managed to recover the encryptor used to generate this cosmic soup, but the sheer amount of words produced by it is staggering. Telemetry indicates the encryptor accidentally echoed and looped the signal multiple times before finally transmitting. Untangling this celestial knot requires a delicate touch; carve a swift path through the static to collapse the echoes back to their original form.
+
+Can you parse the stars and decode the message?

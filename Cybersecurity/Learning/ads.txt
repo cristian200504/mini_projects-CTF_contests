@@ -1,0 +1,37 @@
+take look at the pdf i submitted and the bibliography ask me questions related to that:Bibliografie: 
+Înelegerea unor noiuni fundamentale explicate si in cursul de Pre-Security al celor de la TryHackMe (dar care pot fi însuite din
+orice alte materiale).
+1
+Introduction to Cyber Security
+https://tryhackme.com/room/offensivesecurityintro
+https://tryhackme.com/room/defensivesecurityintro
+https://tryhackme.com/room/careersincyber
+https://cryptohack.org/challenges/general/
+https://cryptopals.com/
+2
+Network Fundamentals
+https://tryhackme.com/room/whatisnetworking
+https://tryhackme.com/room/introtonetworking
+https://www.netacad.com/networking
+https://www.wireshark.org/learn
+3
+How The Web Works
+https://tryhackme.com/room/dnsindetail
+https://tryhackme.com/room/httpindetail
+https://tryhackme.com/room/howwebsiteswork
+https://tryhackme.com/room/puttingitalltogether
+https://www.hacksplaining.com/lessons
+https://http2-explained.haxx.se/
+https://http3-explained.haxx.se/en
+4
+Linux Fundamentals
+https://tryhackme.com/room/linuxfundamentalspart1
+https://clig.dev/
+https://linuxjourney.com/
+https://ubuntu.com/tutorials
+5
+Windows Fundamentals
+https://tryhackme.com/room/windowsfundamentals1xbx
+Windows System Internals PDF
+CTF examples:
+https://ringzer0ctf.com/

@@ -1,0 +1,73 @@
+
+(base) ┌──(venv)(root㉿santey22)-[/mnt/c/users/crist/onedrive/desktop]
+└─# python solve.py
+Connecting to server...
+[▁] Opening connection to lonely-island.picoctf.net on port 62581: Trying 18[+] Opening connection to lonely-island.picoctf.net on port 62581: Done
+[*] Closed connection to lonely-island.picoctf.net port 62581
+No length 1 vector found, reconnecting (approx 15% chance)...
+
+Connecting to server...
+[.] Opening connection to lonely-island.picoctf.net on port 62581: Trying 18[+] Opening connection to lonely-island.picoctf.net on port 62581: Done
+[*] Closed connection to lonely-island.picoctf.net port 62581
+No length 1 vector found, reconnecting (approx 15% chance)...
+
+Connecting to server...
+[◢] Opening connection to lonely-island.picoctf.net on port 62581: Trying 18[+] Opening connection to lonely-island.picoctf.net on port 62581: Done
+[*] Closed connection to lonely-island.picoctf.net port 62581
+No length 1 vector found, reconnecting (approx 15% chance)...
+
+Connecting to server...
+[←] Opening connection to lonely-island.picoctf.net on port 62581: Trying 18[+] Opening connection to lonely-island.picoctf.net on port 62581: Done
+[*] Closed connection to lonely-island.picoctf.net port 62581
+No length 1 vector found, reconnecting (approx 15% chance)...
+
+Connecting to server...
+[|] Opening connection to lonely-island.picoctf.net on port 62581: Trying 18[+] Opening connection to lonely-island.picoctf.net on port 62581: Done
+[*] Closed connection to lonely-island.picoctf.net port 62581
+No length 1 vector found, reconnecting (approx 15% chance)...
+
+Connecting to server...
+[/.......] Opening connection to lonely-island.picoctf.net on port 62581: Tr[../.....] Opening connection to lonely-island.picoctf.net on port 62581: Do[+] Opening connection to lonely-island.picoctf.net on port 62581: Done
+Success! Found length 1 vector: [-87]
+Recovered k0: 112
+Recovered k1: 100
+Recovered k2: 119
+Recovered k3: 115
+Recovered k4: 127
+Recovered k5: 115
+Recovered k6: 47
+Recovered k7: 164
+Recovered k8: 37
+Recovered k9: 99
+Recovered k10: 246
+Recovered k11: 247
+Recovered k12: 202
+Recovered k13: 57
+Recovered k14: 60
+Recovered k15: 52
+Recovered k16: 232
+Recovered k17: 90
+Recovered k18: 195
+Recovered k19: 76
+Recovered k20: 134
+Recovered k21: 208
+Recovered k22: 23
+Recovered k23: 67
+Recovered k24: 61
+Recovered k25: 163
+Recovered k26: 75
+Recovered k27: 250
+Recovered k28: 79
+Recovered k29: 113
+Recovered k30: 87
+Recovered k31: 237
+
+Fully Recovered Key: [112, 100, 119, 115, 127, 115, 47, 164, 37, 99, 246, 247, 202, 57, 60, 52, 232, 90, 195, 76, 134, 208, 23, 67, 61, 163, 75, 250, 79, 113, 87, 237]
+
+==============================
+FLAG: picoCTF{n0t_so_s3cure_.x_w1th_sh@512_190c9998}
+==============================
+[*] Closed connection to lonely-island.picoctf.net port 62581
+
+(base) ┌──(venv)(root㉿santey22)-[/mnt/c/users/crist/onedrive/desktop]
+└─#

@@ -1,0 +1,46 @@
+┌──(santey22㉿santey22)-[/mnt/c/users/crist/onedrive/desktop/hidden-cipher-2/hiddencipher2]
+└─$ python3
+Python 3.13.9 (main, Oct 15 2025, 14:56:22) [GCC 15.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> encoded = [784,735,693,777,469,588,490,861,714,679,749,707,665,714,756,679,721\
+,875]
+...
+... flag = ""
+...
+... for n in encoded:
+...     flag += chr(n // 7)
+...
+... print(flag)
+...
+picoCTF{fake_flag}
+>>> encoded = [
+... 896, 840, 792, 888, 536, 672, 560, 984, 872, 416,
+... 928, 832, 760, 784, 408, 832, 392, 880, 800, 760,
+... 792, 392, 896, 832, 408, 912, 760, 776, 808, 792,
+... 432, 400, 440, 416, 784, 1000
+... ]
+...
+... flag = ""
+...
+... for n in encoded:
+...     flag += chr(n // 7)
+...
+... print(flag)
+...
+xq~L`P|;vlp:v8}rlq8v:lnsq=9>;p
+>>> encoded = [
+... 896, 840, 792, 888, 536, 672, 560, 984, 872, 416,
+... 928, 832, 760, 784, 408, 832, 392, 880, 800, 760,
+... 792, 392, 896, 832, 408, 912, 760, 776, 808, 792,
+... 432, 400, 440, 416, 784, 1000
+... ]
+...
+... flag = ""
+...
+... for n in encoded:
+...     flag += chr(n // 8)
+...
+... print(flag)
+...
+picoCTF{m4th_b3h1nd_c1ph3r_aec6274b}
+>>>

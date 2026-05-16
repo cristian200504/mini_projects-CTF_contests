@@ -1,0 +1,39 @@
+
+┌──(santey22㉿santey22)-[~]
+└─$ python3
+Python 3.13.9 (main, Oct 15 2025, 14:56:22) [GCC 15.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import socket
+...
+... HOST = "lonely-island.picoctf.net"
+... PORT = 54408
+...
+... s = socket.create_connection((HOST, PORT))
+...
+... # read until prompt
+... data = b""
+... while b"==>" not in data:
+...     data += s.recv(4096)
+...
+... print(data.decode(errors="ignore"))
+...
+... # send 3 bytes 0xFF and newline
+... s.sendall(b"\xff\xff\xff\n")
+...
+... # print response
+... resp = s.recv(4096)
+... print(resp.decode(errors="ignore"))
+...
+... s.close()
+...
+⊹──────[ BYTEMANCY-2 ]──────⊹
+☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐
+
+Send me the HEX BYTE 0xFF 3 times, side-by-side, no space.
+
+☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐☉⟊☽☈⟁⧋⟡☍⟐
+⊹─────────────⟡─────────────⊹
+==>
+picoCTF{3ff5_4_d4yz_fa2f490f}
+
+>>>

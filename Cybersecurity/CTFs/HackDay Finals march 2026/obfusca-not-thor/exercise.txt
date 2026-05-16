@@ -1,0 +1,6 @@
+Obfusca_Not_Thor
+381
+hard
+Reverse this NodeJS server side code to find how to exploit it. Good Luck Mate !
+
+obfusca-not-thor.hackday.fr:4224

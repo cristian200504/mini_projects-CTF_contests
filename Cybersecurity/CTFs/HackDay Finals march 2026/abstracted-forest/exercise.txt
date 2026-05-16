@@ -1,0 +1,10 @@
+Abstracted Forest
+500
+hard
+Find a way to hack buddy ! 🎯
+
+────────────────────────────── 🔌 Connection: 192.168.VLAN-ID.132:3840
+
+⚠️ Replace "VLAN-ID" with your island's dedicated VLAN number. Example: if your VLAN is 10 → 192.168.10.132:3840 ──────────────────────────────
+
+192.168.VLAN-ID.132:3840

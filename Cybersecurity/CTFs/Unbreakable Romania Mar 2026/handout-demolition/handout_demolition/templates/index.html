@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>demolition</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f5f4ef;
+        --panel: #ffffff;
+        --ink: #151515;
+        --muted: #727272;
+        --line: #dad8cf;
+      }
+      body {
+        margin: 0;
+        font-family: "Courier New", monospace;
+        color: var(--ink);
+        background: radial-gradient(circle at top left, #ece8d8, var(--bg));
+      }
+      main {
+        max-width: 1080px;
+        margin: 24px auto;
+        padding: 0 16px 40px;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 1.35rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 12px;
+      }
+      section {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 12px;
+      }
+      label {
+        display: block;
+        margin: 8px 0 4px;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+      input,
+      textarea,
+      button {
+        width: 100%;
+        font-family: inherit;
+        box-sizing: border-box;
+        border: 1px solid var(--line);
+        background: #fbfbf8;
+        color: var(--ink);
+        padding: 8px;
+      }
+      textarea {
+        min-height: 96px;
+        resize: vertical;
+      }
+      button {
+        margin-top: 10px;
+        cursor: pointer;
+        background: #ece9de;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      #rendered,
+      #mailPreview {
+        margin-top: 10px;
+        min-height: 70px;
+        border: 1px dashed var(--line);
+        background: #fffffa;
+        padding: 8px;
+        overflow-wrap: anywhere;
+      }
+      #composePreview {
+        margin-top: 10px;
+        min-height: 70px;
+        border: 1px dashed var(--line);
+        background: #fffffa;
+        padding: 8px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .status {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .hint {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      #serverTrace {
+        margin-top: 12px;
+        border: 1px dashed var(--line);
+        background: #fffdf3;
+        padding: 10px;
+      }
+      #serverTrace h3 {
+        margin: 0 0 8px;
+        font-size: 0.9rem;
+      }
+      #serverTrace pre {
+        margin: 0;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>demolition renderer</h1>
+      <p class="hint">mode: dual-pass profile + sanitizer branch + template preview stack</p>
+      <p class="hint" data-orbit="{{ boot.profile | e }}" data-latency="{{ boot.mail_subject | e }}">
+        telemetry lane nominal
+      </p>
+      <div id="serverTrace">{{ trace_html | safe }}</div>
+
+      <div class="grid">
+        <section>
+          <h2>Render Pipeline</h2>
+          <label for="profileBlob">profile blob</label>
+          <input id="profileBlob" type="text" />
+
+          <label for="draft">draft html</label>
+          <textarea id="draft"></textarea>
+
+          <button id="runRender" type="button">run render</button>
+          <div class="status">engine: <span id="engineOut">n/a</span></div>
+          <div id="rendered"></div>
+        </section>
+
+        <section>
+          <h2>Template Composer</h2>
+          <label for="composeTemplate">template body</label>
+          <textarea id="composeTemplate"></textarea>
+
+          <label for="composeVars">vars (json)</label>
+          <textarea id="composeVars">{"username":"guest","team":"blue"}</textarea>
+
+          <button id="runCompose" type="button">preview compose</button>
+          <pre id="composePreview"></pre>
+        </section>
+
+        <section>
+          <h2>Mail Preview</h2>
+          <div class="row">
+            <div>
+              <label for="mailSubject">subject</label>
+              <input id="mailSubject" type="text" />
+            </div>
+            <div>
+              <label for="mailVars">vars (json)</label>
+              <input id="mailVars" type="text" value='{"username":"guest"}' />
+            </div>
+          </div>
+
+          <label for="mailBody">body</label>
+          <textarea id="mailBody"></textarea>
+
+          <button id="runMail" type="button">preview mail</button>
+          <div id="mailPreview"></div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      window.__BOOT__ = {{ boot | tojson }};
+    </script>
+    <script src="/static/client.js"></script>
+  </body>
+</html>
+<!-- POTATO_FUNGI_GROWTH_YOGURT_PIZZA @&86549&788875478-568999-34)8&£$$ STRING!!!!! -->

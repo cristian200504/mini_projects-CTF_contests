@@ -1,0 +1,33 @@
+┌──(santey22㉿santey22)-[~]
+└─$ cd /mnt/c/Users/crist/OneDrive/Desktop/cool-car
+
+┌──(santey22㉿santey22)-[/mnt/c/Users/crist/OneDrive/Desktop/cool-car]
+└─$ python3 -c '
+from PIL import Image
+
+try:
+    print("[*] Processing image channels...")
+    img = Image.open("cool_car.png").convert("RGBA")
+    r, g, b, a = img.split()
+
+    # 1. Alpha Channel Visualizer (Make anything not 255 completely black)
+    a_vis = a.point(lambda p: 255 if p == 255 else 0)
+    a_vis.save("anomaly_alpha.png")
+
+    # 2. LSB Visualizer (Amplify LSBs to max contrast)
+    r.point(lambda p: (p & 1) * 255).save("anomaly_lsb_red.png")
+    g.point(lambda p: (p & 1) * 255).save("anomaly_lsb_green.png")
+    b.point(lambda p: (p & 1) * 255).save("anomaly_lsb_blue.png")
+
+    print("[+] Visual extraction complete! Open your folder and view the new anomaly_*.png files.")
+except Exception as e:
+    print("Error:", e)
+'
+[*] Processing image channels...
+[+] Visual extraction complete! Open your folder and view the new anomaly_*.png files.
+
+┌──(santey22㉿santey22)-[/mnt/c/Users/crist/OneDrive/Desktop/cool-car]
+└─$ echo "Q0lUezRWdTF1MXpofQ==" | base64 -d
+CIT{4Vu1u1zh}
+┌──(santey22㉿santey22)-[/mnt/c/Users/crist/OneDrive/Desktop/cool-car]
+└─$

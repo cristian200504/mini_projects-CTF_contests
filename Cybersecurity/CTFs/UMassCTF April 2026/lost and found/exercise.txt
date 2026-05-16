@@ -1,0 +1,15 @@
+Lost and Found
+100
+disk-forensics crypto
+vaakash
+
+ 9 (100% liked)  0
+Help! I was running commands on my ultra minimalistic Linux VM when I installed my favorite package and everything turned into nonsense!
+
+LINK TO DOWNLOADABLE ASSETS
+
+View Hint: Hint 1
+Credentials are root, empty password
+
+View Hint: Hint 2
+the command 'history' does not print the history file

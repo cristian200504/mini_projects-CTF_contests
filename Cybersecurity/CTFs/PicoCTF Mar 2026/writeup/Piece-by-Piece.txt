@@ -1,0 +1,27 @@
+ctf-player@pico-chall$ ls
+instructions.txt  part_aa  part_ab  part_ac  part_ad  part_ae
+ctf-player@pico-chall$ cat instructions.txt
+Hint:
+
+- The flag is split into multiple parts as a zipped file.
+- Use Linux commands to combine the parts into one file.
+- The zip file is password protected. Use this "supersecret" password to extract the zip file.
+- After unzipping, check the extracted text file for the flag.
+
+
+ctf-player@pico-chall$ cd part_aa
+-bash: cd: part_aa: Not a directory
+ctf-player@pico-chall$ file part_aa
+part_aa: Zip archive data, at least v1.0 to extract
+ctf-player@pico-chall$ cat part_aa part_ab part_ac part_ad part_ae > flag.zip
+ctf-player@pico-chall$ file flag.zip
+flag.zip: Zip archive data, at least v1.0 to extract
+ctf-player@pico-chall$ unzip flag.zip
+Archive:  flag.zip
+[flag.zip] flag.txt password:
+ extracting: flag.txt
+ctf-player@pico-chall$ ls
+flag.txt  instructions.txt  part_ab  part_ad
+flag.zip  part_aa           part_ac  part_ae
+ctf-player@pico-chall$ cat flag.txt
+picoCTF{z1p_and_spl1t_f1l3s_4r3_fun_78b76e61}ctf-player@pico-chall$

@@ -1,0 +1,14 @@
+Brick by Brick
+100
+web easy
+Michael/michaelye_22
+
+ 57 (95% liked)  3
+I found this old portal for BrickWorks Co. They say their internal systems are secure, but I'm not so sure. Can you find the hidden admin dashboard and get the flag?
+
+http://brick-by-brick.web.ctf.umasscybersec.org:32769
+Hint 1 (Cost: 0 points)
+What files do web servers usually use to hide things from search engines?
+
+Hint 2 (Cost: 0 points)
+Look closely at the URL parameters when reading documents.

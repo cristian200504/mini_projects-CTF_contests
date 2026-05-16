@@ -1,0 +1,3 @@
+Invalid list : abc -5 null 200 
+Valid list: 10 20 50 30
+Errors: 5

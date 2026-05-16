@@ -1,0 +1,64 @@
++---------------------------------------------------------------------------------------------------------------------------------------------+
+| [REC] *                                                                                                                [BAT] ninety-eight%  |
+|                                                                                                                                             |
+|     00   01   02   03   04   05   06   07   08   09   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24              |
+| 00  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 01  zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            | 
+| 02  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 03  zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 04  zero zero zero zero zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero one  zero zero zero            |
+| 05  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 06  zero zero zero zero zero zero zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero one  zero            |
+| 07  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 08  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 09  zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero            |
+| 10  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 11  zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero one  zero zero zero zero zero zero zero            |
+| 12  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 13  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 14  zero zero zero zero zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero one  zero zero zero            | 
+| 15  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 16  zero zero zero zero zero zero zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero one  zero            | 
+| 17  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 18  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 19  zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero            |
+| 20  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 21  zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero one  zero zero zero zero zero zero zero            |
+| 22  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 23  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 24  zero zero zero zero zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 25  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 26  zero zero zero zero zero zero zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 27  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 28  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 29  zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 30  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 31  zero zero zero zero zero one  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+| 32  zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero            |
+|                                                                                                                                             |
+| + TARGETS: twenty-two                                                                                            ZOOM: three point five x + |
++---------------------------------------------------------------------------------------------------------------------------------------------+
+
+coordinates:
+one. (three, one)
+two. (five, three)
+three. (three, nine)
+four. (five, eleven)
+five. (three, nineteen)
+six. (five, twenty-one)
+seven. (three, twenty-nine)
+eight. (five, thirty-one)
+nine. (nine, four)
+ten. (eleven, six)
+eleven. (nine, fourteen)
+twelve. (eleven, sixteen)
+thirteen. (nine, twenty-four)
+fourteen. (eleven, twenty-six)
+fifteen. (fifteen, nine)
+sixteen. (seventeen, eleven)
+seventeen. (fifteen, nineteen)
+eighteen. (seventeen, twenty-one)
+nineteen. (twenty-one, four)
+twenty. (twenty-three, six)
+twenty-one. (twenty-one, fourteen)
+twenty-two. (twenty-three, sixteen)

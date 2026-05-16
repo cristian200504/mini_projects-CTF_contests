@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="MessageLog.xsl" ?>
+<!-- MSN Messenger History Log -->
+<!-- 2003-11-15 - Session exported by MSN Messenger 7.5 -->
+<!-- Encryption: aes-256-cbc / IV: md5(admin_nickname) -->
+<!-- MessageLog.xsl v2.1 - do not edit -->
+
+<Log FirstSessionID="1" LastSessionID="1">
+  <Session SessionID="1" Date="2003-11-15" Time="19:02:31">
+    <Message DateTime="2003-11-15T19:02:31" SessionID="1">
+      <From>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF0000; font-family:Comic Sans MS; font-size:10pt;">yo tout le monde est la ??</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:02:45" SessionID="1">
+      <From>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF69B4; font-family:Comic Sans MS; font-size:10pt;">ouiiii (L) trop contente de te voir</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:03:01" SessionID="1">
+      <From>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#00FF00; font-family:Comic Sans MS; font-size:10pt;">hey (S) quoi de neuf</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:03:15" SessionID="1">
+      <From>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+      </To>
+      <Text Style="color:#0066FF; font-family:Comic Sans MS; font-size:10pt;">sa va (B) c le weekend</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:03:30" SessionID="1">
+      <From>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF0000; font-family:Comic Sans MS; font-size:10pt;">j'ai un truc ouf a vous montrer (#) attendez</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:04:02" SessionID="1">
+      <From>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF69B4; font-family:Comic Sans MS; font-size:10pt;">c koi encore tes delires ?? :P</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:04:15" SessionID="1">
+      <From>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF0000; font-family:Comic Sans MS; font-size:10pt;">attendez je cherche (B) 2 sec</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:04:30" SessionID="1">
+      <From>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#00FF00; font-family:Comic Sans MS; font-size:10pt;">mdr (L)(U) tu fais tjs des trucs chelou</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:04:45" SessionID="1">
+      <From>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+      </To>
+      <Text Style="color:#0066FF; font-family:Comic Sans MS; font-size:10pt;">jui curieux (E) montre</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:05:00" SessionID="1">
+      <From>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF0000; font-family:Comic Sans MS; font-size:10pt;">regardez (Q)(P)(R) c dingue non ?</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:05:20" SessionID="1">
+      <From>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF69B4; font-family:Comic Sans MS; font-size:10pt;">OMG (I) jsui choquee</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:05:35" SessionID="1">
+      <From>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#00FF00; font-family:Comic Sans MS; font-size:10pt;">(M) jcomprend pas</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:05:50" SessionID="1">
+      <From>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+      </To>
+      <Text Style="color:#0066FF; font-family:Comic Sans MS; font-size:10pt;">c quoi le rapport avec les avatars la mdr</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:06:05" SessionID="1">
+      <From>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF0000; font-family:Comic Sans MS; font-size:10pt;">hehe (E) faut chercher un peu</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:06:20" SessionID="1">
+      <From>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF69B4; font-family:Comic Sans MS; font-size:10pt;">hein (Z) de koi tu parles</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:06:40" SessionID="1">
+      <From>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#00FF00; font-family:Comic Sans MS; font-size:10pt;">laissez tomber il delire encore lol xD</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:06:55" SessionID="1">
+      <From>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+      </To>
+      <Text Style="color:#0066FF; font-family:Comic Sans MS; font-size:10pt;">mdr toujours a faire ses mysteres</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:07:10" SessionID="1">
+      <From>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF0000; font-family:Comic Sans MS; font-size:10pt;">vous verrez bien ;) a++ tout le monde</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:07:25" SessionID="1">
+      <From>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#FF69B4; font-family:Comic Sans MS; font-size:10pt;">bisous a demain (K)</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:07:40" SessionID="1">
+      <From>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </To>
+      <Text Style="color:#00FF00; font-family:Comic Sans MS; font-size:10pt;">a+</Text>
+    </Message>
+    <Message DateTime="2003-11-15T19:07:55" SessionID="1">
+      <From>
+        <User FriendlyName="Sk8erBoi_Tony" LogonName="sk8erboi@hotmail.com"/>
+      </From>
+      <To>
+        <User FriendlyName="~xX_D4rK_Adm1n_Xx~" LogonName="dark_admin@hotmail.com"/>
+        <User FriendlyName="PrInCeSs_2003" LogonName="princess2003@hotmail.com"/>
+        <User FriendlyName="N3o_H4ck3r" LogonName="neo_hacker@hotmail.com"/>
+      </To>
+      <Text Style="color:#0066FF; font-family:Comic Sans MS; font-size:10pt;">peace</Text>
+    </Message>
+  </Session>
+</Log>

@@ -1,0 +1,35 @@
+
+┌──(santey22㉿santey22)-[~]
+└─$ python3
+Python 3.13.9 (main, Oct 15 2025, 14:56:22) [GCC 15.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from pwn import *
+... import re
+...
+... HOST = "candy-mountain.picoctf.net"
+... PORT = 62012
+...
+... io = remote(HOST, PORT)
+...
+... # receive the line with the heap address
+... line = io.recvline().decode()
+... print(line.strip())
+...
+... # extract the hex address automatically
+... addr = int(re.search(r'0x[0-9a-fA-F]+', line).group(), 16)
+...
+... # send the 6 chunk addresses
+... for i in range(6):
+...     chunk = addr + i*0x90
+...     io.sendlineafter(b"address:", hex(chunk).encode())
+...
+... # print the rest (should contain the flag)
+... print(io.recvall().decode())
+...
+[/.......] Opening connection to candy-mountain.picoctf.net on port 62012: T[../.....] Opening connection to candy-mountain.picoctf.net on port 62012: D[+] Opening connection to candy-mountain.picoctf.net on port 62012: Done
+tcache head (start of free list) -> 0x3395f490
+[+] Receiving all data: Done (68B)
+[*] Closed connection to candy-mountain.picoctf.net port 62012
+ Correct traversal! Flag: picoCTF{0fd522cb3e9905002631d25e21a4750b}
+
+>>>

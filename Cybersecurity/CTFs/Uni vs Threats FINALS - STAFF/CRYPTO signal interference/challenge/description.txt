@@ -1,0 +1,10 @@
+Title: Signal Inteference
+
+Transmission Incoming...
+"Captain, we are receiving an emergency transmission from Mars Base Alpha. However, our comms arrays are picking up a massive anomaly. An unknown hidden extraterrestrial frequency is overlapping with the human transmission, filling the log with alien garbage data.
+
+Mars Base Alpha relies on strict, standardized communication protocols for its emergency beacons, while the alien broadcast appears to be entirely chaotic, unstructured noise.
+
+We need you to write a script to filter out the alien interference and recover the base signal. The fate of the mission depends on it!"
+
+FLAG FORMAT: UVT{}

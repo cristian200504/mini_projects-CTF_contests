@@ -1,0 +1,13 @@
+Y2K-Compliance-Checker
+487
+easy
+y2k-compliance-checker.hackday.fr:8000
+
+Millennium Systems has deployed a Y2K Compliance Checker tool to verify that dates will work correctly after the year 2000. The tool accepts date expressions and evaluates whether they are Y2K-safe.
+
+Something about this checker feels... too flexible. Can you make it reveal more than just compliance results?
+
+- Constraints
+
+The flag is on the server
+No brute-force needed

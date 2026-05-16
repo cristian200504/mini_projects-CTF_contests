@@ -1,0 +1,6 @@
+crypto/sporadiclogarithms
+149 solves / 186 points
+cyberg
+I heard the discrete logarithm problem can be solved efficiently in all sporadic groups without even knowing the group. Can you prove it to me?
+
+ncat --ssl sporadiclogarithms.opus4-7.b01le.rs 8443

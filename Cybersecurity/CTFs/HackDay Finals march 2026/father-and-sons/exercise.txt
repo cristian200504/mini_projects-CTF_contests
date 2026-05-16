@@ -1,0 +1,6 @@
+Father and sons
+500
+hard
+We captured a bunch of public keys that are owned by some bad dudes but it seems that there are invalid ones among them. One of our sources told us that the keys we are looking for have been derived using unhardened BIP32 derivation, using the SECP256k1 curve and the hexadecimal string "c0ffee" as seed. He also said that the path (the classic "m/[number]") may be very important.
+
+Flag format : HACKDAY{sha256}

@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MITRE ATT&CK Case Study &amp; Student Exercise</title>
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #0f3460;
+            --highlight: #e94560;
+            --text: #eee;
+            --card-bg: #1e2a3a;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #3498db;
+            --danger: #e74c3c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--highlight);
+        }
+        header h1 {
+            font-size: 2.4em;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        header h1 span { color: var(--highlight); }
+        header p {
+            font-size: 1.15em;
+            opacity: 0.85;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--secondary);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--accent);
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: background 0.2s;
+        }
+        nav a:hover { background: var(--accent); }
+
+        /* Sections */
+        section {
+            margin: 40px 0;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--highlight);
+            display: inline-block;
+        }
+        h3 {
+            font-size: 1.3em;
+            margin: 20px 0 10px;
+            color: var(--info);
+        }
+        h4 {
+            font-size: 1.1em;
+            margin: 15px 0 8px;
+            color: var(--warning);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid var(--info);
+        }
+        .card.red { border-left-color: var(--danger); }
+        .card.green { border-left-color: var(--success); }
+        .card.orange { border-left-color: var(--warning); }
+        .card.purple { border-left-color: #9b59b6; }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #2c3e50;
+        }
+        th {
+            background: var(--accent);
+            color: var(--highlight);
+            font-weight: 600;
+        }
+        td { background: var(--card-bg); }
+        tr:hover td { background: #253545; }
+
+        /* Attack flow */
+        .attack-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        .flow-step {
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            padding: 18px;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+        }
+        .flow-step .step-num {
+            background: var(--highlight);
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+        .flow-step h4 { margin: 5px 0; color: var(--info); }
+        .flow-step p { font-size: 0.85em; opacity: 0.8; }
+        .flow-arrow {
+            font-size: 1.8em;
+            color: var(--highlight);
+            padding: 0 5px;
+        }
+
+        /* Code blocks */
+        code {
+            background: #0d1117;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e6db74;
+        }
+        pre {
+            background: #0d1117;
+            padding: 18px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border: 1px solid #2c3e50;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        /* Tags / Badges */
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin: 2px;
+        }
+        .tag.tactic { background: #e74c3c33; color: #e74c3c; border: 1px solid #e74c3c; }
+        .tag.technique { background: #3498db33; color: #3498db; border: 1px solid #3498db; }
+        .tag.procedure { background: #9b59b633; color: #9b59b6; border: 1px solid #9b59b6; }
+        .tag.mitigation { background: #2ecc7133; color: #2ecc71; border: 1px solid #2ecc71; }
+        .tag.detection { background: #f39c1233; color: #f39c12; border: 1px solid #f39c12; }
+        .tag.datasource { background: #1abc9c33; color: #1abc9c; border: 1px solid #1abc9c; }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 10px 15px;
+            margin: 6px 0;
+            background: var(--card-bg);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+        .checklist li::before {
+            content: "\2610";
+            margin-right: 10px;
+            font-size: 1.1em;
+        }
+
+        /* Tip boxes */
+        .tip {
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+        .tip.info { background: #3498db22; border: 1px solid #3498db; }
+        .tip.warning { background: #f39c1222; border: 1px solid #f39c12; }
+        .tip.danger { background: #e74c3c22; border: 1px solid #e74c3c; }
+        .tip strong { display: block; margin-bottom: 5px; }
+
+        /* Exercise section */
+        .exercise-box {
+            background: linear-gradient(135deg, #1a2a3a, #1e3a4a);
+            border: 2px solid var(--info);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+        .exercise-box h3 {
+            color: var(--highlight);
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        /* Mapping template */
+        .mapping-row {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin: 10px 0;
+        }
+        .mapping-cell {
+            background: #0d1117;
+            border: 1px dashed #2c3e50;
+            padding: 12px;
+            border-radius: 4px;
+            min-height: 60px;
+            font-size: 0.85em;
+        }
+        .mapping-cell.header {
+            background: var(--accent);
+            border: 1px solid var(--info);
+            font-weight: bold;
+            text-align: center;
+            min-height: auto;
+        }
+
+        /* Collapsible */
+        details {
+            background: var(--card-bg);
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            margin: 10px 0;
+            padding: 0;
+        }
+        summary {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--info);
+        }
+        summary:hover { color: var(--highlight); }
+        details > div {
+            padding: 0 20px 20px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 2px solid var(--accent);
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+
+        /* Links */
+        a { color: var(--info); text-decoration: none; }
+        a:hover { color: var(--highlight); text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.6em; }
+            .attack-flow { flex-direction: column; align-items: center; }
+            .flow-arrow { transform: rotate(90deg); }
+            .mapping-row { grid-template-columns: repeat(2, 1fr); }
+            nav ul { flex-direction: column; align-items: center; }
+        }
+
+        ul, ol { margin-left: 25px; margin-bottom: 10px; }
+        li { margin: 5px 0; }
+        p { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <h1>MITRE ATT&amp;CK<span>&reg;</span> Framework</h1>
+    <p>Case Study: Data Exfiltration via SQL Injection &mdash; A Complete Walkthrough with Hands-On Student Exercise</p>
+</header>
+
+<!-- NAVIGATION -->
+<nav>
+    <ul>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#framework">Framework Structure</a></li>
+        <li><a href="#casestudy">Case Study</a></li>
+        <li><a href="#mapping">ATT&amp;CK Mapping</a></li>
+        <li><a href="#defense">Defense</a></li>
+        <li><a href="#exercise">Student Exercise</a></li>
+        <li><a href="#resources">Resources</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- SECTION 1: INTRODUCTION -->
+<!-- ============================================================ -->
+<section id="intro">
+    <h2>1. What is MITRE ATT&amp;CK?</h2>
+
+    <div class="card">
+        <p><strong>MITRE ATT&amp;CK</strong> (Adversarial Tactics, Techniques, and Common Knowledge) is a globally recognized, open knowledge base that catalogs how real-world adversaries behave after they gain access to computer systems.</p>
+        <p>Created by <strong>The MITRE Corporation</strong> in 2013 and publicly released in 2015, it is now maintained by a global community of cybersecurity professionals.</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Why It Matters</h3>
+            <ul>
+                <li>Provides a <strong>common language</strong> for describing cyberattacks</li>
+                <li>Focuses on the <strong>adversary's perspective</strong> to help defenders anticipate threats</li>
+                <li>Used for <strong>threat detection</strong>, <strong>red teaming</strong>, and <strong>gap analysis</strong></li>
+                <li>Bridges the gap between theory and real-world practice</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Three Main Matrices</h3>
+            <ul>
+                <li><strong>Enterprise</strong> &mdash; Windows, macOS, Linux, Cloud, Network</li>
+                <li><strong>Mobile</strong> &mdash; Android, iOS</li>
+                <li><strong>ICS</strong> &mdash; Industrial Control Systems</li>
+            </ul>
+            <p style="margin-top:10px;">Each matrix organizes adversary behavior into <strong>Tactics</strong> (columns) and <strong>Techniques</strong> (cells).</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: FRAMEWORK STRUCTURE -->
+<!-- ============================================================ -->
+<section id="framework">
+    <h2>2. Framework Structure</h2>
+    <p>The MITRE ATT&amp;CK framework is built on six core concepts. Understanding each is essential before analyzing any attack.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Component</th>
+                <th>ID Format</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="tag tactic">Tactics</span></td>
+                <td><code>TAxxxx</code></td>
+                <td>The <strong>"WHY"</strong> &mdash; the adversary's goal at each phase of the attack (e.g., gain access, steal data).</td>
+                <td>TA0001 &mdash; Initial Access</td>
+            </tr>
+            <tr>
+                <td><span class="tag technique">Techniques</span></td>
+                <td><code>Txxxx</code></td>
+                <td>The <strong>"HOW"</strong> &mdash; specific methods used to accomplish a tactic.</td>
+                <td>T1190 &mdash; Exploit Public-Facing Application</td>
+            </tr>
+            <tr>
+                <td><span class="tag procedure">Procedures / Groups</span></td>
+                <td><code>Gxxxx</code></td>
+                <td>The <strong>"WHO"</strong> &mdash; real-world threat groups and their specific implementations of techniques.</td>
+                <td>G0087 &mdash; APT39</td>
+            </tr>
+            <tr>
+                <td><span class="tag mitigation">Mitigations</span></td>
+                <td><code>Mxxxx</code></td>
+                <td>The <strong>"WHAT TO DO"</strong> &mdash; preventive controls that reduce the risk of a technique succeeding.</td>
+                <td>M1016 &mdash; Vulnerability Scanning</td>
+            </tr>
+            <tr>
+                <td><span class="tag detection">Detection</span></td>
+                <td>&mdash;</td>
+                <td>The <strong>"HOW TO FIND IT"</strong> &mdash; strategies and indicators for spotting active use of a technique.</td>
+                <td>Monitor application logs for SQL syntax errors</td>
+            </tr>
+            <tr>
+                <td><span class="tag datasource">Data Sources</span></td>
+                <td><code>DSxxxx</code></td>
+                <td>The <strong>"WHERE TO LOOK"</strong> &mdash; types of data that provide visibility into technique usage.</td>
+                <td>DS0015 &mdash; Application Log</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="tip info">
+        <strong>How to read the ATT&amp;CK Matrix:</strong>
+        Each column is a <strong>Tactic</strong> (goal). Under each column, the cells list <strong>Techniques</strong> (methods) that adversaries use to achieve that goal. An attack typically flows left to right through multiple tactics.
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: CASE STUDY -->
+<!-- ============================================================ -->
+<section id="casestudy">
+    <h2>3. Case Study: SQL Injection &amp; Data Exfiltration</h2>
+
+    <div class="card red">
+        <h3>Scenario</h3>
+        <p>A small online retailer runs a web application with a product search feature. The search box is vulnerable to <strong>SQL Injection</strong> because user input is inserted directly into database queries without validation or parameterization. An attacker discovers this flaw, uses the tool <code>sqlmap</code> to automate the exploitation, extracts customer data (usernames, emails, password hashes), and exfiltrates it to an external cloud service over HTTPS.</p>
+    </div>
+
+    <!-- Attack Flow Visual -->
+    <h3>Attack Flow Overview</h3>
+    <div class="attack-flow">
+        <div class="flow-step">
+            <div class="step-num">1</div>
+            <h4>Reconnaissance</h4>
+            <p>Attacker finds the target website and identifies input fields</p>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step">
+            <div class="step-num">2</div>
+            <h4>Discovery</h4>
+            <p>Tests search box with <code>'</code> and gets SQL error messages</p>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step">
+            <div class="step-num">3</div>
+            <h4>Exploitation</h4>
+            <p>Uses <code>sqlmap</code> to confirm and exploit the SQL injection</p>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step">
+            <div class="step-num">4</div>
+            <h4>Collection</h4>
+            <p>Enumerates databases, tables, and dumps sensitive data</p>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step">
+            <div class="step-num">5</div>
+            <h4>Exfiltration</h4>
+            <p>Transfers stolen data to cloud storage via HTTPS</p>
+        </div>
+    </div>
+
+    <!-- Step by step details -->
+    <h3>Detailed Attack Walkthrough</h3>
+
+    <details>
+        <summary>Step 1: Vulnerability Discovery</summary>
+        <div>
+            <p>The attacker navigates to the retailer's website and notices a <strong>product search box</strong>. To test for SQL injection, they enter a single quote character:</p>
+            <pre><code>Search input: '</code></pre>
+            <p>The application returns an error like:</p>
+            <pre><code>Error: You have an error in your SQL syntax; check the manual
+that corresponds to your MySQL server version for the right
+syntax to use near ''' at line 1</code></pre>
+            <p>This error reveals that:</p>
+            <ul>
+                <li>User input is passed <strong>directly</strong> into SQL queries without sanitization</li>
+                <li>The backend database is <strong>MySQL</strong></li>
+                <li>The application shows verbose error messages (information disclosure)</li>
+            </ul>
+            <div class="tip danger">
+                <strong>Why is this dangerous?</strong>
+                The vulnerable code likely looks like this:<br>
+                <code>query = "SELECT * FROM products WHERE name = '" + user_input + "'"</code><br>
+                Instead of using parameterized queries, the input is concatenated directly into the SQL string.
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>Step 2: Automated Exploitation with sqlmap</summary>
+        <div>
+            <p>The attacker uses <strong>sqlmap</strong>, an open-source penetration testing tool, to automate exploitation.</p>
+
+            <h4>a) Confirm SQL Injection</h4>
+            <pre><code>sqlmap -u "https://shop.example.com/search?q=laptop"</code></pre>
+            <p>sqlmap tests various injection techniques (error-based, UNION-based, blind) and confirms the parameter <code>q</code> is injectable.</p>
+
+            <h4>b) Enumerate Databases</h4>
+            <pre><code>sqlmap -u "https://shop.example.com/search?q=laptop" --dbs</code></pre>
+            <p>Output reveals available databases:</p>
+            <pre><code>[*] information_schema
+[*] shop_db
+[*] mysql</code></pre>
+
+            <h4>c) Enumerate Tables</h4>
+            <pre><code>sqlmap -u "https://shop.example.com/search?q=laptop" -D shop_db --tables</code></pre>
+            <p>Output:</p>
+            <pre><code>[*] customers
+[*] orders
+[*] products
+[*] admin_users</code></pre>
+
+            <h4>d) Dump Sensitive Data</h4>
+            <pre><code>sqlmap -u "https://shop.example.com/search?q=laptop" -D shop_db -T customers --dump</code></pre>
+            <p>This extracts the full contents of the <code>customers</code> table: usernames, emails, and hashed passwords.</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>Step 3: Types of SQL Injection Used</summary>
+        <div>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>How It Works</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>Error-based</strong></td>
+                    <td>Triggers database errors that leak information about the schema</td>
+                    <td><code>' AND 1=CONVERT(int, @@version)--</code></td>
+                </tr>
+                <tr>
+                    <td><strong>UNION-based</strong></td>
+                    <td>Appends a second query using UNION to extract data from other tables</td>
+                    <td><code>' UNION SELECT username, password FROM users--</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Blind (Boolean)</strong></td>
+                    <td>Asks true/false questions; infers data from application behavior</td>
+                    <td><code>' AND 1=1-- </code> vs <code>' AND 1=2--</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Blind (Time-based)</strong></td>
+                    <td>Uses time delays to infer data when no visible output changes</td>
+                    <td><code>' AND SLEEP(5)--</code></td>
+                </tr>
+            </table>
+        </div>
+    </details>
+
+    <details>
+        <summary>Step 4: Data Exfiltration</summary>
+        <div>
+            <p>After extracting the data, the attacker transfers it out of the compromised environment:</p>
+            <ul>
+                <li>Data is saved locally, then uploaded to a <strong>cloud storage service</strong> (e.g., a file-sharing platform)</li>
+                <li>The transfer uses <strong>HTTPS</strong>, making it look like normal encrypted web traffic</li>
+                <li>This blends with legitimate traffic, making detection difficult</li>
+            </ul>
+            <div class="tip warning">
+                <strong>Why cloud exfiltration is effective:</strong> Security tools often whitelist traffic to popular cloud services. Encrypted HTTPS traffic is hard to inspect without SSL/TLS decryption in place.
+            </div>
+        </div>
+    </details>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: MITRE ATT&CK MAPPING -->
+<!-- ============================================================ -->
+<section id="mapping">
+    <h2>4. Mapping the Attack to MITRE ATT&amp;CK</h2>
+    <p>Now we map each phase of the attack to the MITRE ATT&amp;CK framework. This is the core analytical skill the framework teaches.</p>
+
+    <!-- Full mapping table -->
+    <table>
+        <thead>
+            <tr>
+                <th><span class="tag tactic">Tactic</span></th>
+                <th><span class="tag technique">Technique</span></th>
+                <th><span class="tag procedure">Procedure</span></th>
+                <th><span class="tag mitigation">Mitigation</span></th>
+                <th><span class="tag detection">Detection</span></th>
+                <th><span class="tag datasource">Data Source</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <strong>TA0001</strong><br>Initial Access
+                </td>
+                <td>
+                    <strong>T1190</strong><br>Exploit Public-Facing Application
+                </td>
+                <td>
+                    Attacker uses sqlmap to exploit SQL injection in the search parameter of a public web app
+                </td>
+                <td>
+                    <strong>M1016</strong> &mdash; Vulnerability Scanning<br>
+                    <strong>M1026</strong> &mdash; Privileged Account Management<br>
+                    <strong>M1050</strong> &mdash; Exploit Protection
+                </td>
+                <td>
+                    Monitor web server logs for SQL keywords (<code>UNION</code>, <code>SELECT</code>, <code>DROP</code>, <code>'OR'</code>).<br>
+                    Alert on repeated error responses (HTTP 500) to search endpoints.
+                </td>
+                <td>
+                    <strong>DS0015</strong><br>Application Log
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>TA0009</strong><br>Collection
+                </td>
+                <td>
+                    <strong>T1005</strong><br>Data from Local System
+                </td>
+                <td>
+                    sqlmap enumerates database schemas, tables, and dumps customer records (usernames, emails, password hashes)
+                </td>
+                <td>
+                    <strong>M1057</strong> &mdash; Data Loss Prevention<br>
+                    Apply least privilege to DB accounts
+                </td>
+                <td>
+                    Monitor for unusual database query patterns (full table scans, schema enumeration).<br>
+                    Alert on large result sets returned to web application.
+                </td>
+                <td>
+                    <strong>DS0029</strong><br>Network Traffic<br>
+                    <strong>DS0015</strong><br>Application Log
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>TA0010</strong><br>Exfiltration
+                </td>
+                <td>
+                    <strong>T1567.002</strong><br>Exfiltration Over Web Service: Exfiltration to Cloud Storage
+                </td>
+                <td>
+                    Stolen data is uploaded to a cloud storage service over HTTPS to blend with normal traffic
+                </td>
+                <td>
+                    <strong>M1021</strong> &mdash; Restrict Web-Based Content<br>
+                    <strong>M1057</strong> &mdash; Data Loss Prevention
+                </td>
+                <td>
+                    Monitor outbound traffic for large uploads to cloud storage domains.<br>
+                    Implement SSL/TLS inspection for outbound HTTPS.
+                </td>
+                <td>
+                    <strong>DS0029</strong><br>Network Traffic<br>
+                    <strong>DS0022</strong><br>File Monitoring
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>How to Read This Mapping</h3>
+    <div class="grid">
+        <div class="card orange">
+            <h4>Left to Right = Attack Lifecycle</h4>
+            <p>Each row represents one phase of the attack. The attacker first <strong>gains access</strong> (Initial Access), then <strong>collects data</strong> (Collection), then <strong>steals it</strong> (Exfiltration).</p>
+        </div>
+        <div class="card green">
+            <h4>Defense Columns</h4>
+            <p>For each attack phase, we identify <strong>what controls to put in place</strong> (Mitigation), <strong>how to spot the attack</strong> (Detection), and <strong>where to look</strong> (Data Sources).</p>
+        </div>
+    </div>
+
+    <div class="tip info">
+        <strong>ATT&amp;CK Navigator:</strong> You can visualize this mapping using the <a href="https://mitre-attack.github.io/attack-navigator/" target="_blank">MITRE ATT&amp;CK Navigator</a> &mdash; an interactive tool that lets you highlight techniques on the full ATT&amp;CK matrix and export/share your analysis.
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: DEFENSE -->
+<!-- ============================================================ -->
+<section id="defense">
+    <h2>5. Defense &amp; Mitigation Strategies</h2>
+
+    <div class="grid">
+        <div class="card green">
+            <h3>1. Input Validation</h3>
+            <p>Reject any input containing SQL-special characters. Use allowlists to define acceptable input patterns.</p>
+            <pre><code>-- BAD (vulnerable):
+query = "SELECT * FROM products
+  WHERE name = '" + input + "'"
+
+-- GOOD (parameterized):
+query = "SELECT * FROM products
+  WHERE name = ?"
+cursor.execute(query, (input,))</code></pre>
+        </div>
+        <div class="card green">
+            <h3>2. Parameterized Queries</h3>
+            <p>Always use <strong>prepared statements</strong>. This separates SQL logic from data, making injection impossible.</p>
+            <pre><code>// PHP PDO Example:
+$stmt = $pdo->prepare(
+  "SELECT * FROM products
+   WHERE name = :name"
+);
+$stmt->execute([':name' => $input]);</code></pre>
+        </div>
+        <div class="card green">
+            <h3>3. Least Privilege</h3>
+            <p>Database accounts used by the web app should have <strong>minimal permissions</strong>:</p>
+            <ul>
+                <li>Read-only access where possible</li>
+                <li>No access to <code>information_schema</code></li>
+                <li>No <code>FILE</code> or <code>EXECUTE</code> privileges</li>
+            </ul>
+        </div>
+        <div class="card green">
+            <h3>4. Monitoring &amp; Detection</h3>
+            <ul>
+                <li>Log all database queries and web requests</li>
+                <li>Set alerts for SQL keywords in URL parameters</li>
+                <li>Monitor for unusual outbound data transfers</li>
+                <li>Implement a Web Application Firewall (WAF)</li>
+                <li>Use DLP (Data Loss Prevention) tools</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: STUDENT EXERCISE -->
+<!-- ============================================================ -->
+<section id="exercise">
+    <h2>6. Student Exercise: Map Your Own ATT&amp;CK Flow</h2>
+
+    <div class="exercise-box">
+        <h3>Your Task</h3>
+        <p>Choose <strong>one</strong> of the following scenarios and create a complete MITRE ATT&amp;CK mapping, just like the SQL injection case study above.</p>
+
+        <div class="grid" style="margin: 20px 0;">
+            <div class="card">
+                <h4>Scenario A</h4>
+                <p>Data exfiltration from <strong>OneDrive</strong></p>
+                <p><em>An attacker compromises a user's Microsoft 365 account and steals sensitive files from OneDrive.</em></p>
+            </div>
+            <div class="card">
+                <h4>Scenario B</h4>
+                <p>Data exfiltration from <strong>Google Drive</strong></p>
+                <p><em>An attacker uses a phishing email to gain access to a Google Workspace account and downloads confidential documents.</em></p>
+            </div>
+            <div class="card">
+                <h4>Scenario C</h4>
+                <p>Data exfiltration from <strong>MS SQL Server</strong></p>
+                <p><em>An attacker exploits a misconfigured MS SQL Server exposed to the internet and extracts financial records.</em></p>
+            </div>
+            <div class="card">
+                <h4>Scenario D</h4>
+                <p>Data exfiltration from <strong>Cloud (AWS/Azure)</strong></p>
+                <p><em>An attacker uses stolen API keys to access an S3 bucket / Azure Blob and downloads all stored data.</em></p>
+            </div>
+        </div>
+    </div>
+
+    <h3>Step-by-Step Instructions</h3>
+
+    <div class="card">
+        <h4>Step 1: Understand the Scenario</h4>
+        <p>Read your chosen scenario carefully. Ask yourself:</p>
+        <ul>
+            <li>What is the <strong>target</strong>? (what system/data is being attacked)</li>
+            <li>What is the <strong>entry point</strong>? (how does the attacker get in)</li>
+            <li>What is the <strong>goal</strong>? (what data do they want to steal)</li>
+            <li>How do they <strong>get the data out</strong>? (exfiltration method)</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h4>Step 2: Identify the Tactics (the "WHY")</h4>
+        <p>List the phases of the attack using MITRE ATT&amp;CK Tactics. Typical flow:</p>
+        <ol>
+            <li><strong>TA0001 &mdash; Initial Access</strong>: How does the attacker gain their first foothold?</li>
+            <li><strong>TA0006 &mdash; Credential Access</strong> (if applicable): Do they steal credentials?</li>
+            <li><strong>TA0007 &mdash; Discovery</strong> (if applicable): Do they explore the environment?</li>
+            <li><strong>TA0009 &mdash; Collection</strong>: How do they gather the target data?</li>
+            <li><strong>TA0010 &mdash; Exfiltration</strong>: How do they transfer data out?</li>
+        </ol>
+        <div class="tip info">
+            <strong>Reference:</strong> Browse all tactics at <a href="https://attack.mitre.org/tactics/enterprise/" target="_blank">attack.mitre.org/tactics/enterprise/</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4>Step 3: Identify the Techniques (the "HOW")</h4>
+        <p>For each tactic, find the matching technique on the MITRE ATT&amp;CK website:</p>
+        <ol>
+            <li>Go to <a href="https://attack.mitre.org/" target="_blank">attack.mitre.org</a></li>
+            <li>Click on the relevant Tactic</li>
+            <li>Browse the list of Techniques and find the one that best matches your scenario</li>
+            <li>Note the technique ID (e.g., <code>T1566.001</code> for Spearphishing Attachment)</li>
+        </ol>
+        <div class="tip warning">
+            <strong>Tip:</strong> Many techniques have <strong>sub-techniques</strong> (e.g., T1567<strong>.002</strong>). Check if a sub-technique is a more precise match than the parent technique.
+        </div>
+    </div>
+
+    <div class="card">
+        <h4>Step 4: Describe the Procedures (the "WHO/WHAT")</h4>
+        <p>For each technique, write a short description of how the attacker specifically uses it in your scenario. You can also look up known threat groups that use this technique.</p>
+        <p>Check the "Procedure Examples" section on each technique's page on the MITRE website.</p>
+    </div>
+
+    <div class="card">
+        <h4>Step 5: Define Mitigations (the "DEFENSE")</h4>
+        <p>For each technique, identify what controls could prevent or reduce the attack:</p>
+        <ol>
+            <li>On the technique page, scroll to the <strong>"Mitigations"</strong> section</li>
+            <li>Note the mitigation ID and name (e.g., <code>M1032</code> &mdash; Multi-factor Authentication)</li>
+            <li>Add any additional mitigations you think are relevant</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h4>Step 6: Define Detection Strategies (the "HOW TO FIND IT")</h4>
+        <p>For each technique, describe how a security team could detect this activity:</p>
+        <ul>
+            <li>What <strong>logs</strong> should be monitored?</li>
+            <li>What <strong>alerts</strong> should be configured?</li>
+            <li>What <strong>anomalies</strong> would indicate this technique is being used?</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h4>Step 7: Identify Data Sources (the "WHERE TO LOOK")</h4>
+        <p>For each technique, note which data sources provide visibility:</p>
+        <ul>
+            <li>Check the <strong>"Detection"</strong> section on the technique page for listed data sources</li>
+            <li>Common data sources: <code>DS0015</code> (Application Log), <code>DS0029</code> (Network Traffic), <code>DS0028</code> (Logon Session), <code>DS0002</code> (User Account)</li>
+        </ul>
+        <div class="tip info">
+            <strong>Full list:</strong> <a href="https://attack.mitre.org/datasources/" target="_blank">attack.mitre.org/datasources/</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4>Step 8: Fill In the Mapping Template</h4>
+        <p>Organize your findings in the table below (or use the <code>mitre_attck_mapping_flow.xlsx</code> file):</p>
+    </div>
+
+    <!-- Mapping Template -->
+    <h3>Your Mapping Template</h3>
+    <div class="mapping-row">
+        <div class="mapping-cell header">Tactics</div>
+        <div class="mapping-cell header">Techniques</div>
+        <div class="mapping-cell header">Procedures</div>
+        <div class="mapping-cell header">Mitigation</div>
+        <div class="mapping-cell header">Detection</div>
+        <div class="mapping-cell header">Data Sources</div>
+    </div>
+    <div class="mapping-row">
+        <div class="mapping-cell"><em>TA____ &mdash; ...</em></div>
+        <div class="mapping-cell"><em>T____ &mdash; ...</em></div>
+        <div class="mapping-cell"><em>Describe how...</em></div>
+        <div class="mapping-cell"><em>M____ &mdash; ...</em></div>
+        <div class="mapping-cell"><em>Monitor for...</em></div>
+        <div class="mapping-cell"><em>DS____ &mdash; ...</em></div>
+    </div>
+    <div class="mapping-row">
+        <div class="mapping-cell"><em>TA____ &mdash; ...</em></div>
+        <div class="mapping-cell"><em>T____ &mdash; ...</em></div>
+        <div class="mapping-cell"><em>Describe how...</em></div>
+        <div class="mapping-cell"><em>M____ &mdash; ...</em></div>
+        <div class="mapping-cell"><em>Monitor for...</em></div>
+        <div class="mapping-cell"><em>DS____ &mdash; ...</em></div>
+    </div>
+    <div class="mapping-row">
+        <div class="mapping-cell"><em>TA____ &mdash; ...</em></div>
+        <div class="mapping-cell"><em>T____ &mdash; ...</em></div>
+        <div class="mapping-cell"><em>Describe how...</em></div>
+        <div class="mapping-cell"><em>M____ &mdash; ...</em></div>
+        <div class="mapping-cell"><em>Monitor for...</em></div>
+        <div class="mapping-cell"><em>DS____ &mdash; ...</em></div>
+    </div>
+
+    <h3>Example: Scenario B (Google Drive) &mdash; Partial Solution</h3>
+    <details>
+        <summary>Click to reveal hint (try on your own first!)</summary>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tactic</th>
+                        <th>Technique</th>
+                        <th>Procedure</th>
+                        <th>Mitigation</th>
+                        <th>Detection</th>
+                        <th>Data Source</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TA0001<br>Initial Access</td>
+                        <td>T1566.002<br>Phishing: Spearphishing Link</td>
+                        <td>Attacker sends a targeted email with a fake Google login page link</td>
+                        <td>M1017 &mdash; User Training<br>M1032 &mdash; Multi-factor Auth</td>
+                        <td>Monitor email gateway for suspicious links; check for login anomalies</td>
+                        <td>DS0015 &mdash; Application Log</td>
+                    </tr>
+                    <tr>
+                        <td>TA0006<br>Credential Access</td>
+                        <td>T1556<br>Modify Authentication Process</td>
+                        <td>Victim enters credentials on the phishing page; attacker captures them</td>
+                        <td>M1032 &mdash; Multi-factor Auth</td>
+                        <td>Alert on logins from new devices/locations</td>
+                        <td>DS0028 &mdash; Logon Session</td>
+                    </tr>
+                    <tr>
+                        <td>TA0009<br>Collection</td>
+                        <td>T1530<br>Data from Cloud Storage</td>
+                        <td>Attacker accesses Google Drive and identifies sensitive documents</td>
+                        <td>M1018 &mdash; User Account Management</td>
+                        <td>Monitor for bulk file access or download patterns</td>
+                        <td>DS0010 &mdash; Cloud Storage</td>
+                    </tr>
+                    <tr>
+                        <td>TA0010<br>Exfiltration</td>
+                        <td>T1537<br>Transfer Data to Cloud Account</td>
+                        <td>Attacker shares files to an external Google account or downloads them</td>
+                        <td>M1057 &mdash; Data Loss Prevention</td>
+                        <td>Alert on external sharing or mass downloads from Drive</td>
+                        <td>DS0029 &mdash; Network Traffic</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </details>
+
+    <h3>Submission Checklist</h3>
+    <ul class="checklist">
+        <li>I chose one of the four scenarios</li>
+        <li>I identified at least 3 Tactics in the attack flow</li>
+        <li>I found the correct Technique ID for each Tactic from the MITRE website</li>
+        <li>I wrote a specific Procedure description for each technique</li>
+        <li>I listed at least one Mitigation (with ID) per technique</li>
+        <li>I described how to Detect each technique</li>
+        <li>I identified the relevant Data Sources</li>
+        <li>I filled in the mapping template (Excel file or Navigator)</li>
+    </ul>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: RESOURCES -->
+<!-- ============================================================ -->
+<section id="resources">
+    <h2>7. Resources</h2>
+
+    <div class="grid">
+        <div class="card">
+            <h3>MITRE ATT&amp;CK</h3>
+            <ul>
+                <li><a href="https://attack.mitre.org/" target="_blank">MITRE ATT&amp;CK Main Site</a></li>
+                <li><a href="https://mitre-attack.github.io/attack-navigator/" target="_blank">ATT&amp;CK Navigator</a></li>
+                <li><a href="https://attack.mitre.org/datasources/" target="_blank">Data Sources Catalog</a></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>MITRE Extensions</h3>
+            <ul>
+                <li><a href="https://atlas.mitre.org/" target="_blank">ATLAS</a> &mdash; AI/ML security threats</li>
+                <li><a href="https://d3fend.mitre.org/" target="_blank">D3FEND</a> &mdash; Cybersecurity countermeasures</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>SQL Injection Learning</h3>
+            <ul>
+                <li><a href="https://portswigger.net/web-security/sql-injection" target="_blank">PortSwigger Web Security Academy</a></li>
+                <li><a href="https://tryhackme.com/room/sqlinjectionlm" target="_blank">TryHackMe SQL Injection Room</a></li>
+                <li><a href="https://academy.hackthebox.com/module/details/33" target="_blank">HackTheBox SQL Injection Module</a></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Gamification</h3>
+            <ul>
+                <li><a href="https://cybergamesuk.com/data-leak" target="_blank">CyberGamesUK &mdash; Data Leak</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>MITRE ATT&amp;CK Case Study &amp; Exercise &mdash; Data Security Course</p>
+    <p>West University of Timisoara &mdash; Faculty of Economics and Business Administration</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+crypto/ttyspin
+Red Guy
+18 solves / 325 points
+Ready for a classic, yet modern gaming experience?
+
+ssh -p 32123 ttyspin@chall.lac.tf (password: ttyspin)
+
+Note: if the game isn't working locally on linux, try running export TERM=xterm-256color
+
+Flag
+Downloads
+
+game.py
+board.py

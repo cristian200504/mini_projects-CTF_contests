@@ -1,0 +1,9 @@
+Spaceship Battle
+Difficulty: Medium / Hard
+Category: Cryptography / Reverse Engineering / Programming / Forensics
+Description:
+The alien falcon swarm is closing in. This scrambled data fragment holds the master override for the spaceship arsenal—our only hope for survival. Do you have the skills to decrypt the symbols, unlock the weaponry, and unleash a devastating barrage of fire to crush the enemy fleet? 
+
+Red sirens are blaring across the bridge, and hull integrity is dropping fast. The ship's primary defense mainframes have been locked down by an automated security protocol. Our sensors are blind, our weapons are offline, and the swarm is minutes away from critical contact.
+
+Engineering managed to dump a few vital files from the ship's memory banks, but the data is heavily corrupted and ciphered.

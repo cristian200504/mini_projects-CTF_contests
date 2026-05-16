@@ -1,0 +1,16 @@
+Follow the Flock
+890
+elemental
+
+ 5 (100% liked)  0
+Man these damn seagulls keep following me around… always in a flock, obnoxious sirens blaring. And they smell like pizza.
+
+Feels like I’m being watched everywhere I go…
+
+FLAG FORMAT: CIT{Street_Name_City_Name_State}
+
+Example: CIT{Main_Street_Los_Angeles_CA}
+
+View Hint: For the out of towners
+This specific city in Connecticut is known for it's style of Pizza.
+

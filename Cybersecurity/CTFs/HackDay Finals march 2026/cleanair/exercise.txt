@@ -1,0 +1,6 @@
+CleanAir
+361
+medium
+Your Goal : Find a way to hijack this activist site. This site is protesting against air pollution. Find the bomb (the flag). Don't forget to check common routes.
+
+clean-air.hackday.fr:8000

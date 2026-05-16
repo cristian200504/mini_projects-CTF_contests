@@ -1,0 +1,182 @@
+# Abstracted Forest — Writeup
+
+## Challenge
+
+**Abstracted Forest**
+Difficulty: **hard**
+Connection format:
+
+```text
+192.168.VLAN-ID.132:3840
+```
+
+The challenge hint says to replace `VLAN-ID` with the island’s dedicated VLAN number. 
+
+---
+
+## Goal
+
+Find the correct VLAN target, connect to the service, and recover the flag.
+
+---
+
+## Initial approach
+
+The first step was to identify which VLANs actually responded on:
+
+```text
+192.168.<VLAN>.132:3840
+```
+
+A brute-force script was used to scan candidate VLAN IDs and detect live services. That quickly showed two responsive hosts:
+
+* `192.168.109.132:3840`
+* `192.168.112.132:3840`
+
+The first probing attempt only got:
+
+```text
+HTTP/1.1 400 Bad Request
+```
+
+That strongly suggested the target was an **HTTP service** and not a raw shell or custom TCP protocol. The `400` responses happened because the service expected a proper HTTP request.
+
+---
+
+## HTTP probing
+
+Once the service was treated like HTTP, the next probe sent valid requests with a `Host` header.
+
+Example raw request:
+
+```http
+GET / HTTP/1.1
+Host: 192.168.112.132
+Connection: close
+```
+
+This immediately produced meaningful responses.
+
+### VLAN 109
+
+VLAN 109 returned a normal page:
+
+```text
+Forest Journal · Forest Journal
+```
+
+It also exposed a `robots.txt` file with:
+
+```text
+Disallow: /internal/admin-panel
+Disallow: /internal/admin-panel-backup
+```
+
+That looked interesting, but nothing in the observed output directly exposed a flag.
+
+### VLAN 112
+
+VLAN 112 returned a similar page, but the body leaked sensitive data directly in the HTML:
+
+```text
+FLAGPATH=/app/flag.txt::HACKDAY{Upgrade_Y0ur_S0ftw4re_
+```
+
+That was the key indicator that **VLAN 112 was the correct target**.
+
+---
+
+## Correct connection
+
+The correct host was:
+
+```text
+192.168.112.132:3840
+```
+
+---
+
+## Flag extraction strategy
+
+Since the root page `/` already leaked the flag, the simplest solution was:
+
+1. Connect to `192.168.112.132:3840`
+2. Request `/`
+3. Search the response body for a flag pattern like:
+
+```regex
+HACKDAY\{[^}]+\}
+```
+
+---
+
+## Solver script
+
+```python
+import re
+import socket
+
+HOST = "192.168.112.132"
+PORT = 3840
+
+request = (
+    "GET / HTTP/1.1\r\n"
+    f"Host: {HOST}\r\n"
+    "Connection: close\r\n"
+    "\r\n"
+).encode()
+
+with socket.create_connection((HOST, PORT), timeout=3) as s:
+    s.sendall(request)
+    chunks = []
+    while True:
+        data = s.recv(4096)
+        if not data:
+            break
+        chunks.append(data)
+
+response = b"".join(chunks).decode(errors="ignore")
+
+match = re.search(r"HACKDAY\{[^}]+\}", response)
+if match:
+    print(match.group(0))
+else:
+    print("Flag not found")
+```
+
+---
+
+## Minimal one-liner
+
+A quick command-line version:
+
+```bash
+python -c "import re,urllib.request;print(re.search(r'HACKDAY\\{[^}]+\\}', urllib.request.urlopen('http://192.168.112.132:3840/').read().decode()).group(0))"
+```
+
+---
+
+## What happened
+
+This challenge turned out not to require RCE, auth bypass, or a hidden admin endpoint to get the flag. The vulnerable service on VLAN 112 was simply leaking the flag in the root HTML response.
+
+The main challenge was identifying:
+
+* which VLAN was the real target
+* that the service was HTTP
+* that `400 Bad Request` meant the probing method was wrong, not that the host was useless
+
+---
+
+## Final result
+
+* **Correct VLAN:** `112`
+* **Correct connection:** `192.168.112.132:3840`
+* **Flag location:** leaked in `/` response body
+* **Flag format:** `HACKDAY{...}`
+
+---
+
+## Notes
+
+The challenge description provided the connection template but not the actual VLAN number, so enumeration was necessary. 
