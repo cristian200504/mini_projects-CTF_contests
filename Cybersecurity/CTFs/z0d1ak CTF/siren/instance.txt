@@ -1,0 +1,1 @@
+ncat --ssl siren-162ef798f77b.chals.z0d1ak.org 1337
