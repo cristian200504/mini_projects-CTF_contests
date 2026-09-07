@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "name": "perchance",
+  "description": "NNS CTF 2026",
+  "version": "1.0",
+  "permissions": [
+    "storage",
+    "webNavigation",
+    "tabs",
+    "scripting",
+    "webRequest",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true,
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    "*"
+  ],
+  "options_ui": {
+    "page": "options.html"
+  },
+  "content_security_policy": "default-src 'self' 'unsafe-eval' 'unsafe-inline'; script-src 'self' 'unsafe-eval'",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "perchance@2026.nnsc.tf"
+    }
+  }
+}

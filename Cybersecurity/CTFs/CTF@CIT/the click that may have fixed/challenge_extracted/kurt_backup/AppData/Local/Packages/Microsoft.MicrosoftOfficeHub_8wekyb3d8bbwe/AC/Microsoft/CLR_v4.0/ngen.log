@@ -1,7 +1,0 @@
-﻿To learn about increasing the verbosity of the NGen log files please see http://go.microsoft.com/fwlink/?linkid=210113
-04/17/2026 22:31:15.068 [3508]: Uninstalling assembly C:\Program Files\WindowsApps\Microsoft.MicrosoftOfficeHub_18.1903.1152.0_x64__8wekyb3d8bbwe\MyOffice.winmd because of an error during compilation: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)).
-04/17/2026 22:31:15.083 [3508]: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))
-04/17/2026 22:31:15.083 [3508]: ngen returning 0xffffffff
-04/17/2026 22:31:15.177 [5492]: Uninstalling assembly C:\Program Files\WindowsApps\Microsoft.MicrosoftOfficeHub_18.1903.1152.0_x64__8wekyb3d8bbwe\WinMetadata\Windows.winmd because of an error during compilation: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)).
-04/17/2026 22:31:15.177 [5492]: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))
-04/17/2026 22:31:15.177 [5492]: ngen returning 0xffffffff

@@ -1,0 +1,25 @@
+dont-worry
+by 0xle
+·
+Web
+100 pts
+68 solves
+Details
+Solves
+(68)
+Description
+Don't worry, be happy.
+
+Instancer
+Endpoint
+https
+https://dont-worry-abb51c3813ed.chall.nnsc.tf
+
+59:19 remaining
+Extend
+Stop
+Admin bot
+url
+^/
+Submit
+Download config

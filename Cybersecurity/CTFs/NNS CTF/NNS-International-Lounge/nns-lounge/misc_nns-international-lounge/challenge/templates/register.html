@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<main class="auth">
+  <h1>Join the lounge</h1>
+  <form method="post">
+    <label>First name<input name="first_name" required maxlength="32" autocomplete="given-name"></label>
+    <label>Last name<input name="last_name" required maxlength="32" autocomplete="family-name"></label>
+    <label>Password<input name="password" required minlength="8" type="password" autocomplete="new-password"></label>
+    <button>Create membership</button>
+  </form>
+  <p>Already a member? <a href="/login">Log in</a>.</p>
+</main>
+{% endblock %}

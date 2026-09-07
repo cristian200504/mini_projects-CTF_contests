@@ -1,0 +1,51 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: domains.triangle.io
+spec:
+  group: triangle.io
+  scope: Cluster
+  names:
+    kind: Domain
+    listKind: DomainList
+    plural: domains
+    singular: domain
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      additionalPrinterColumns:
+        - name: Host
+          type: string
+          jsonPath: .spec.host
+        - name: Namespace
+          type: string
+          jsonPath: .spec.siteRef.namespace
+        - name: Site
+          type: string
+          jsonPath: .spec.siteRef.name
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required:
+                - host
+                - siteRef
+              properties:
+                host:
+                  type: string
+                  maxLength: 253
+                siteRef:
+                  type: object
+                  required:
+                    - namespace
+                    - name
+                  properties:
+                    namespace:
+                      type: string
+                      maxLength: 63
+                    name:
+                      type: string
+                      maxLength: 63

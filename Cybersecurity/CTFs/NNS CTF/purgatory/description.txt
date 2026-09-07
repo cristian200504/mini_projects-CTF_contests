@@ -1,0 +1,4 @@
+We hot patched the validator during business hours. Nothing crashed, which is a good sign.
+
+Instance:
+ncat --ssl purgatory-da8b8ebf1fbc.chall.nnsc.tf 1337

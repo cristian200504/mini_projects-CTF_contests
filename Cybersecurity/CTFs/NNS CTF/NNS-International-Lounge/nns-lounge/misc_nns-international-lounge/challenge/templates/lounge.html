@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Welcome · NNS International Lounge{% endblock %}
+{% block content %}
+<main class="celebration">
+  <div class="sun"><span>☀</span></div>
+  <div class="float float-a">🌴</div>
+  <div class="float float-b">🍹</div>
+  <div class="float float-c">🏖️</div>
+  <h1>Welcome to summer, {{ user.first_name }}!</h1>
+  <p>Enjoy our lounge. Returning to your membership in <span id="countdown">5</span>s.</p>
+  {% if flag %}<p class="notice flag"><strong>{{ flag }}</strong><br></p>{% endif %}
+</main>
+<script>
+  let remaining = 10;
+  const counter = document.querySelector('#countdown');
+  const timer = setInterval(() => {
+    remaining -= 1;
+    counter.textContent = remaining;
+    if (remaining <= 0) {
+      clearInterval(timer);
+      window.location.href = '/';
+    }
+  }, 1000);
+</script>
+{% endblock %}

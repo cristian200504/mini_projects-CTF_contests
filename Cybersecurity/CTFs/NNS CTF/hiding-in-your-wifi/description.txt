@@ -1,0 +1,7 @@
+I'm on your network. There is a client at 10.10.10.20 that keeps fetching something from the web server at 10.10.10.10, and the server only talks to the client.
+
+You are 10.10.10.66. You have arpspoof and tcpdump.
+
+Instance:
+ncat --ssl hiding-in-your-wifi-f3bbaf9e8fe8.chall.nnsc.tf 1337
+

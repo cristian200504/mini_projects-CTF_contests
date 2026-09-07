@@ -1,0 +1,4 @@
+# The challenge does not require brute force, which is explicitly prohibited by the rules, and the solution should not rely on guesswork.
+# If you are taking this approach, you are on the wrong track. This file exists solely to reduce the impact of automated crawlers.
+User-Agent: *
+Disallow: /

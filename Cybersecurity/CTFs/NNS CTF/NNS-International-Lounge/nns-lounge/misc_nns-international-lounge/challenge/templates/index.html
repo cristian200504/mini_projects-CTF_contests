@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user %}
+<main class="account">
+  <header class="page-title">
+    <h1>Account</h1>
+    <form action="/logout" method="post"><button class="text-button">Log out</button></form>
+  </header>
+  <section class="identity">
+    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+    <p>Lounge access number</p>
+    <strong>{{ user.member_id }}</strong>
+  </section>
+  <section class="entitlement">
+    <h2>My entitlement</h2>
+    <div class="ring">{{ user.remaining_visits }}</div>
+    <p class="ring-label">Visits remaining</p>
+    <div class="metrics">
+      <div><strong>{{ user.visits_used }}</strong><span>Visits used</span></div>
+      <div><strong>0</strong><span>Visits pending</span></div>
+    </div>
+    <button type="button" class="updated" id="refresh">
+      <span class="refresh-icon" aria-hidden="true">↻</span>
+      <span class="refresh-label">Updated just now</span>
+    </button>
+    <p class="note">Your lounge entitlement includes {{ allowance }} visits and is valid until {{ user.expires_at.strftime('%d %b %Y') }}. Your digital pass updates after every visit.</p>
+  </section>
+  <section class="pass-card">
+    <div><h2>Digital lounge pass</h2><p>{{ user.remaining_visits }} visits remaining</p></div>
+    <img src="/pass.png?v={{ user.visits_used }}" alt="Current QR lounge pass">
+    <a class="button secondary" href="/pass.png?v={{ user.visits_used }}" download="nns-international-lounge-pass.png">Download pass</a>
+  </section>
+  <section class="scanner">
+    <h2>Enter the lounge</h2>
+    <p>Upload your latest digital pass. A new pass is issued after each visit.</p>
+    <form action="/lounge" method="post" enctype="multipart/form-data">
+      <label class="file-input">
+        <input required type="file" name="ticket" accept="image/png,image/jpeg">
+        <span class="file-input-title">Drop your QR pass here</span>
+        <span class="file-input-hint">or click to choose an image</span>
+      </label>
+      <button>Scan pass</button>
+    </form>
+  </section>
+</main>
+<script>
+  const drop = document.querySelector('.file-input');
+  const ticket = drop.querySelector('input[type="file"]');
+  const title = drop.querySelector('.file-input-title');
+  const hint = drop.querySelector('.file-input-hint');
+  const idle = {title: title.textContent, hint: hint.textContent};
+
+  for (const type of ['dragenter', 'dragover']) {
+    drop.addEventListener(type, event => {
+      event.preventDefault();
+      drop.classList.add('is-dragging');
+    });
+  }
+  for (const type of ['dragleave', 'dragend', 'drop']) {
+    drop.addEventListener(type, () => drop.classList.remove('is-dragging'));
+  }
+  ticket.addEventListener('change', () => {
+    const file = ticket.files[0];
+    drop.classList.toggle('has-file', Boolean(file));
+    title.textContent = file ? file.name : idle.title;
+    hint.textContent = file ? 'drop or click to replace' : idle.hint;
+  });
+
+  const refresh = document.querySelector('#refresh');
+  refresh.addEventListener('click', () => {
+    if (refresh.classList.contains('is-refreshing')) return;
+    refresh.classList.add('is-refreshing');
+    refresh.querySelector('.refresh-label').textContent = 'Refreshing\u2026';
+    setTimeout(() => window.location.reload(), 550);
+  });
+</script>
+{% else %}
+<main class="welcome">
+  <h1>NNS International Lounge</h1>
+  <p class="welcome-text">Get access to a quiet seat, a hot meal and a drink before every departure. Membership includes four lounge visits</p>
+  <div class="actions"><a class="button" href="/register">Create membership</a><a class="button secondary" href="/login">Log in</a></div>
+</main>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<main class="auth">
+  <h1>Welcome back</h1>
+  <form method="post">
+    <label>First name<input name="first_name" required autocomplete="given-name"></label>
+    <label>Last name<input name="last_name" required autocomplete="family-name"></label>
+    <label>Password<input name="password" required type="password" autocomplete="current-password"></label>
+    <button>Log in</button>
+  </form>
+  <p>New here? <a href="/register">Create a membership</a>.</p>
+</main>
+{% endblock %}

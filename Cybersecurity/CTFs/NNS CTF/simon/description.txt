@@ -1,0 +1,4 @@
+You are Simon. Simon must select the optimal seat for his upcoming flight!
+
+Instance:
+https://simon-c8fd32f1cb46.chall.nnsc.tf

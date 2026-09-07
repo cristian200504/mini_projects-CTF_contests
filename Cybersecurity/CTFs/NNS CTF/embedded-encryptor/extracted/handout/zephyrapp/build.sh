@@ -1,0 +1,1 @@
+west build --build-dir build . --pristine --board nucleo_f103rb/stm32f103xb -- -DCONF_FILE="prj.conf" -DDEBUG_THREAD_INFO=On -DCONFIG_DEBUG_THREAD_INFO=y -Dzephyrapp_DEBUG_THREAD_INFO=Off -DDTC_OVERLAY_FILE="nucleo.dtoverlay"

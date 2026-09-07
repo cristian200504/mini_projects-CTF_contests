@@ -1,0 +1,6 @@
+Wanna see my coin collection? You see, I'm somewhat of a numismatist myself.
+
+I'll give you a flag if you can pay for it in my kind of money.
+
+Instance:
+ncat --ssl coins-c0e5d8bb33fa.chall.nnsc.tf 1337

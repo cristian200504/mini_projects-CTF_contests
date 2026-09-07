@@ -1,0 +1,7 @@
+The NNS house has never been cleaner, but our old ECOVACS DEEBOT T9 AIVI is still running firmware 1.4.9 from 2021. We extracted the web CGI from that firmware and are hosting it here for you. The floors may be spotless. The firmware is another story. Can you sweep through it and get root?
+
+Note
+The flag is located at /root/flag.txt
+
+Instance:
+https://clean-sweep-1050155e9ca7.chall.nnsc.tf

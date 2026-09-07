@@ -1,0 +1,6 @@
+I recently found out janet's sandbox has a bunch of issues.
+
+It should be secure with my changes, so let's see if there is any hope for this "sandbox"
+
+Instance:
+ncat --ssl jailnet-f27162716dcb.chall.nnsc.tf 1337

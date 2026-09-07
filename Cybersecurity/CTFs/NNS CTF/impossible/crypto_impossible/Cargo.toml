@@ -1,0 +1,10 @@
+[package]
+name = "impossible-player"
+version = "1.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+pairing = "=0.14.2"
+bellman = "=0.1.0"
+blake2-rfc = "=0.2.18"

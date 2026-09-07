@@ -1,0 +1,7 @@
+services:
+  purgatory:
+    build: .
+    environment:
+      FLAG: "NNS{local}"
+    ports:
+      - "1337:1337"

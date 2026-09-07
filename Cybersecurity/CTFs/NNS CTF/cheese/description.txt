@@ -1,0 +1,8 @@
+Would you rather practice for an exam, or find a way to cheese it?
+
+Note
+It is not recommended to open the "exam link" directly on your machine.
+
+
+Instance:
+https://cheese-629690310523.chall.nnsc.tf

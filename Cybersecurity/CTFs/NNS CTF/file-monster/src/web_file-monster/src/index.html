@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Monster</title>
+    <link rel="stylesheet" href="../public/simplecss.css" />
+  </head>
+  <body>
+    <h1>File Monster</h1>
+    <p>The file monster likes to eat files. Send it some! Maybe it will even add some flags to the files?</p>
+    <form action="/upload" method="POST" class="notice" enctype="multipart/form-data">
+      <h4>Upload new file</h4>
+      <label for="file">File:</label>
+      <input type="file" name="file" id="file" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <details>
+      <summary>Analyze uploaded files using MongoDB</summary>
+      <p>We allow you to analyze the backend database entries using a read-only MongoDB user.</p>
+    </details>
+  </body>
+</html>

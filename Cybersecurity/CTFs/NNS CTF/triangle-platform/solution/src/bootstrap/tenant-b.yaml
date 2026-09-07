@@ -1,0 +1,36 @@
+apiVersion: triangle.io/v1
+kind: Site
+metadata:
+  name: invoices
+  namespace: tenant-b
+spec:
+  siteYAML: |
+    target:
+      plane: edge
+    integrations:
+      - forms
+    server:
+      root: /srv/site
+      index: index.html
+    content: |
+      <!doctype html>
+      <html lang="en">
+      <head>
+      <meta charset="utf-8">
+      <title>Acme Invoices</title>
+      </head>
+      <body>
+      <h1>Acme Invoices</h1>
+      <p>Invoicing for small businesses.</p>
+      </body>
+      </html>
+---
+apiVersion: triangle.io/v1
+kind: Domain
+metadata:
+  name: tenant-b-acme-invoices
+spec:
+  host: acme-invoices.sites.triangle.tld
+  siteRef:
+    namespace: tenant-b
+    name: invoices

@@ -1,0 +1,22 @@
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: site-target-plane
+spec:
+  failurePolicy: Fail
+  validationActions:
+    - Deny
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ["triangle.io"]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["sites"]
+  variables:
+    - name: cfg
+      expression: "yaml.parse(object.spec.siteYAML)"
+  validations:
+    - expression: >-
+        !has(variables.cfg.target.plane) ||
+        variables.cfg.target.plane in ['origin', 'edge']
+      message: "target.plane must be origin or edge"

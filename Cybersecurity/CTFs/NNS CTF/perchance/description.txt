@@ -1,0 +1,7 @@
+perchance
+
+Tip
+doc.rust-lang.org itself is out of scope!
+
+Instance:
+https://perchance-34122967b49c.chall.nnsc.tf

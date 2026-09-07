@@ -1,0 +1,14 @@
+name: "php-is-my-passion-dev"
+
+configs:
+  flag:
+    content: "NNS{test_flag}"
+
+services:
+  phpbb:
+    build: "."
+    configs:
+      - source: "flag"
+        target: "/flag.txt"
+    ports:
+      - "127.0.0.1:8080:8080"

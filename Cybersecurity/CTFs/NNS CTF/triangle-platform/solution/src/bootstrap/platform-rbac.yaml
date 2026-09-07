@@ -1,0 +1,76 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: triangle-edge
+  namespace: triangle-system
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["create", "get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: triangle-edge
+  namespace: triangle-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: triangle-edge
+subjects:
+  - kind: ServiceAccount
+    name: tri-edge
+    namespace: tenant-a
+  - kind: ServiceAccount
+    name: tri-edge
+    namespace: tenant-b
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: triangle:edge
+rules:
+  - apiGroups: ["triangle.io"]
+    resources: ["sites", "domains"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: triangle:edge
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: triangle:edge
+subjects:
+  - kind: ServiceAccount
+    name: tri-edge
+    namespace: tenant-a
+  - kind: ServiceAccount
+    name: tri-edge
+    namespace: tenant-b
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: triangle:registry-sync
+rules:
+  - apiGroups: ["triangle.io"]
+    resources: ["domains"]
+    verbs: ["create", "get", "list", "watch"]
+  - apiGroups: ["triangle.io"]
+    resources: ["sites"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: triangle:registry-sync
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: triangle:registry-sync
+subjects:
+  - kind: ServiceAccount
+    name: tri-registry-sync
+    namespace: triangle-system

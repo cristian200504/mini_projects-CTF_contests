@@ -1,0 +1,6 @@
+NNS Air has launched a brand new travel agency: NNS Air Travel Agency. Now you just need to find the tickets they ordered for you.
+
+The flag is located at /flag.txt.
+
+Instance:
+https://nns-travel-686fdc5fa6d6.chall.nnsc.tf

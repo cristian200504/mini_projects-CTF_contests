@@ -1,0 +1,9 @@
+build*/
+.west
+zephyr
+modules
+.venv
+tools
+doc
+modules
+bootloader

@@ -1,0 +1,132 @@
+"""
+Given (F,G)-shaped candidates recovered by attack.py's gradient descent,
+algebraically derive the exact sparse f (up to rotation/sign) via:
+
+  1. f*G - g*F = q has general solution (f,g) = (f0,g0) + c*(F,G) for any
+     ring element c (the homogeneous kernel of "u*G - v*F = 0" is exactly
+     the (F,G)-multiples, since F,G are coprime).
+  2. Get ONE particular solution (f0,g0) by reusing chall.sage's own keygen()
+     construction (xgcd against phi, not against each other!) with the roles
+     of (f,g) and (F,G) swapped: gen_particular(G,F) gives (g0,f0) satisfying
+     G*f0 - F*g0 = q.
+  3. Babai-round c = round(-f0/F) (same K=Q[y]/(y^N-1) division trick keygen()
+     itself uses for size-reduction) to push f0 down into the SAME small
+     coset as the true f: f_cand = f0 + c*F.
+  4. f_cand is then f up to sign and rotation; try all N rotations x2 signs,
+     hash, AES-decrypt ct, check padding.
+
+Run with: sage derive_and_verify.sage <candidates.json>
+"""
+import json
+import sys
+from hashlib import sha256
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+
+path = sys.argv[1] if len(sys.argv) > 1 else "fg_candidates.json"
+with open(path) as f:
+    data = json.load(f)
+
+N, q = data["N"], data["q"]
+ct = bytes.fromhex(data["ct"])
+candidates = data["candidates"]
+print(f"loaded {len(candidates)} candidates", flush=True)
+
+R = PolynomialRing(ZZ, 'x')
+x = R.gen()
+Qy = PolynomialRing(QQ, 'y')
+y = Qy.gen()
+K = Qy.quotient(y**N - 1, 'z')
+phi = x**N - 1
+
+
+def gen_particular(p, w, qval):
+    """Same construction as chall.sage's keygen(). Returns (X,Y) with
+    p*Y - w*X = qval (exact identity mod phi), or None if the retry
+    conditions keygen() itself checks would fail for this (p,w) -- e.g. a
+    spurious (non-genuine) candidate row that isn't actually coprime to phi."""
+    try:
+        rp, a, _ = p.xgcd(phi)
+        rw, b, _ = w.xgcd(phi)
+        if rp.degree() > 0 or rw.degree() > 0:
+            return None
+        if gcd(ZZ(rp), qval) != 1:
+            return None
+        d, u, v = xgcd(ZZ(rp), ZZ(rw))
+        if abs(d) != 1:
+            return None
+        u = u / d
+        v = v / d
+        X = (-qval * v * b) % phi
+        Y = (qval * u * a) % phi
+        return X, Y
+    except Exception:
+        return None
+
+
+def try_flag(f_poly):
+    coeffs = f_poly.list()
+    coeffs = coeffs + [0] * (N - len(coeffs))
+    for r in range(N):
+        rot = coeffs[-r:] + coeffs[:-r] if r else coeffs[:]
+        key = sha256(bytes(int(c) % 256 for c in rot)).digest()
+        try:
+            pt = AES.new(key, AES.MODE_ECB).decrypt(ct)
+            flag = unpad(pt, 16)
+        except Exception:
+            continue
+        # PKCS7 unpad alone has a ~1/256 false-accept rate across this many
+        # trials (251 rotations x 2 signs x many candidates); require the
+        # plaintext to actually look like a flag.
+        if flag.startswith(b"NNS{") and flag.endswith(b"}") and flag.isascii():
+            return flag
+    return None
+
+
+BASE_WINDOW = int(sys.argv[2]) if len(sys.argv) > 2 else 8
+
+found = None
+attempts = 0
+for idx, cand in enumerate(candidates):
+    rel_F = cand["F"]  # difference vector: rel_F[0] == 0, true_F == rel_F + base_F
+    rel_G = cand["G"]
+    guess_F = -int(round(sum(rel_F) / float(N)))
+    guess_G = -int(round(sum(rel_G) / float(N)))
+
+    for base_F in range(guess_F - BASE_WINDOW, guess_F + BASE_WINDOW + 1):
+        Fc = R([c + base_F for c in rel_F])
+        for base_G in range(guess_G - BASE_WINDOW, guess_G + BASE_WINDOW + 1):
+            Gc = R([c + base_G for c in rel_G])
+
+            for sign in (1, -1):
+                attempts += 1
+                Fs, Gs = sign * Fc, sign * Gc
+                result = gen_particular(Gs, Fs, q)
+                if result is None:
+                    continue
+                g0, f0 = result  # G*f0 - F*g0 = q  =>  f0*G - g0*F = q
+
+                try:
+                    c_poly = R([round(coef) for coef in K(Qy(list(f0))) / K(Qy(list(Fs)))])
+                except Exception:
+                    continue
+
+                f_cand = (f0 - c_poly * Fs) % phi
+
+                flag = try_flag(f_cand)
+                if flag is not None:
+                    print(f"[candidate {idx}, base_F={base_F}, base_G={base_G}, sign={sign}] SUCCESS: {flag}")
+                    found = flag
+                    break
+            if found is not None:
+                break
+        if found is not None:
+            break
+    if found is not None:
+        break
+    print(f"  candidate {idx+1}/{len(candidates)} done ({attempts} attempts so far), no hit yet", flush=True)
+
+if found is None:
+    print("FAILED: no candidate yielded a valid flag")
+else:
+    print("FLAG:", found.decode(errors="replace"))

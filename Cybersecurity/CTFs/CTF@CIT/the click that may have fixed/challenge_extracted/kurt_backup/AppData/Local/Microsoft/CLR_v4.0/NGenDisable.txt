@@ -1,2 +1,0 @@
-C:\Program Files\WindowsApps\Microsoft.MicrosoftOfficeHub_18.1903.1152.0_x64__8wekyb3d8bbwe\MyOffice.winmd	637113092556399287
-C:\Program Files\WindowsApps\Microsoft.MicrosoftOfficeHub_18.1903.1152.0_x64__8wekyb3d8bbwe\\WinMetadata\Windows.winmd	637113092563205432

@@ -1,0 +1,24 @@
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: site-integration-entitlement
+spec:
+  failurePolicy: Fail
+  validationActions:
+    - Deny
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ["triangle.io"]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["sites"]
+  variables:
+    - name: cfg
+      expression: "yaml.parse(object.spec.siteYAML)"
+    - name: plan
+      expression: "['forms', 'analytics']"
+  validations:
+    - expression: >-
+        !has(variables.cfg.integrations) ||
+        variables.cfg.integrations.all(i, i in variables.plan)
+      message: "site declares an integration that is not on this plan"

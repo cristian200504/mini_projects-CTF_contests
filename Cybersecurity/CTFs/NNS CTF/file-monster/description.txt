@@ -1,0 +1,11 @@
+The file monster like files and flags.
+
+Instance:
+Web Interface
+https
+https://file-monster-4a946a47e6a2.chall.nnsc.tf
+
+MongoDB (TLS)
+TCP+SSL
+ncat --ssl file-monster-db-4a946a47e6a2.chall.nnsc.tf 1337
+

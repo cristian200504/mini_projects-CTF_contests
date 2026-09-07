@@ -1,0 +1,18 @@
+{
+  "name": "nns-ctf-2026-perchance",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@playwright/test": "1.62.1",
+    "playwright": "1.62.1",
+    "playwright-webextext": "0.0.5",
+    "tslib": "2.8.1"
+  }
+}

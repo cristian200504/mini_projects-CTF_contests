@@ -1,0 +1,5 @@
+&rcc {
+        clocks = <&clk_hse>;
+        clock-frequency = <DT_FREQ_M(4)>;
+        ahb-prescaler = <2>;
+};

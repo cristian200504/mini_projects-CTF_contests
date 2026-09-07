@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ASS</title>
+    <style>
+      body {
+        font:
+          15px/1.5 system-ui,
+          sans-serif;
+        max-width: 46rem;
+        margin: 3rem auto;
+        padding: 0 1rem;
+      }
+      form {
+        display: flex;
+        gap: 0.5rem;
+      }
+      input,
+      select,
+      button {
+        font: inherit;
+        padding: 0.4rem 0.6rem;
+      }
+      input {
+        flex: 1;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 0.75rem;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Administration Self-Service</h1>
+
+    <form id="request">
+      <input
+        id="name"
+        placeholder="Principal name"
+        autocomplete="off"
+        required
+      />
+      <select id="profile">
+        <option value="CLIENT">CLIENT</option>
+        <option value="ADMIN">ADMIN</option>
+      </select>
+      <button type="submit">Request certificate</button>
+    </form>
+    <pre id="output"></pre>
+
+    <p><a href="/ca.pem">Issuing CA certificate</a></p>
+
+    <script>
+      document
+        .getElementById("request")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          var output = document.getElementById("output");
+          output.textContent = "...";
+          try {
+            var reply = await fetch("/certificates", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({
+                profile: document.getElementById("profile").value,
+                name: document.getElementById("name").value,
+              }),
+            });
+            output.textContent = JSON.stringify(await reply.json(), null, 2);
+          } catch (error) {
+            output.textContent = String(error);
+          }
+        });
+    </script>
+  </body>
+</html>
