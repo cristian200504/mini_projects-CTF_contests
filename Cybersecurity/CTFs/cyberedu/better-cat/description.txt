@@ -1,0 +1,14 @@
+4.58
+150
+1623
+better-cat
+NOT SOLVED
+by Lucian Ioan Nitescu
+ Description
+You might need to look for a certain password.
+
+Flag format: ctf{sha256}
+
+Goal: In this challenge you have to obtain the password string or flag from the binary file.
+
+The challenge was created by Bit Sentinel.

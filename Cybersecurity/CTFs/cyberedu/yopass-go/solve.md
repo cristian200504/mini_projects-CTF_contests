@@ -1,0 +1,6 @@
+opened yopass.elf in binary ninja
+
+ found main.main
+
+flag:
+ **ctf{0962393ce380c3cf696c6c59a085cde0f7edd1382f2e9090220abdf9a6396c88}**

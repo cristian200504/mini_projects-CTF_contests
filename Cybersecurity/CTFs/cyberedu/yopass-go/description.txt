@@ -1,0 +1,9 @@
+yopass-go
+NOT SOLVED
+by Lucian Ioan Nitescu
+ Description
+The password is so clear that it is the flag itself.
+
+Flag format: CTF{sha256}
+
+The challenge was proposed by BIT SENTINEL. 

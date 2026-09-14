@@ -1,0 +1,25 @@
+4.71
+500
+1972
+injector
+SOLVED
+by skyv3il
+ Description
+Try harder!!
+
+
+ Service Instance
+You need to interact with this service in order to solve this task. Please note that sometimes even when the service is running, it may be non-functional for a short period of time until it loads completely.
+
+Status:
+Alive
+Terminates:
+in 1h 29m 11s
+Last Restart:
+Never
+Restarts:
+0 / 4
+Last Checked:
+20s ago
+Port 1234:
+34.179.231.75:30654
