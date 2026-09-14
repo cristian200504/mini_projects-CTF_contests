@@ -1,0 +1,12 @@
+4.70
+10
+928
+basic-coms
+NOT SOLVED
+by Lucian Ioan Nitescu
+ Description
+Look for it and you shall find the flag.
+
+Flag format: CTF{sha256}
+
+The challenge was proposed by BIT SENTINEL.

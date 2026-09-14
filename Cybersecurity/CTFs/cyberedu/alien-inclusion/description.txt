@@ -1,0 +1,14 @@
+
+alien-inclusion
+NOT SOLVED
+by Lucian Ioan Nitescu
+ Description
+Keep it local and you should be fine. The flag is in /var/www/html/flag.php.
+
+Flag format: CTF{sha256}
+
+The challenge was proposed by BIT SENTINEL.
+
+
+ Service Instance
+You need to interact with this service in order to solve this task. Please note that sometimes even when the service is running, it may be non-functional for a short period of time until it loads completely.

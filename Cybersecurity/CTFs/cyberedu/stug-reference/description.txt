@@ -1,0 +1,12 @@
+4.61
+10
+945
+stug-reference
+NOT SOLVED
+by Lucian Ioan Nitescu
+ Description
+Do you have your own stug pass hidden within?
+
+Flag format: ctf{sha256}
+
+The challenge was proposed by BIT SENTINEL.

@@ -1,0 +1,8 @@
+4.58
+500
+961
+source
+NOT SOLVED
+by tomadimitrie
+ Description
+I store all my secrets in binaries, no one can read them if they don't have the source code!
