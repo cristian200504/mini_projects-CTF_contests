@@ -1,0 +1,29 @@
+4.70
+182
+916
+web-intro
+NOT SOLVED
+by Lucian Ioan Nitescu
+ Description
+Are you an admin?
+
+Note: Access Denied is part of the challenge.
+
+Flag format: CTF{sha256}
+
+
+ Service Instance
+You need to interact with this service in order to solve this task. Please note that sometimes even when the service is running, it may be non-functional for a short period of time until it loads completely.
+
+Status:
+Alive
+Terminates:
+in 0h 27m 21s
+Last Restart:
+Never
+Restarts:
+0 / 4
+Last Checked:
+14s ago
+Port 5000:
+34.179.231.75:32699

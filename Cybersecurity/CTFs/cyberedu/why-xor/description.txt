@@ -1,0 +1,12 @@
+4.48
+10
+820
+why-xor
+NOT SOLVED
+by Lucian Ioan Nitescu
+ Description
+Let's be fair, we all start with XOR, and we keep enjoying it.
+
+Flag format: CTF{sha256}
+
+The challenge was proposed by BIT SENTINEL.
