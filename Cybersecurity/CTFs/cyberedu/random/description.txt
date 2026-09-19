@@ -1,0 +1,11 @@
+4.64
+500
+642
+random
+NOT SOLVED
+by tomadimitrie
+ Description
+Get the flag, is more easy!!
+
+Instance:
+34.179.231.75:31215

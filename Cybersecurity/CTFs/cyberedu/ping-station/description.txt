@@ -1,0 +1,9 @@
+Just another ping service to audit.
+
+About the challenge
+The challenge was initially published at European Cyber Security Challenge 2020 - the national phase organised in Romania. The challenge was created by Bit Sentinel.
+
+European Cyber Security Challenge (ECSC) is the annual European event that brings together young talent from across Europe to have fun and compete in cybersecurity!
+
+Instance:
+34.179.250.187:31276
