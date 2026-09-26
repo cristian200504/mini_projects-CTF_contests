@@ -1,0 +1,6 @@
+Free tickets for everyone! Support tickets that you should resolve!
+
+Flag format: CTF{sha256}
+
+Instance:
+34.107.28.150:31880
