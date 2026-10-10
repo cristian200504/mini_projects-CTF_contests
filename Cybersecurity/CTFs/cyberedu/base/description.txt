@@ -1,0 +1,13 @@
+Steve Kobbs is a specialist in meteorology.
+
+He was called to offer his expertise on the last tsunami which took place in our country.
+
+While Steve was working, a mysterious package arrived at the door.
+
+Inside, an USB stick was found, containing the following audio file: rain.wav
+
+Flag format: The correct answer is in plaintext and must be sent to players in the form of ctf{sha256 of plaintext word}.
+
+Goal: Use various techniques to analyse audio files in order to recover the flag which is hidden in the file rain.wav.
+
+The challenge was created by Bit Sentinel.

@@ -1,0 +1,19 @@
+ Description
+Se spune ca fericirea nu poate fi cumparata. Acesta este cazul si pentru acest magazin. Trebuie sa gasesti o vulnerabilitate in aceasta aplicatie si sa recuperezi secretul.
+
+
+ Service Instance
+You need to interact with this service in order to solve this task. Please note that sometimes even when the service is running, it may be non-functional for a short period of time until it loads completely.
+
+Status:
+Alive
+Terminates:
+in 0h 58m 55s
+Last Restart:
+Never
+Restarts:
+0 / 4
+Last Checked:
+2s ago
+Port 5000:
+34.40.88.204:31966
