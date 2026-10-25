@@ -1,0 +1,16 @@
+Patient Vist S[BACKSPACE][BACKSPACE][BACKSPACE][BACKSPACE]sit Summary
+
+\P[BACKSPACE][BACKSPACE][BACKSPACE]
+Patient: Jordan A. Whitfield
+DOB 03/14/9[BACKSPACE]1989
+
+Visit Date: 07/25/2026
+
+Primary Complaint:
+	[BACKSPACE]Patient rp[BACKSPACE][BACKSPACE]presents with intermittend lower p[BACKSPACE]back p[a[BACKSPACE][BACKSPACE]pa[BACKSPACE][BACKSPACE]ain, mild fatigue, and occasinal tension headaches overthe[BACKSPACE][BACKSPACE][BACKSPACE] the pas three weeks
+
+
+Notes:
+	[BACKSPACE]Mae[BACKSPACE][BACKSPACE]echnical lower p[BACKSPACE]bakc [BACKSPACE][BACKSPACE][BACKSPACE]ck strain [BACKSPACE], ;lio[BACKSPACE][BACKSPACE][BACKSPACE]ikely related to re[BACKSPACE][BACKSPACE]prologned sendary posture
+Playn[BACKSPACE]ing too many VC[BACKSPACE]TFs and not finding any flags LOL
+s

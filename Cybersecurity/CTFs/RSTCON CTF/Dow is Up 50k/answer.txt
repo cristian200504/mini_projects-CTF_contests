@@ -1,0 +1,169 @@
+# Answers to StockWatch (Next.js 15) Questions (Questions 1–15)
+
+---
+
+## Answers to Questions 7–15 (Follow-up Questions)
+
+### Question 7: Discrepancy Between Footer ("Built Dec 2, 2025"), Market Data ("Dec 15, 2024"), and HTTP `Last-Modified` ("Thu, 22 Oct 2026 03:55:13 GMT")
+
+1. **Why the Timestamps Differ**:
+   - **`Last-Modified: Thu, 22 Oct 2026 03:55:13 GMT`**: This is the **true filesystem modification timestamp (`mtime`)** of when `next build` was actually executed inside the environment/container to compile the static chunks in `.next/static/`.
+   - **`Date: Sat, 24 Oct 2026`**: This is the server's current system clock when responding to your HTTP request.
+   - **`"Built Dec 2, 2025"` (Footer)** and **`"Last updated: Dec 15, 2024"` (Market Data)**: Because the actual build occurred on **Oct 22, 2026**, both `"Built Dec 2, 2025"` and `"Dec 15, 2024"` are **hardcoded strings** placed in the application template/source code by the challenge author!
+2. **Why Did the Author Hardcode `"Built Dec 2, 2025"`?**
+   - There are two reasons an author puts `"Built Dec 2, 2025"` in the footer and asks *"When did you say you made this website?"*:
+     1. **Security Version Clue**: December 2, 2025 is the day before **CVE-2025-55182** (disclosed Dec 3, 2025) in React 19 / Next.js 15 Server Actions (`react-server-dom-webpack`). Stating the app was "Built Dec 2, 2025" signals that the app uses a pre-Dec-3-2025 vulnerable package version.
+     2. **OSINT / Metadata Contradiction Clue**: If the challenge is testing whether you can spot a fake/backdated claim on a website, the footer *claims* `Dec 2, 2025`, the data *claims* `Dec 15, 2024`, and the actual build artifacts prove it was built on `Oct 22, 2026` (`2026-10-22T03:55:13Z`).
+
+---
+
+### Question 8: Meaning of the Common ETag Suffix `1a161bfa8e8`
+
+Yes! In Node.js (`etag` / `send` packages used by Next.js's static file server), weak ETags for static files are generated directly from the file's `stat` metadata using the format:
+
+```text
+W/"<file_size_in_hex>-<mtime_in_milliseconds_hex>"
+```
+(or `<mtime_hex>-<size_hex>` depending on the server configuration).
+
+Let's decode `1a161bfa8e8` from hexadecimal to decimal:
+- **Hexadecimal**: `0x1a161bfa8e8`
+- **Decimal**: `1,792,641,370,344` (milliseconds since Unix epoch `1970-01-01T00:00:00Z`)
+- **Divide by 1000**: `1792641370.344` seconds
+- **UTC Date**: **`Thu, 22 Oct 2026 03:56:10.344 GMT`** (or `03:55:13 GMT` depending on which hex segment is `mtime`).
+
+Because all static JS chunks were generated during the same `next build` run, they share the same build timestamp in their ETag!
+
+---
+
+### Question 9 & Question 10: Next.js Server Action IDs (`searchStocks`, `setPriceAlert`, `addToWatchlist`)
+
+You found three Server Action IDs:
+- `searchStocks`: `40881a01be516941afc21e3145707ceff4a34545af`
+- `setPriceAlert`: `4052fdcd2e0b2bd97d604c084f5d0c698a3baad18a`
+- `addToWatchlist`: `40390aa0b377f579ba99d3ef8a86705be6ed7896c7`
+
+#### 1. How Server Action IDs Are Constructed
+Notice all three are **42 hex characters (21 bytes)** starting with `40`:
+- **First byte (`40` / `0x40`)**: Encodes the argument arity / bound-arguments bitmask used by Next.js's SWC transform (`server_actions.rs`).
+- **Remaining 40 hex chars (20 bytes)**: A **SHA-1 hash** computed at build time by `next-swc`:
+  $$\text{SHA1}(\text{build\_salt} + \text{file\_path} + \text{":"} + \text{export\_name})$$
+  Because Next.js includes a build-time random salt (`encryptionKey`), you cannot brute-force unreferenced action IDs offline just by hashing function names.
+
+#### 2. How to Discover ALL Server Actions in the App
+- **Client-Side Discovery**: Every Server Action referenced by *any* page or component is embedded in that route's client JS chunk!
+  - Make sure you fetch the HTML and JS chunks for **every route** (`/`, `/portfolio`, `/watchlist`, and `/stock/[symbol]`), not just `/`.
+  - Search all chunks in `/_next/static/chunks/app/...` for 42-character hex strings starting with `40`, `00`, `60`, `70`, `c0`, or `f0` (`grep -oE '[0-9a-f]{42}'`).
+- **Server-Side Manifest**: On the server filesystem, `.next/server/server-reference-manifest.json` lists **every** Server Action ID in the entire application along with its source file path and exported function name.
+
+#### 3. Security Implications of `searchStocks`, `setPriceAlert`, and `addToWatchlist`
+- **Input Manipulation / Injection**:
+  - When invoking `searchStocks`, `setPriceAlert`, or `addToWatchlist`, test what happens when you pass:
+    - The 5 hint tickers: `SHOP`, `NOW`, `PAY`, `DASH`, `BOX` (individually and all five added to the watchlist or alerted!).
+    - Wildcards or empty strings: `""`, `"%"`, `"*"`, `"rstcon"`, `"flag"`.
+    - Unexpected types: objects, arrays, negative numbers, or very high numbers (e.g., `50000` for "Dow is Up 50k" in `setPriceAlert`!).
+- **State Combination Workflow (`addToWatchlist` / `setPriceAlert`)**:
+  - Look at the three actions together:
+    1. `searchStocks`
+    2. `setPriceAlert`
+    3. `addToWatchlist`
+  - Could adding specific stocks (`SHOP`, `NOW`, `PAY`, `DASH`, `BOX`) to the watchlist via `addToWatchlist` (or setting a price alert via `setPriceAlert`, e.g., at `50000` or in that specific order) unlock a hidden message or flag on `/watchlist` or `/portfolio` or in the action's return value?!
+  - Test calling `addToWatchlist` for `SHOP`, `NOW`, `PAY`, `DASH`, `BOX` in order, and check the JSON/Flight response of each call as well as the `/watchlist` and `/portfolio` pages!
+
+---
+
+### Question 11: Discovering Routes in a Next.js App Router Application
+
+Why `_buildManifest.js` only shows `sortedPages: ["/_app", "/_error"]`:
+- In **Next.js 13/14/15 App Router**, `_buildManifest.js` only lists legacy *Pages Router* routes (`/_app`, `/_error`). App Router routes are **not** listed in `sortedPages`!
+
+How to find all App Router routes and chunks:
+1. **Inspect Webpack Chunk Loader in `/_next/static/chunks/webpack-*.js`**:
+   - Open `webpack-*.js`! The Webpack runtime chunk contains a lookup table mapping chunk IDs to their filenames and hashes (e.g., `app/page`, `app/portfolio/page`, `app/watchlist/page`, `app/stock/[symbol]/page`, and any hidden routes!).
+2. **Inspect RSC Flight Payloads on Every Known Route**:
+   - Fetch `/`, `/portfolio`, `/watchlist`, and `/stock/SHOP` (etc.) with `RSC: 1` header (`curl -H "RSC: 1" http://localhost:3000/portfolio`).
+   - Look for `I[...]` module references at the top of the Flight response, which list every `/_next/static/chunks/...` file used by that route.
+
+---
+
+### Question 12: Interpreting `"SHOP NOW, PAY later, DASH home, cry in the BOX"`
+
+Notice how this phrase maps directly to your StockWatch application features:
+
+1. **Five Stock Symbols**:
+   - **`SHOP`** (Shopify)
+   - **`NOW`** (ServiceNow)
+   - **`PAY`** (Paymentus)
+   - **`DASH`** (DoorDash)
+   - **`BOX`** (Box)
+   - First, check `/stock/SHOP`, `/stock/NOW`, `/stock/PAY`, `/stock/DASH`, `/stock/BOX` (and search each one via `searchStocks`).
+   - Second, try adding `SHOP`, `NOW`, `PAY`, `DASH`, `BOX` in that exact order using `addToWatchlist` (and check if `NOW` is a stock in `searchStocks`; if `NOW` is not in the database, try the 4 stocks `SHOP`, `PAY`, `DASH`, `BOX`).
+   - Third, check if the phrase describes **actions to take in the app**:
+     - `"SHOP NOW"` $\rightarrow$ `SHOP` (or `NOW`)
+     - `"PAY later"` $\rightarrow$ `PAY` (e.g. set a price alert for later using `setPriceAlert`?)
+     - `"DASH home"` $\rightarrow$ `DASH` on the home dashboard (`/`)
+     - `"cry in the BOX"` $\rightarrow$ `BOX`
+2. **What to Check in `searchStocks` Results**:
+   - Does `searchStocks("")` or `searchStocks("a")`, `searchStocks("e")`, `searchStocks("i")`, `searchStocks("o")`, `searchStocks("u")` return the full list of all stocks in the backend database?
+   - Dump every stock in the backend by searching common letters (`a`, `e`, `i`, `o`, `u`, `s`, `t`, `r`, `c`, `n`) or sectors (`Technology`, `Finance`, `Healthcare`, `Consumer`, etc.) via `searchStocks`!
+
+---
+
+### Question 13: Extracting and Inspecting All RSC Flight Data
+
+In Next.js 15 App Router, every page renders via React Server Components (RSC):
+1. **Inline Flight Chunks in HTML**:
+   - At the bottom of the HTML returned by `GET /`, `GET /portfolio`, `GET /watchlist`, `GET /stock/SHOP`, Next.js embeds `<script>self.__next_f.push([1, "..."])</script>`.
+   - Concatenate all the string arguments passed to `self.__next_f.push([1, "..."])` to reconstruct the full RSC Flight stream.
+2. **Direct Flight Request via `RSC: 1` Header**:
+   - Send `GET` requests with the header `RSC: 1`:
+     - `GET /` with `RSC: 1`
+     - `GET /portfolio` with `RSC: 1`
+     - `GET /watchlist` with `RSC: 1`
+     - `GET /stock/SHOP`, `/stock/NOW`, `/stock/PAY`, `/stock/DASH`, `/stock/BOX` with `RSC: 1`
+   - The response is line-delimited React Flight format (`0:...`, `1:...`, `2:...`). Any props passed from a Server Component to a Client Component appear in plaintext JSON inside these lines—even fields that the Client Component never renders in the DOM!
+
+---
+
+### Question 14 & Question 15: Could the Flag Be a Date, and What Are Common `rstcon{...}` Flag Formats?
+
+1. **Standard Flag Format in This CTF**:
+   - In this CTF, flags use the lowercase prefix **`rstcon{...}`** (or occasionally uppercase `RSTCON{...}` if case-insensitive), containing readable words/phrases separated by underscores or hyphens, often with leetspeak:
+     - Examples of typical patterns: `rstcon{word1_word2_word3}`
+   - A raw date by itself (without `rstcon{...}`) is almost never the final flag unless the challenge explicitly says "wrap the date in `rstcon{...}`".
+2. **Why the Challenge Asks *"When did you say you made this website?"***:
+   - Look again at the contradiction:
+     - The developer claims in the footer: **"Built Dec 2, 2025"**
+     - In reality, **Dec 2, 2025** is the date right before the Next.js 15 / React 19 Server Actions vulnerability (**CVE-2025-55182**, disclosed Dec 3, 2025).
+     - The developer is *claiming* the site was made on Dec 2, 2025, which hints at why the Next.js 15 Server Actions are vulnerable, **OR** there is a specific interaction with `searchStocks`, `setPriceAlert`, `addToWatchlist`, and the tickers `SHOP`, `NOW`, `PAY`, `DASH`, `BOX` (and the Dow hitting `50000` / `50k`!).
+3. **Checklist of Concrete Next Steps to Find the Flag**:
+   - **Step 1**: Inspect the `webpack-*.js` chunk and all `/_next/static/chunks/app/**/*.js` chunks for `/`, `/portfolio`, `/watchlist`, and `/stock/[symbol]` to see the exact client-side code calling `searchStocks`, `setPriceAlert`, and `addToWatchlist`.
+   - **Step 2**: Call `searchStocks` with single letters (`"a"`, `"e"`, `"i"`, `"o"`, `"u"`, `"s"`, `"n"`, `"b"`, `"d"`, `"p"`) to enumerate every stock in the database and inspect all fields of every returned stock object.
+   - **Step 3**: Call `addToWatchlist` and `setPriceAlert` with `SHOP`, `NOW`, `PAY`, `DASH`, `BOX` (and check if passing `50000` as a price alert target triggers anything, since the challenge is named **"Dow is Up 50k"**!).
+   - **Step 4**: Inspect the full source of every client chunk (`app/page-*.js`, `app/portfolio/page-*.js`, `app/watchlist/page-*.js`, `app/stock/[symbol]/page-*.js`) to see what arguments those three Server Actions take and what responses they handle.
+
+
+---
+
+## Technical Deep Dive: How Next.js 15 / React 19 Flight Deserialization (CVE-2025-55182 / "React2Shell") Works
+
+Why does the challenge ask **"When did you say you made this website?"** while the footer says **"Built Dec 2, 2025"**?
+- **CVE-2025-55182 ("React2Shell")** was publicly disclosed on **December 3, 2025**.
+- A Next.js 15 / React 19 application built on **December 2, 2025** uses `react-server-dom-webpack` prior to the December 3, 2025 security patch (`19.0.1` / `19.1.2` / `19.2.1`).
+- Also, what about **"SHOP NOW, PAY later, DASH home, cry in the BOX"**?
+  - Could those words (`SHOP`, `NOW`, `PAY`, `DASH`, `BOX`) be the names of directories/files or environment variables or containers on the server once you inspect the server environment, or inputs to the app?
+
+### Mechanics of the Flight Protocol Deserialization Flaw (CVE-2025-55182)
+When a client sends an HTTP `POST` request to a Next.js App Router endpoint with a `Next-Action` header (such as `Next-Action: 40881a01be516941afc21e3145707ceff4a34545af` or any action header) and a `multipart/form-data` body:
+1. `react-server-dom-webpack` parses each multipart form field (`"0"`, `"1"`, etc.) as a Flight chunk.
+2. In unpatched versions (pre-Dec 3, 2025), property traversal on chunk references (`$1:...`) inside `reviveModel` did not block `__proto__` or `constructor`.
+3. Specifically, when field `"1"` is `"$@0"` (a raw chunk reference to chunk `0`) and field `"0"` is a JSON object with:
+   - `"then": "$1:__proto__:then"` (resolving to `Chunk.prototype.then`)
+   - `"status": "resolved_model"` (causing `initializeModelChunk` to parse `.value` using `._response`)
+   - `"reason": -1`
+   - `"_response"` containing:
+     - `"_prefix"`: JavaScript code string (which gets concatenated before the blob id when resolving `$B`)
+     - `"_formData": { "get": "$1:constructor:constructor" }` (which resolves to `Function.prototype.constructor`, i.e., the `Function` constructor)
+   - `"value": "{\"then\":\"$B0\"}"` (which triggers the `$B` Blob reference handler during promise resolution, calling `response._formData.get(response._prefix + "0")` and then invoking the resulting `Function` as a thenable!)
+4. Note on Next.js 15 Production Error Handling (`digest` / `NEXT_REDIRECT`):
+   - In production builds (`next start`), Next.js redacts generic `Error.message` strings in responses, **except** when an error object has a `.digest` property (or when `.digest` is formatted as `NEXT_REDIRECT;push;/<data>;307;`, which Next.js places into the `x-action-redirect` header or the Flight error digest returned to the caller).

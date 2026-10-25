@@ -1,0 +1,13 @@
+{
+  "raw_arrays_identical_to_original_session": true,
+  "final_fit_arrays_identical_to_original_session": true,
+  "road_reference_identical_to_original_session": true,
+  "python_files_compiled": 17,
+  "scripts_unchanged": {
+    "fit_analysis.py": "f961f25b93111deff779543d604e1bdbad9813756cd03077bdcb7949476e0b5a",
+    "fit_start.py": "a496338874b52949af6362ede2c1a20f77c0683bb9d293f76dfdec369e77858c",
+    "check_variants.py": "e96ed9b98b3d1f8ae04c2a171ebac9069188373c3bda2a676954389249c7c62f"
+  },
+  "pdf_pages_visually_reviewed": 12,
+  "latest_visual_review_passed": true
+}

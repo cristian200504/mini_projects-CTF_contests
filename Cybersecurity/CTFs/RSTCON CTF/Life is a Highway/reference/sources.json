@@ -1,0 +1,27 @@
+{
+  "toyota_2017.dbc": {
+    "url": "https://raw.githubusercontent.com/commaai/opendbc/master/opendbc/dbc/generator/toyota/_toyota_2017.dbc",
+    "sha256": "818872b1c1034983f61a51460a9b175b4bfe01f3d34f537c3d21f420991a8a48",
+    "snapshot_date": "2026-10-25"
+  },
+  "route7_full.osm": {
+    "url": "https://www.openstreetmap.org/api/0.6/relation/176453/full",
+    "sha256": "92172285c9dd3196501b4c0316ae6babf27a04d6264e5bf71943760e60d66dc4",
+    "snapshot_date": "2026-10-25"
+  },
+  "parking_map.osm": {
+    "url": "https://www.openstreetmap.org/api/0.6/map?bbox=-77.225,38.914,-77.217,38.921",
+    "sha256": "879ffd0d3b6abd82993c2cba6cc2d0a13c9260150f9f30eaa6253545673ac6a1",
+    "snapshot_date": "2026-10-25"
+  },
+  "start_map.osm": {
+    "url": "https://www.openstreetmap.org/api/0.6/map?bbox=-77.415,39.02,-77.395,39.035",
+    "sha256": "b37f57aa263f1e48842f8ac8262dd5783003cf4884405be74927840d0f12c1fb",
+    "snapshot_date": "2026-10-25"
+  },
+  "regional_basemap.png": {
+    "url": "https://tile.openstreetmap.org/12/{x}/{y}.png; x=1166..1169,y=1563..1567",
+    "sha256": "c0ae97dfafbc860592284f4cbcbc24c2348e3084eee9179c050d501a514640d9",
+    "snapshot_date": "2026-10-25"
+  }
+}

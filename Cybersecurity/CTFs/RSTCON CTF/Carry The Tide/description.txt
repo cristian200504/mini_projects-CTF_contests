@@ -1,0 +1,8 @@
+Carry The Tide
+70
+f8al
+
+ 0  0
+A sluice controller will only align if you give it the right control key.
+
+Provided: carry

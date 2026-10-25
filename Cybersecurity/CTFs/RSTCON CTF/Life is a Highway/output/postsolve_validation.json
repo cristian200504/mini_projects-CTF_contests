@@ -1,0 +1,15 @@
+{
+  "confirmed_coordinate_source": "User confirmation after the solution was submitted",
+  "confirmed_latitude_longitude": [
+    39.0286785634,
+    -77.4043945431
+  ],
+  "submitted_latitude_longitude": [
+    39.0287,
+    -77.4043
+  ],
+  "submitted_to_confirmed_metres": 8.507366254814823,
+  "reproduced_to_confirmed_metres": 8.759632597093974,
+  "challenge_tolerance_metres": 1000,
+  "confirmed_answer_used_in_optimization": false
+}

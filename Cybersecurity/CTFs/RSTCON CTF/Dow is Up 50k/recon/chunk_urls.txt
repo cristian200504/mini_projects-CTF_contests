@@ -1,0 +1,6 @@
+﻿/_next/static/chunks/4bd1b696-e3d95b76f82505a1.js
+/_next/static/chunks/517-4e633ead85d0d9a9.js
+/_next/static/chunks/app/page-dcea1cd040fd23a5.js
+/_next/static/chunks/main-app-1dd263df69101e7e.js
+/_next/static/chunks/polyfills-42372ed130431b0a.js
+/_next/static/chunks/webpack-06b7f1618a9e9933.js

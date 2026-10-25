@@ -1,0 +1,9 @@
+{
+  "strong_turn_yaw_to_rear_difference_correlation": 0.9945852347619877,
+  "fit_yaw_equals_a_diff_plus_b_speed_plus_c": [
+    37.134265233282484,
+    -0.023353279873601848,
+    -0.129091768805444
+  ],
+  "used_for_final_coordinate": false
+}

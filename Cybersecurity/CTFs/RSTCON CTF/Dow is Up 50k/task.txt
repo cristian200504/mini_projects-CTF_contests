@@ -1,0 +1,29 @@
+TASK FILE - Follow-up Questions
+====================================
+
+Thanks for the previous answers! I have some follow-up questions about my Next.js web application. Please write your answers in answer.txt (append to existing content).
+
+Question 7: My Next.js app's footer says "Built Dec 2, 2025" but when I check the HTTP headers for static assets (JS chunks, CSS), they all show "Last-Modified: Thu, 22 Oct 2026 03:55:13 GMT". The server's current Date header shows "Sat, 24 Oct 2026". This is a huge discrepancy - the footer says Dec 2025 but the files were last modified Oct 2026. What does this mean? Could the footer date be fake? How do I determine the actual build date?
+
+Question 8: All my static JS chunks share the same ETag suffix "1a161bfa8e8" - what does this mean? Does this common ETag suffix indicate they were all built at the same time?
+
+Question 9: I found that my Next.js app has a server action called "searchStocks" (action ID: 40881a01be516941afc21e3145707ceff4a34545af). When I POST to it, it searches stocks by symbol, company name, or sector. Are there any security implications of server actions? Could there be hidden server actions that aren't visible in the client-side JS? How would I discover all server actions in a Next.js app?
+
+Question 10: I have server actions with these IDs:
+- searchStocks: 40881a01be516941afc21e3145707ceff4a34545af
+- setPriceAlert: 4052fdcd2e0b2bd97d604c084f5d0c698a3baad18a
+- addToWatchlist: 40390aa0b377f579ba99d3ef8a86705be6ed7896c7
+
+These look like hashes. What are Next.js server action IDs? Are they derived from the function name, file path, or something else? Could there be additional server actions I haven't discovered?
+
+Question 11: My app has these routes: / (dashboard), /portfolio, /watchlist, /stock/[symbol]. The build manifest shows sortedPages: ["/_app", "/_error"]. Are there any techniques to discover hidden routes in a Next.js App Router application? What about checking the RSC flight data for route information?
+
+Question 12: The description of my project mentions "SHOP NOW, PAY later, DASH home, cry in the BOX" - what if these are not stock tickers but rather hints about the web technology? Could "DASH" refer to a dash in a URL path? Could "BOX" refer to a sandbox or container? What if these are clues about where to find something hidden?
+
+Question 13: In the RSC (React Server Components) flight data embedded in the HTML, I see references to build IDs and component IDs. Could there be hidden data embedded in the RSC payload that isn't rendered visually? How would I extract and inspect all the RSC flight data?
+
+Question 14: If a CTF challenge hint says "When did you say you made this website?" and the footer says "Built Dec 2, 2025" but the actual file timestamps say October 2026 - could the answer to the challenge BE a date? Would the flag potentially be something like a date formatted as a flag? What date format would be typical for a CTF flag?
+
+Question 15: What are common CTF flag formats? I've seen things like flag{...}, CTF{...}, RSTCON{...}. If the flag format is RSTCON{...}, what kinds of values would typically be inside the braces? Could a date be the flag value?
+
+Please write all answers in answer.txt.

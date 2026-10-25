@@ -1,0 +1,8 @@
+Brackish Key
+10
+f8al
+
+ 0  0
+We pulled a note off a SecurityShrimp engagement box. Whoever wrote it did a little something to it.
+
+Provided: cipher.txt

@@ -1,0 +1,12 @@
+{
+  "estimated_start_latitude": 39.02871981623482,
+  "estimated_start_longitude": -77.40430815080919,
+  "bias_deg_per_second": 0.07041630210827382,
+  "heading_at_1735s_ccw_from_east_degrees": 180.48534779399165,
+  "speed_scale": 1.015122176753299,
+  "road_point_to_trace_rms_metres": 132.10971252572986,
+  "reference_points": 922,
+  "success": true,
+  "message": "Optimization terminated successfully.",
+  "confirmed_answer_used_in_optimization": false
+}

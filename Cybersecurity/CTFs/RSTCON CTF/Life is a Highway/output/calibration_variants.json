@@ -1,0 +1,45 @@
+[
+  {
+    "gain": 1.0,
+    "linear_drift": false,
+    "parameters": [
+      0.07041554565111026,
+      180.485793162834,
+      1.0151034003934516
+    ],
+    "rms_metres": 132.10969141903277,
+    "start_latitude": 39.028718009645125,
+    "start_longitude": -77.40430457105798,
+    "success": true,
+    "heading_on_upper_bound": false
+  },
+  {
+    "gain": 1.0245901639344261,
+    "linear_drift": false,
+    "parameters": [
+      0.07156540242812279,
+      177.46460070071322,
+      1.0169438362245766
+    ],
+    "rms_metres": 134.96684035423473,
+    "start_latitude": 39.028854164710246,
+    "start_longitude": -77.40421640646568,
+    "success": true,
+    "heading_on_upper_bound": false
+  },
+  {
+    "gain": 1.0,
+    "linear_drift": true,
+    "parameters": [
+      0.06511587676699404,
+      190.0,
+      1.0140194670793532,
+      -0.06677488858972436
+    ],
+    "rms_metres": 118.10537510079985,
+    "start_latitude": 39.026971820225114,
+    "start_longitude": -77.404520307658,
+    "success": true,
+    "heading_on_upper_bound": true
+  }
+]

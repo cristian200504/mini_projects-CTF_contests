@@ -1,0 +1,9 @@
+Template Tide
+10
+Veryyes
+
+ 7 (87% liked)  1
+The hydro dashboard has a friendly little tide report that greets you by name. It is a bit too friendly with what you give it.
+
+Mirror 1 http18.215.143.2505001
+Mirror 2 http18.145.136.915001
